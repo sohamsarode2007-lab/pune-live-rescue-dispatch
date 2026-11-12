@@ -5,7 +5,10 @@ import { MinHeap } from './MinHeap.js';
 // BLOCKED roads are excluded by graph.neighbors(). All traversable weights are >= 0, which Dijkstra requires.
 // Time O((V + E) log V).
 // options.excludeRoadIds: Set of road IDs to treat as unavailable for this run only (graph is not modified).
-// options.target: stop as soon as this vertex is settled (its distance is then final).
+// options.target: OPTIONAL early stop as soon as this vertex is settled (its distance is then final).
+//   Without a target the run is a full single-source search: dist has every reachable vertex.
+// options.reverse: search the reversed graph, so dist(v) = cost of the best route v -> sourceId and
+//   prev(v) = { from: next vertex towards sourceId, roadId }. One run gives every vertex's cost TO a target.
 export function dijkstraAll(graph, sourceId, options = {}) {
   if (!graph.hasLocation(sourceId)) throw new Error(`Unknown source location: ${sourceId}`);
   const dist = new Map();      // id -> best known effective cost
@@ -23,8 +26,8 @@ export function dijkstraAll(graph, sourceId, options = {}) {
     stats.heapExtractions++;
     if (done.has(u)) { stats.staleSkipped++; continue; }   // stale entry
     done.add(u);
-    if (u === options.target) break;                       // early exit: target settled
-    for (const e of graph.neighbors(u)) {
+    if (options.target !== undefined && u === options.target) break;   // optional early exit
+    for (const e of (options.reverse ? graph.inNeighbors(u) : graph.neighbors(u))) {
       if (done.has(e.to) || options.excludeRoadIds?.has(e.roadId)) continue;
       const alt = cost + e.cost;
       if (!dist.has(e.to) || alt < dist.get(e.to)) {
@@ -70,6 +73,21 @@ export function buildRoute(graph, sourceId, destId, prev) {
     totalCost: totalTimeS + totalRiskPenaltyS,
     roadCount: roadIds.length,
   };
+}
+
+// Route v -> targetId from a REVERSE search rooted at targetId (prev(v).from = next vertex towards target).
+export function buildRouteToTarget(graph, sourceId, targetId, prevReverse) {
+  const path = [sourceId];
+  const roadIds = [];
+  let cur = sourceId;
+  while (cur !== targetId) {
+    const p = prevReverse.get(cur);
+    roadIds.push(p.roadId);
+    path.push(p.from);
+    cur = p.from;
+  }
+  const forwardPrev = new Map(path.slice(1).map((v, i) => [v, { from: path[i], roadId: roadIds[i] }]));
+  return buildRoute(graph, sourceId, targetId, forwardPrev);
 }
 
 export function dijkstra(graph, sourceId, destId, options = {}) {

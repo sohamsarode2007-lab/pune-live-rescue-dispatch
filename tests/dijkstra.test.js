@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { MinHeap } from '../shared/graph/MinHeap.js';
-import { dijkstra, dijkstraAll } from '../shared/graph/dijkstra.js';
+import { dijkstra, dijkstraAll, buildRouteToTarget } from '../shared/graph/dijkstra.js';
 import { RISK_PENALTY_S } from '../shared/graph/Graph.js';
-import { smallGraph, randomGraph, bellmanFord, routeIsValid } from './helpers.js';
+import { smallGraph, randomGraph, bellmanFord, routeIsValid, hasPuneData, loadPune } from './helpers.js';
 
 const HR = RISK_PENALTY_S.HIGH_RISK;
 
@@ -108,6 +108,44 @@ test('early stop at the target gives the same cost as a full run', () => {
     const r = dijkstra(g, 'v0', t);
     if (!full.has(t)) assert.equal(r.reachable, false);
     else assert.ok(Math.abs(r.totalCost - full.get(t)) < 1e-9);
+  }
+});
+
+test('early stop is optional: without a target dijkstraAll settles every reachable vertex', () => {
+  const g = randomGraph(31, 60, 150, { closures: false });
+  const full = dijkstraAll(g, 'v0');
+  const bf = bellmanFord(g, 'v0');
+  const reachable = [...bf.values()].filter((d) => d < Infinity).length;
+  assert.equal(full.dist.size, reachable);
+  assert.equal(full.stats.settled, reachable);
+  const stopped = dijkstraAll(g, 'v0', { target: [...full.dist.keys()][3] });
+  assert.ok(stopped.stats.settled < full.stats.settled, 'a target makes it stop early');
+});
+
+test('full single-source run on the real Pune graph returns a distance to every junction',
+  { skip: !hasPuneData && 'Pune graph not generated' }, async () => {
+    const { graph } = await loadPune();
+    const start = graph.locations.keys().next().value;
+    const { dist, stats } = dijkstraAll(graph, start);
+    assert.equal(dist.size, graph.locations.size);
+    assert.equal(stats.settled, graph.locations.size);
+    for (const d of dist.values()) assert.ok(Number.isFinite(d) && d >= 0);
+  });
+
+test('reverse Dijkstra: dist(v) equals the forward cost v -> target, and the rebuilt routes are valid', () => {
+  for (let seed = 40; seed < 55; seed++) {
+    const g = randomGraph(seed, 25, 60);
+    const target = 'v3';
+    const rev = dijkstraAll(g, target, { reverse: true });
+    for (const v of g.locations.keys()) {
+      const fwd = dijkstra(g, v, target);
+      assert.equal(rev.dist.has(v), fwd.reachable, `seed ${seed} ${v}`);
+      if (!fwd.reachable) continue;
+      assert.ok(Math.abs(rev.dist.get(v) - fwd.totalCost) < 1e-6);
+      const route = buildRouteToTarget(g, v, target, rev.prev);
+      assert.ok(routeIsValid(g, route));
+      assert.ok(Math.abs(route.totalCost - fwd.totalCost) < 1e-6);
+    }
   }
 });
 

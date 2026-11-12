@@ -111,7 +111,9 @@ tests/
    incident (e.g. flood needs a boat) get infinite cost. Solve with the Hungarian algorithm, O(n³).
    Also implement greedy nearest-unit. Test Hungarian against brute-force permutations for n ≤ 6.
 4. **Two-leg routing**: unit → incident → best hospital, where best = minimum ETA among hospitals
-   with `bedsFree > 0`. Decrement beds on arrival.
+   with `bedsFree > 0`. Decrement beds on arrival. For severe incidents (highest severity level),
+   prefer hospitals marked `major` in `facilities.json` (fall back to any hospital with beds if no
+   major hospital is reachable). *(Added after Phase 1.)*
 5. **Greedy vs optimal panel**: show total and average response time for both on the same incidents.
 
 ## Phase 4 — Live traffic + "Our engine vs OSRM"
@@ -164,6 +166,12 @@ tests/
    at 50%) → shelters
    (capacity) → super-sink. Report max people evacuable vs total, and the bottleneck edges (min cut)
    on the map. Test against a hand-solved small network.
+
+## Cross-phase additions (requested after Phase 1)
+- `/algorithms` page: pick a junction, run BFS or DFS, show visit order on the map and the number of
+  junctions reached; an explanation card (purpose, input, output, steps, complexity) for every
+  algorithm/data structure. Each phase adds cards for its new algorithms.
+- Git: commit at the end of every phase.
 
 ## Phase 7 — Evaluation and demo safety
 1. `scripts/bench.mjs`: Dijkstra vs A* (time, nodes settled) on central Pune and full Pune;

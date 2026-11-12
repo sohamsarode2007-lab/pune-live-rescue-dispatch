@@ -38,6 +38,7 @@ export class Graph {
     this.roads = new Map();     // id -> road (single source of truth for road state)
     this.adjacency = new Map(); // id -> [{ roadId, from, to }]
     this._maxSpeedMps = null;   // cached for the A* heuristic; reset when roads are added
+    this._inAdjacency = null;   // reverse adjacency, built on first use; reset when roads are added
   }
 
   addLocation({ id, name = '', type = 'Intersection', lat, lng, affected = false }) {
@@ -68,6 +69,7 @@ export class Graph {
     this.adjacency.get(from).push({ roadId: id, from, to });
     if (!oneWay) this.adjacency.get(to).push({ roadId: id, from: to, to: from });
     this._maxSpeedMps = null;
+    this._inAdjacency = null;
     return road;
   }
 
@@ -84,6 +86,28 @@ export class Graph {
   neighbors(id) {
     const out = [];
     for (const e of this.adjacency.get(id) ?? []) {
+      const road = this.roads.get(e.roadId);
+      if (!this.isTraversable(road)) continue;
+      out.push({
+        to: e.to, roadId: road.id, lengthM: road.lengthM,
+        timeS: this.travelTimeS(road), riskPenaltyS: road.riskPenaltyS, cost: this.roadCost(road),
+      });
+    }
+    return out;
+  }
+
+  // Traversable INCOMING edges of a vertex: roads u -> id, reported as { to: u, ... } so a search on the
+  // reversed graph can use the same loop as a forward search. Used for "cost from every vertex TO id"
+  // (e.g. ETA of every rescue unit to one incident with a single Dijkstra run).
+  inNeighbors(id) {
+    if (!this._inAdjacency) {
+      this._inAdjacency = new Map([...this.locations.keys()].map((k) => [k, []]));
+      for (const edges of this.adjacency.values()) {
+        for (const e of edges) this._inAdjacency.get(e.to).push({ roadId: e.roadId, from: e.to, to: e.from });
+      }
+    }
+    const out = [];
+    for (const e of this._inAdjacency.get(id) ?? []) {
       const road = this.roads.get(e.roadId);
       if (!this.isTraversable(road)) continue;
       out.push({
