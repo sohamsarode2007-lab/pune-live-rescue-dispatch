@@ -28,6 +28,7 @@ export default function SOS() {
   const [incident, setIncident] = useState(null);
   const [unit, setUnit] = useState(null);
   const [connected, setConnected] = useState(true);
+  const [merged, setMerged] = useState(false);
 
   useEffect(() => { store.set(LANG_KEY, lang); document.documentElement.lang = lang; }, [lang]);
 
@@ -78,6 +79,7 @@ export default function SOS() {
       const res = await emitAck('sos:new', { ...p, type, severity, people, clientId: clientId() });
       if (res.ok) {
         store.set(STORE_KEY, res.incident.id);
+        setMerged(Boolean(res.merged));
         setIncident(res.incident); setUnit(res.unit); setMe(p); setPhase('tracking');
       } else if (res.error === 'OUTSIDE_AREA') { setPhase('pick'); setNotice('outside'); }
       else { setPhase(me ? 'pick' : 'form'); setNotice(res.error === 'TOO_FAST' ? 'tooFast' : 'sendFailed'); }
@@ -104,7 +106,7 @@ export default function SOS() {
 
   const newRequest = () => {
     store.set(STORE_KEY, null);
-    setIncident(null); setUnit(null); setMe(null); setPhase('form'); setNotice(null);
+    setIncident(null); setUnit(null); setMe(null); setPhase('form'); setNotice(null); setMerged(false);
   };
 
   const etaText = useMemo(() => {
@@ -188,6 +190,7 @@ export default function SOS() {
         <section className={`sos-status st-${status}`} aria-live="polite">
           <p className="muted">{t.received} · {t.incident} {incident.id}</p>
           <h2>{t[status]}</h2>
+          {merged && <p className="hint">{t.merged}{incident.calls > 1 && <> ({incident.calls} {t.calls})</>}</p>}
           {status === 'PENDING' && incident.queue && <p>{t.queuePos}: <b>{incident.queue.position}</b></p>}
           {unit && status !== 'RESOLVED' && (
             <p>{t.unit}: <b>{t[unit.type]} {unit.id}</b></p>

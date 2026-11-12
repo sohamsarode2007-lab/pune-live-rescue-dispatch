@@ -27,6 +27,8 @@ export const T = {
     ambulance: 'Ambulance', fire_truck: 'Fire engine', rescue_boat: 'Rescue boat',
     newRequest: 'New request', accuracy: 'GPS accuracy',
     offline: 'Connection lost — reconnecting…', simNote: 'Simulated units and times.',
+    merged: 'Others nearby already reported this emergency. Your call was added to the same request.',
+    calls: 'calls',
   },
   mr: {
     banner: 'हे केवळ डेमो सिम्युलेशन आहे — खऱ्या आपत्कालीन परिस्थितीत 112 वर कॉल करा.',
@@ -52,6 +54,8 @@ export const T = {
     ambulance: 'रुग्णवाहिका', fire_truck: 'अग्निशमन बंब', rescue_boat: 'बचाव बोट',
     newRequest: 'नवीन विनंती', accuracy: 'GPS अचूकता',
     offline: 'कनेक्शन तुटले — पुन्हा जोडत आहे…', simNote: 'पथके आणि वेळा सिम्युलेटेड आहेत.',
+    merged: 'जवळच्या इतरांनी ही आपत्कालीन स्थिती आधीच कळवली आहे. तुमचा कॉल त्याच विनंतीत जोडला आहे.',
+    calls: 'कॉल',
   },
   hi: {
     banner: 'यह केवल डेमो सिमुलेशन है — वास्तविक आपातकाल में 112 पर कॉल करें।',
@@ -77,5 +81,7 @@ export const T = {
     ambulance: 'एम्बुलेंस', fire_truck: 'दमकल', rescue_boat: 'बचाव नाव',
     newRequest: 'नया अनुरोध', accuracy: 'GPS सटीकता',
     offline: 'कनेक्शन टूट गया — फिर से जुड़ रहा है…', simNote: 'दल और समय सिमुलेटेड हैं।',
+    merged: 'पास के अन्य लोगों ने यह आपातकाल पहले ही बताया है। आपकी कॉल उसी अनुरोध में जोड़ दी गई है।',
+    calls: 'कॉल',
   },
 };

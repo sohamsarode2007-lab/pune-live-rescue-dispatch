@@ -17,6 +17,7 @@ export function trimRoute(route, p) {
 const initial = {
   connected: false, simTimeS: 0, speed: 1,
   units: new Map(), incidents: new Map(), queue: [], beds: {}, closedRoads: [],
+  mode: 'hungarian', comparisons: [], comparisonTotals: null,
 };
 
 function reducer(state, a) {
@@ -27,7 +28,10 @@ function reducer(state, a) {
       units: new Map(a.s.units.map((u) => [u.id, u])),
       incidents: new Map(a.s.incidents.map((i) => [i.id, i])),
       beds: Object.fromEntries(a.s.hospitals.map((h) => [h.id, h.bedsFree])),
+      mode: a.s.mode, comparisons: a.s.comparisons ?? [], comparisonTotals: a.s.comparisonTotals ?? null,
     };
+    case 'comparison': return { ...state, comparisons: [...state.comparisons, a.c.latest].slice(-20), comparisonTotals: a.c.totals };
+    case 'mode': return { ...state, mode: a.mode };
     case 'unit': { const units = new Map(state.units); units.set(a.u.id, { ...units.get(a.u.id), ...a.u }); return { ...state, units }; }
     case 'incident': { const incidents = new Map(state.incidents); incidents.set(a.i.id, a.i); return { ...state, incidents }; }
     case 'positions': {
@@ -65,6 +69,8 @@ export function useLiveDispatch() {
       'hospital:updated': (h) => dispatch({ type: 'hospital', h }),
       'hazard:updated': (roads) => dispatch({ type: 'hazard', roads }),
       'sim:speed': ({ speed }) => dispatch({ type: 'speed', speed }),
+      'comparison:updated': (c) => dispatch({ type: 'comparison', c }),
+      'dispatch:mode': ({ mode }) => dispatch({ type: 'mode', mode }),
     };
     Object.entries(handlers).forEach(([e, h]) => s.on(e, h));
     if (s.connected) join();

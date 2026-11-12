@@ -127,6 +127,15 @@ button.link { border: none; background: none; padding: 0; color: var(--accent); 
 .pin.inc.EN_ROUTE { background: #db2777; } .pin.inc.ON_SCENE { background: #d97706; }
 .pin.inc.TRANSPORTING { background: #7c3aed; } .pin.inc.RESOLVED { background: #15803d; opacity: .6; font-size: 9px; }
 
+/* ---------- Phase 3: dispatch mode, burst, comparison ---------- */
+.tabs.small button { font-size: .78rem; padding: 6px; }
+button.burst { border-color: #b45309; color: #fde68a; font-weight: 700; }
+.pill.merged { margin-left: 6px; background: #1e3a8a; color: #bfdbfe; }
+.cmp tr.exec th, .cmp tr.exec td { background: #082f49; }
+.cmp.pairs td, .cmp.pairs th { font-size: .74rem; }
+.cmp tr.diff td { color: #fde68a; }
+.batch-pick { margin-top: 6px; }
+
 /* ---------- algorithms page ---------- */
 .scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
 .ramp { height: 10px; border-radius: 5px; margin-top: 10px; }

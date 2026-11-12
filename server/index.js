@@ -14,7 +14,7 @@ import path from 'node:path';
 import { Server } from 'socket.io';
 import { DEMO_BBOX, FACILITIES_FILE, GRAPH_FILE, PORT, ROOT, SIM_SPEED, TICK_MS, TOMTOM_API_KEY } from './config.js';
 import { GraphStore } from './services/graphStore.js';
-import { DispatchService } from './services/dispatchService.js';
+import { DispatchService, DISPATCH_MODES } from './services/dispatchService.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -114,14 +114,14 @@ io.on('connection', (socket) => {
       const lat = Number(msg?.lat), lng = Number(msg?.lng);
       if (!inArea(lat, lng)) return ack({ ok: false, error: 'OUTSIDE_AREA' });
       lastSos = Date.now();
-      const inc = dispatch.createIncident({
+      const { incident: inc, merged } = dispatch.submitCall({
         lat, lng, type: msg.type, severity: msg.severity, people: Number(msg.people),
         accuracyM: Number.isFinite(Number(msg.accuracyM)) ? Math.round(Number(msg.accuracyM)) : null,
         source: msg.source === 'dispatcher' ? 'dispatcher' : 'phone',
         clientId: typeof msg.clientId === 'string' ? msg.clientId.slice(0, 64) : null,
       });
       socket.join(`inc:${inc.id}`);
-      ack({ ok: true, incident: dispatch.incidentView(inc), unit: inc.unitId ? dispatch.unitView(dispatch.units.get(inc.unitId)) : null });
+      ack({ ok: true, merged, incident: dispatch.incidentView(inc), unit: inc.unitId ? dispatch.unitView(dispatch.units.get(inc.unitId)) : null });
     } catch (e) {
       ack({ ok: false, error: 'INVALID', message: e.message });
     }
@@ -145,6 +145,19 @@ io.on('connection', (socket) => {
     if (!socket.rooms.has('dispatch') || !SIM_SPEEDS.includes(Number(msg?.speed))) return;
     dispatch.setSpeed(Number(msg.speed));
     io.to('dispatch').emit('sim:speed', { speed: dispatch.clock.speed });
+  });
+
+  // Phase 3: 8 simultaneous incidents (fixed seeded pattern), dispatched as one batch.
+  socket.on('burst:create', (_msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false, error: 'NOT_DISPATCHER' });
+    const r = dispatch.createBurst();
+    ack({ ok: true, ...r });
+  });
+
+  socket.on('dispatch:mode', (msg) => {
+    if (!socket.rooms.has('dispatch') || !DISPATCH_MODES.includes(msg?.mode)) return;
+    dispatch.setMode(msg.mode);
+    io.to('dispatch').emit('dispatch:mode', { mode: dispatch.mode });
   });
 
   socket.on('sim:reset', () => {

@@ -6,6 +6,7 @@ import { useLiveDispatch } from '../useLiveDispatch.js';
 import SafetyBanner from '../components/SafetyBanner.jsx';
 import NavLinks from '../components/NavLinks.jsx';
 import RescueMap from '../components/RescueMap.jsx';
+import ComparisonPanel from '../components/ComparisonPanel.jsx';
 import { UNIT_LABEL, TYPE_ICON } from '../components/mapParts.jsx';
 
 const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals' };
@@ -98,8 +99,24 @@ export default function Dispatcher() {
     try {
       const res = await emitAck('sos:new', { ...p, ...testForm, source: 'dispatcher', clientId: clientId() });
       if (!res.ok) setTestMsg({ bad: true, text: res.error === 'OUTSIDE_AREA' ? 'Outside the demo area.' : res.error === 'TOO_FAST' ? 'Wait a few seconds between test SOS.' : res.message ?? res.error });
+      else if (res.merged) { setSelectedIncidentId(res.incident.id); setTestMsg({ text: `Merged into ${res.incident.id} (${res.merged.distanceM} m away, ${res.incident.calls} calls). Geohash checked ${res.merged.checked} nearby incident(s).` }); }
       else { setSelectedIncidentId(res.incident.id); setTestMsg({ text: `${res.incident.id} created${res.incident.unitId ? `, ${res.incident.unitId} dispatched` : ' — waiting in queue'}.` }); }
     } catch { setTestMsg({ bad: true, text: 'Server did not answer.' }); }
+  };
+
+  const [burstMsg, setBurstMsg] = useState(null);
+  const sendBurst = async () => {
+    setBurstMsg(null);
+    try {
+      const r = await emitAck('burst:create', {});
+      if (!r.ok) { setBurstMsg({ bad: true, text: r.error }); return; }
+      const c = r.comparison;
+      const parts = [`${r.created.length} new incident${r.created.length === 1 ? '' : 's'}`];
+      if (r.merged.length) parts.push(`${r.merged.length} call${r.merged.length === 1 ? '' : 's'} merged into open incidents (same place within 5 min)`);
+      if (c) parts.push(`greedy ${fmtDuration(c.greedy.totalS)} vs Hungarian ${fmtDuration(c.hungarian.totalS)} total ETA`);
+      else parts.push('no free unit could be planned');
+      setBurstMsg({ text: `${parts.join(' · ')}.` });
+    } catch { setBurstMsg({ bad: true, text: 'Server did not answer.' }); }
   };
 
   const onMapClick = (p) => {
@@ -177,6 +194,20 @@ export default function Dispatcher() {
               </section>
 
               <section className="panel">
+                <h2>Dispatch</h2>
+                <div className="tabs small">
+                  {[['hungarian', 'Hungarian (optimal)'], ['greedy', 'Greedy (nearest unit)']].map(([m, label]) => (
+                    <button key={m} type="button" className={live.mode === m ? 'on' : ''} onClick={() => getSocket().emit('dispatch:mode', { mode: m })}>{label}</button>
+                  ))}
+                </div>
+                <button type="button" className="ghost burst" onClick={sendBurst}>Burst: 8 simultaneous incidents</button>
+                {burstMsg && <p className={burstMsg.bad ? 'alert' : 'okmsg'}>{burstMsg.text}</p>}
+                <p className="note">Both plans are computed for every batch; the mode only decides which one the units follow. The burst uses a fixed seeded pattern, so it is the same every time.</p>
+              </section>
+
+              <ComparisonPanel comparisons={live.comparisons} totals={live.comparisonTotals} mode={live.mode} />
+
+              <section className="panel">
                 <h2>Test SOS</h2>
                 <div className="form-row">
                   <select aria-label="Type" value={testForm.type} onChange={(e) => setTestForm({ ...testForm, type: e.target.value })}>
@@ -209,7 +240,7 @@ export default function Dispatcher() {
                     })}
                   </ol>
                 )}
-                <p className="note">Order: emergency priority queue (max-heap), score = 5·severity + 2·min(people,10) + min(minutes waited,10).</p>
+                <p className="note">Order: emergency priority queue (max-heap), score = 5·severity + 2·min(people,10) + min(minutes waited,10). Aging: the waiting term grows with the sim clock and the queue is re-scored every tick.</p>
               </section>
 
               <section className="panel">
@@ -221,12 +252,19 @@ export default function Dispatcher() {
                       const left = u?.phaseEndS != null ? Math.max(0, u.phaseEndS - live.simTimeS) : null;
                       return (
                         <li key={i.id} className={i.id === selectedIncidentId ? 'sel' : ''} onClick={() => setSelectedIncidentId(i.id)}>
-                          <div><b>{i.id}</b> {TYPE_ICON[i.type]} {i.type} · {i.severity} · {i.people} ppl {i.source === 'dispatcher' && <span className="muted">(test)</span>}</div>
+                          <div>
+                            <b>{i.id}</b> {TYPE_ICON[i.type]} {i.type} · {i.severity} · {i.people} ppl
+                            {i.calls > 1 && <span className="pill merged" title="SOS calls merged by geohash clustering">{i.calls} calls</span>}
+                            {i.source !== 'phone' && <span className="muted"> ({i.source === 'burst' ? 'burst' : 'test'})</span>}
+                          </div>
                           <div className="muted">
                             <span className={`st ${i.status}`}>{i.status}</span>
                             {u && <> · {u.id} ({UNIT_LABEL[u.type]})</>}
                             {u && left != null && (i.status === 'EN_ROUTE' ? ` · ETA ${fmtDuration(left)}` : i.status === 'ON_SCENE' ? ` · on scene ${fmtDuration(left)} more` : i.status === 'TRANSPORTING' ? ` · to ${facById.get(i.hospitalId)?.name ?? i.hospitalId} in ${fmtDuration(left)}` : '')}
                           </div>
+                          {i.plannedHospitalId && (i.status === 'EN_ROUTE' || i.status === 'ON_SCENE') && (
+                            <div className="muted">Leg 2 (planned): {facById.get(i.plannedHospitalId)?.name ?? i.plannedHospitalId}{facById.get(i.plannedHospitalId)?.major ? ' (major)' : ''} · {fmtDuration(i.plannedHospitalLegS)}</div>
+                          )}
                         </li>
                       );
                     })}
