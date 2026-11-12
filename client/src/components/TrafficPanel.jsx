@@ -18,8 +18,11 @@ export default function TrafficPanel({ status, calls, showColours, onShowColours
   const tomtom = calls?.tomtom;
   const refresh = async () => {
     setMsg(null);
+    const left = tomtom ? tomtom.cap - tomtom.calls : 200;
+    if (!window.confirm(`Fetch live traffic from TomTom now? This uses ${status.samples} of today's ${left} remaining calls.`)) return;
     try {
-      const r = await emitAck('traffic:refresh', {}, 120000);
+      let r = await emitAck('traffic:refresh', {}, 120000);
+      if (r.reason === 'TOO_SOON' && window.confirm(`${r.message} Refresh anyway?`)) r = await emitAck('traffic:refresh', { force: true }, 120000);
       setMsg(r.ok
         ? { text: `Fetched ${r.fetched} of ${status.samples} sample points${r.failed ? `, ${r.failed} failed` : ''}${r.capReached ? ' (daily cap reached part-way)' : ''}; ${r.matchedRoads} roads updated.` }
         : { bad: true, text: REASONS[r.reason] ?? r.message ?? r.reason });
@@ -57,7 +60,7 @@ export default function TrafficPanel({ status, calls, showColours, onShowColours
       {msg && <p className={msg.bad ? 'alert' : 'okmsg'}>{msg.text}</p>}
       <p className="note">
         TomTom calls today: <b>{tomtom?.calls ?? 0}/{tomtom?.cap ?? 200}</b> (one refresh = {status.samples} calls; the cap is enforced on the server).
-        Factor = free-flow speed ÷ current speed, clamped to 1–4 so A* stays exact. Refreshes run only while a dispatcher is connected, at most every 15 min, plus this button.
+        Factor = free-flow speed ÷ current speed, clamped to 1–4 so A* stays exact. TomTom is only called when you press this button (never automatically).
       </p>
     </section>
   );

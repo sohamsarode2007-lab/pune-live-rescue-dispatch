@@ -30,6 +30,8 @@ import { NetworkService } from './services/networkService.js';
 import { FloodService } from './services/floodService.js';
 import { CrowdReports } from './services/crowdReports.js';
 import { ELEVATION_FILE, FLOOD_CURRENT_FILE, FLOOD_HISTORY_FILE, RIVER_FILE } from './config.js';
+import { PlanningService } from './services/planningService.js';
+import { ScenarioRunner, monsoonScenario, simStep } from './services/scenario.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -70,6 +72,26 @@ const flood = new FloodService({
 const crowd = new CrowdReports({ store });
 const floodChanged = () => io.to('dispatch').emit('flood:updated', flood.status());
 console.log(`Flood model: ${flood.status().available ? 'ready' : 'unavailable (run scripts/build_elevation.py)'}`);
+// Phase 6 planning: coverage isochrones, station placement (k-center), evacuation (Edmonds-Karp).
+const planning = new PlanningService({ store, flood });
+let geometryJson = null;
+let coverageTimer = null;
+const coverageChanged = () => {
+  clearTimeout(coverageTimer);
+  coverageTimer = setTimeout(() => io.to('dispatch').emit('coverage:updated', planning.coverageSummary(dispatch.now)), 250);
+};
+setTimeout(async () => {
+  const p = await planning.computePlacement();
+  console.log(`Station placement (k-center) ready in ${p.ms} ms; normal and 10 m flood suggestions ${p.sameSuggestion ? 'are the same' : 'differ'}`);
+  const e = await planning.computeEvacuation();
+  if (e) console.log(`Evacuation (Edmonds-Karp): normal ${e.normal.pct}% vs 10 m flood ${e.flood.pct}% of ${e.normal.totalPeople} people`);
+  io.to('dispatch').emit('planning:updated', { placement: Boolean(p), evacuation: Boolean(e) });
+}, 300);
+
+// One-click demo scenario (deterministic: fixed sim steps, seeded calls).
+const runner = new ScenarioRunner();
+const MONSOON = monsoonScenario(flood.riverPoints, DEMO_BBOX, network.crossingDefs);
+
 flood.refreshGlofas().then((g) => {
   console.log(g.ok ? `GloFAS: ${g.status} (peak ${g.peak.m3s} m3/s; p90 ${g.p90?.toFixed(1)}, p99 ${g.p99?.toFixed(1)}) -> initial level ${g.suggestedLevel} m` : `GloFAS: ${g.error}`);
   flood.applyGlofasSuggestion(dispatch.now);           // PLAN: GloFAS sets the initial slider level
@@ -145,9 +167,23 @@ app.get('/api/roads/:id', (req, res) => {
   info ? res.json(info) : res.status(404).json({ error: 'Unknown road' });
 });
 
-const hazardChanged = () => { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); };
+const hazardChanged = () => { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); };
 // Every closure path (manual, crossing, flood, crowd) ends here: reroute affected units, then broadcast.
 const roadsClosed = (ids) => { if (ids.length) dispatch.roadsBlocked(ids); hazardChanged(); };
+
+app.get('/api/coverage', (req, res) => {
+  const kind = req.query.kind === 'ambulance' ? 'ambulance' : 'fire';
+  res.json({ kind, ...planning.coverage(kind), summary: planning.coverageSummary() });
+});
+// (not under /api/roads/: that prefix is taken by /api/roads/:id)
+app.get('/api/geometry/roads', (_req, res) => {
+  geometryJson ??= JSON.stringify(planning.geometry());
+  res.type('application/json').send(geometryJson);
+});
+app.get('/api/placement', (_req, res) => res.json(planning.placementResult ?? { computing: true }));
+app.get('/api/evacuation', (_req, res) => res.json(planning.evacuationResult ?? { computing: true }));
+app.get('/api/shelters', (_req, res) => res.json({ meta: store.facilitiesMeta?.shelters ?? null, shelters: store.facilities.filter((f) => f.kind === 'shelter') }));
+app.get('/api/scenario', (_req, res) => res.json({ definition: MONSOON, status: runner.status() }));
 
 app.get('/api/flood', (_req, res) => res.json({ status: flood.status(), points: flood.floodedPoints(dispatch.now) }));
 app.get('/api/crowd', (_req, res) => res.json(crowd.pending()));
@@ -196,14 +232,16 @@ io.on('connection', (socket) => {
     socket.emit('network:updated', network.summary());
     socket.emit('flood:updated', flood.status());
     socket.emit('crowd:updated', crowd.pending());
-    // PLAN: no timer; refresh only while a dispatcher is connected, at most every 15 minutes.
-    traffic.maybeAutoRefresh()?.then(() => io.to('dispatch').emit('traffic:updated', traffic.status()));
+    socket.emit('coverage:updated', planning.coverageSummary());
+    socket.emit('scenario:updated', runner.status());
+    // TomTom is never called automatically (not on startup, not on connect): only the "Refresh traffic"
+    // button below spends quota.
   });
 
-  socket.on('traffic:refresh', async (_msg, ack = () => {}) => {
+  socket.on('traffic:refresh', async (msg, ack = () => {}) => {
     if (!socket.rooms.has('dispatch')) return ack({ ok: false, reason: 'NOT_DISPATCHER' });
     io.to('dispatch').emit('traffic:updated', { ...traffic.status(), refreshing: true });
-    const r = await traffic.refresh({ reason: 'manual' });
+    const r = await traffic.refresh({ reason: 'manual', force: msg?.force === true });
     io.to('dispatch').emit('traffic:updated', traffic.status());
     ack(r);
   });
@@ -287,22 +325,47 @@ io.on('connection', (socket) => {
 
   socket.on('sim:reset', () => {
     if (!socket.rooms.has('dispatch')) return;
+    runner.stop();
     dispatch.reset();
-    if (flood.level > 0) flood.setLevel(flood.level, 0, flood.levelSource);   // sim clock restarted at 0
+    flood.restartAt(0);                                // sim clock restarted at 0
+    planning.clearHistory();
     io.to('dispatch').emit('state:init', dispatch.snapshot());
+    io.to('dispatch').emit('scenario:updated', runner.status());
     floodChanged();
+  });
+
+  // One click: reset, free-flow, 10x, Hungarian, flood 0 -> 10 m, 12 seeded SOS calls on both banks.
+  socket.on('scenario:start', (msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false });
+    if (msg?.id !== 'monsoon') return ack({ ok: false, error: 'Unknown scenario' });
+    if (!flood.model) return ack({ ok: false, error: 'Flood model unavailable (run scripts/build_elevation.py)' });
+    dispatch.reset();
+    store.resetRoads();
+    flood.reset();
+    crowd.clear();
+    planning.clearHistory();
+    if (traffic.mode !== MONSOON.trafficMode) traffic.setMode(MONSOON.trafficMode);
+    dispatch.setSpeed(MONSOON.speed);
+    dispatch.setMode(MONSOON.dispatchMode);
+    runner.start(MONSOON, dispatch.now);
+    io.to('dispatch').emit('state:init', dispatch.snapshot());
+    io.to('dispatch').emit('sim:speed', { speed: dispatch.clock.speed });
+    io.to('dispatch').emit('dispatch:mode', { mode: dispatch.mode });
+    io.to('dispatch').emit('scenario:updated', runner.status());
+    hazardChanged();
+    floodChanged();
+    ack({ ok: true, status: runner.status() });
   });
 });
 
-let last = Date.now();
+// Simulation loop. The sim clock advances by a FIXED step per tick (TICK_MS x speed), not by measured wall
+// time, so a scenario always plays out identically (deterministic); wall-clock jitter only changes pace.
 let lastFloodKey = '';
 setInterval(() => {
-  const nowMs = Date.now();
-  dispatch.tick(nowMs - last);
-  last = nowMs;
-  // The flood spreads with simulated time: apply due road closures, reroute units, refresh analyses.
-  const ch = flood.tick(dispatch.now);
-  if (ch.blocked.length || ch.highRisk.length || ch.reopened.length) roadsClosed(ch.blocked);
+  const { roadsChanged, scenarioChanged } = simStep({ dispatch, flood, runner }, TICK_MS);
+  // (reroutes caused by changes.blocked were already broadcast by the dispatch service)
+  if (roadsChanged) { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); }
+  if (scenarioChanged) io.to('dispatch').emit('scenario:updated', runner.status());
   const key = `${flood.level}|${flood.floodedNow}|${flood.applied.size}`;
   if (key !== lastFloodKey) { lastFloodKey = key; floodChanged(); }
 }, TICK_MS);

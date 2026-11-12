@@ -3,12 +3,15 @@ import { MapContainer, Polyline, Marker, Popup, CircleMarker } from 'react-leafl
 import { AreaBox, BaseTiles, ClickHandler, MapFrame, divIcon, UNIT_LABEL, UNIT_LETTER, TYPE_ICON } from './mapParts.jsx';
 import { trafficColor } from './TrafficPanel.jsx';
 import NetworkLayer from './NetworkLayer.jsx';
+import { CoverageLayer, PlacementMarkers, EvacuationLayer } from './PlanningLayer.jsx';
 
 const KIND_STYLE = {
   hospital: { cls: 'hospital', label: 'H' },
   fire_station: { cls: 'fire', label: 'F' },
   police: { cls: 'police', label: 'P' },
+  shelter: { cls: 'shelter', label: 'S' },
 };
+const SHELTER_TYPE = { school: 'school', college: 'college', community_hall: 'community hall', municipal_hall: 'municipal hall' };
 
 function fleetText(units) {
   const counts = {};
@@ -20,7 +23,7 @@ function fleetText(units) {
 export default function RescueMap({
   bbox, facilities, fleet, layers, origin, destination, route, closedRoads, onMapClick, onReopenRoad, onPickOrigin,
   incidents = [], liveUnits = [], showIdle = false, selectedIncidentId = null, onSelectIncident, beds = {}, cursor = '',
-  trafficRoads = [], compare = null, network = null, floodPoints = [], crowdRoads = [], reroutes = [],
+  trafficRoads = [], compare = null, network = null, floodPoints = [], crowdRoads = [], reroutes = [], planning = null,
 }) {
   const fleetByStation = useMemo(() => {
     const m = new Map();
@@ -47,6 +50,10 @@ export default function RescueMap({
               </Popup>
             </Polyline>
           ))}
+
+          {planning?.bands && <CoverageLayer geometry={planning.geometry} bands={planning.bands} />}
+          {planning?.evac && <EvacuationLayer result={planning.evac} />}
+          {planning?.placement && <PlacementMarkers placement={planning.placement} />}
 
           {floodPoints.map((p, i) => (
             <CircleMarker key={`fl-${i}`} center={p} radius={7} interactive={false}
@@ -110,6 +117,7 @@ export default function RescueMap({
                   <b>{f.name}</b>{f.major && <span className="tag-major">major</span>}<br />
                   <span className="muted">{f.id} · {f.kind.replace('_', ' ')} · OSM {f.osm}</span>
                   {f.kind === 'hospital' && <><br />Beds free: <b>{beds[f.id] ?? f.bedsFree}</b> <i>(simulated)</i></>}
+                  {f.kind === 'shelter' && <><br />Evacuation shelter ({SHELTER_TYPE[f.shelterType]}) · capacity <b>{f.capacity}</b> people <i>(simulated)</i></>}
                   {f.majorReasons && <><br /><span className="muted">Major because: {f.majorReasons.join(', ')}</span></>}
                   {units.length > 0 && (
                     <>

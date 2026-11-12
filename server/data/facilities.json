@@ -28,7 +28,28 @@
    "fire_station": 5,
    "police": 30,
    "majorHospitals": 12,
-   "units": 57
+   "units": 57,
+   "shelter": 254
+  },
+  "shelters": {
+   "source": "OpenStreetMap contributors (ODbL): amenity=school|college|university|community_centre|townhall",
+   "why": "OSM rarely tags flood shelters in India; Pune moves flood-affected families into schools and municipal halls.",
+   "capacityPerType": {
+    "school": 300,
+    "college": 500,
+    "community_hall": 150,
+    "municipal_hall": 200
+   },
+   "simulatedNote": "Shelter capacities are SIMULATED by type, not real data.",
+   "rawRecords": 263,
+   "afterMerge": 254,
+   "byType": {
+    "school": 135,
+    "college": 96,
+    "community_hall": 21,
+    "municipal_hall": 2
+   },
+   "totalCapacity": 92050
   }
  },
  "facilities": [
@@ -3375,6 +3396,3816 @@
    "lng": 73.859159,
    "nodeId": "8036470949",
    "snapDistanceM": 34.3
+  },
+  {
+   "id": "S1",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "AISSMS",
+   "osm": "way/331500152",
+   "lat": 18.531039,
+   "lng": 73.865757,
+   "nodeId": "10089606904",
+   "snapDistanceM": 104.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "AISSMS College of Hotel Management",
+   "osm": "way/170934920",
+   "lat": 18.526896,
+   "lng": 73.85432,
+   "nodeId": "13893070339",
+   "snapDistanceM": 57.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "AISSMS IOIT",
+   "osm": "node/14219150001",
+   "lat": 18.531521,
+   "lng": 73.867135,
+   "nodeId": "10089606904",
+   "snapDistanceM": 200.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S4",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Abasaheb Garware College",
+   "osm": "way/207872390",
+   "lat": 18.511693,
+   "lng": 73.838768,
+   "nodeId": "2085669840",
+   "snapDistanceM": 79.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S5",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Abhinav Kala Mahavidyalaya",
+   "osm": "way/244401342",
+   "lat": 18.505455,
+   "lng": 73.853232,
+   "nodeId": "9158988152",
+   "snapDistanceM": 24.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S6",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Agriculture College",
+   "osm": "way/281844136",
+   "lat": 18.53797,
+   "lng": 73.84258,
+   "nodeId": "5424210219",
+   "snapDistanceM": 319.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S7",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Armament Research and Development Establishment",
+   "osm": "way/91713334",
+   "lat": 18.535651,
+   "lng": 73.800604,
+   "nodeId": "1065059043",
+   "snapDistanceM": 519.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S8",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Ashtang Ayurved Mahavidyalaya",
+   "osm": "way/256157756",
+   "lat": 18.506287,
+   "lng": 73.850975,
+   "nodeId": "2270799499",
+   "snapDistanceM": 35.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S9",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Azam Campus",
+   "osm": "way/216582071",
+   "lat": 18.504288,
+   "lng": 73.876466,
+   "nodeId": "4703358625",
+   "snapDistanceM": 176.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S10",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "BJ Medical College",
+   "osm": "node/772572006",
+   "lat": 18.526834,
+   "lng": 73.871916,
+   "nodeId": "8021160081",
+   "snapDistanceM": 145.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S11",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "BMCC College Ground",
+   "osm": "way/1478876502",
+   "lat": 18.520396,
+   "lng": 73.835338,
+   "nodeId": "2280406712",
+   "snapDistanceM": 143.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S12",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Bhandarkar Oriental Research Institute",
+   "osm": "way/204906699",
+   "lat": 18.519346,
+   "lng": 73.829179,
+   "nodeId": "6202055642",
+   "snapDistanceM": 122.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S13",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Bharati Vidyapeeth",
+   "osm": "way/274021268",
+   "lat": 18.513617,
+   "lng": 73.819834,
+   "nodeId": "4704786398",
+   "snapDistanceM": 115.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S14",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Biotechnology Department, Fergusson College",
+   "osm": "node/12976993801",
+   "lat": 18.526422,
+   "lng": 73.840238,
+   "nodeId": "2365553044",
+   "snapDistanceM": 146.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S15",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Botany Department",
+   "osm": "node/11375788759",
+   "lat": 18.548777,
+   "lng": 73.824399,
+   "nodeId": "670336134",
+   "snapDistanceM": 365.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S16",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "C-DAC",
+   "osm": "node/11375788762",
+   "lat": 18.551739,
+   "lng": 73.823801,
+   "nodeId": "10241885468",
+   "snapDistanceM": 514.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S17",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "COEP TU South Campus",
+   "osm": "way/279548180",
+   "lat": 18.529306,
+   "lng": 73.856296,
+   "nodeId": "3238256066",
+   "snapDistanceM": 105.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S18",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Coep College",
+   "osm": "node/13650015705",
+   "lat": 18.530337,
+   "lng": 73.856799,
+   "nodeId": "3238256066",
+   "snapDistanceM": 126.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S19",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Coep ground",
+   "osm": "node/13649952150",
+   "lat": 18.528496,
+   "lng": 73.85324,
+   "nodeId": "2061304051",
+   "snapDistanceM": 94.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S20",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "College Of Engineering Pune",
+   "osm": "node/13394413446",
+   "lat": 18.53051,
+   "lng": 73.857938,
+   "nodeId": "10224923460",
+   "snapDistanceM": 173.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S21",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "College of Agricultural Banking",
+   "osm": "way/159301385",
+   "lat": 18.537245,
+   "lng": 73.836973,
+   "nodeId": "4342574172",
+   "snapDistanceM": 109.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S22",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "College of Engineering, Pune",
+   "osm": "relation/3718263",
+   "lat": 18.530613,
+   "lng": 73.856488,
+   "nodeId": "3238256066",
+   "snapDistanceM": 109.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S23",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Deccan College",
+   "osm": "relation/4237127",
+   "lat": 18.548918,
+   "lng": 73.874773,
+   "nodeId": "2940513883",
+   "snapDistanceM": 269.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S24",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Deccan College Ground",
+   "osm": "node/13629181690",
+   "lat": 18.547588,
+   "lng": 73.8759,
+   "nodeId": "10227980017",
+   "snapDistanceM": 190.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S25",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Deceen College Ground",
+   "osm": "node/13629198407",
+   "lat": 18.547588,
+   "lng": 73.8759,
+   "nodeId": "10227980017",
+   "snapDistanceM": 190.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S26",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Chemistry",
+   "osm": "node/11375788758",
+   "lat": 18.552075,
+   "lng": 73.824166,
+   "nodeId": "10241885468",
+   "snapDistanceM": 532.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S27",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Commerce",
+   "osm": "node/11375788764",
+   "lat": 18.548072,
+   "lng": 73.82772,
+   "nodeId": "670336134",
+   "snapDistanceM": 333.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S28",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Computer Science",
+   "osm": "node/11375788736",
+   "lat": 18.552847,
+   "lng": 73.822159,
+   "nodeId": "10241885468",
+   "snapDistanceM": 304.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S29",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Electronic sciences",
+   "osm": "node/11375798504",
+   "lat": 18.551681,
+   "lng": 73.822638,
+   "nodeId": "10241885468",
+   "snapDistanceM": 416.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S30",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Geography",
+   "osm": "node/11375798469",
+   "lat": 18.548057,
+   "lng": 73.827321,
+   "nodeId": "670336134",
+   "snapDistanceM": 307.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S31",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Geology",
+   "osm": "node/11375788765",
+   "lat": 18.548399,
+   "lng": 73.82759,
+   "nodeId": "670336134",
+   "snapDistanceM": 354.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S32",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Law",
+   "osm": "node/10172993857",
+   "lat": 18.546975,
+   "lng": 73.828941,
+   "nodeId": "670336134",
+   "snapDistanceM": 365.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S33",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Mathematics",
+   "osm": "node/11375788766",
+   "lat": 18.549029,
+   "lng": 73.827411,
+   "nodeId": "670336134",
+   "snapDistanceM": 406.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S34",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Media & Communication Studies",
+   "osm": "node/11375788747",
+   "lat": 18.553991,
+   "lng": 73.822509,
+   "nodeId": "10241885468",
+   "snapDistanceM": 310.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S35",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Physics",
+   "osm": "node/11375788763",
+   "lat": 18.551283,
+   "lng": 73.823679,
+   "nodeId": "10241885468",
+   "snapDistanceM": 531.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S36",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Politics and Public Administration",
+   "osm": "node/10172993843",
+   "lat": 18.551715,
+   "lng": 73.825808,
+   "nodeId": "10241901768",
+   "snapDistanceM": 612.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S37",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Scientific computing, modeling and simulations",
+   "osm": "node/11375788767",
+   "lat": 18.548591,
+   "lng": 73.829268,
+   "nodeId": "670336134",
+   "snapDistanceM": 489.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S38",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Sports",
+   "osm": "node/11375798502",
+   "lat": 18.558525,
+   "lng": 73.82561,
+   "nodeId": "10801390661",
+   "snapDistanceM": 579.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S39",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of Technology",
+   "osm": "node/11375798473",
+   "lat": 18.556917,
+   "lng": 73.827732,
+   "nodeId": "10801390661",
+   "snapDistanceM": 295.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S40",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of education",
+   "osm": "node/11375798476",
+   "lat": 18.55735,
+   "lng": 73.827411,
+   "nodeId": "10801390661",
+   "snapDistanceM": 349.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S41",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Department of physical education",
+   "osm": "node/11375798475",
+   "lat": 18.557149,
+   "lng": 73.827356,
+   "nodeId": "10801390661",
+   "snapDistanceM": 342.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S42",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Dhondumama Sathe Homoeopathic Medical College",
+   "osm": "way/251878753",
+   "lat": 18.509763,
+   "lng": 73.836558,
+   "nodeId": "2289023716",
+   "snapDistanceM": 60.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S43",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "EVS Department",
+   "osm": "node/13875722187",
+   "lat": 18.526709,
+   "lng": 73.840111,
+   "nodeId": "2365553044",
+   "snapDistanceM": 120.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S44",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Engineering College Ground",
+   "osm": "node/13629201421",
+   "lat": 18.527987,
+   "lng": 73.853293,
+   "nodeId": "1838721956",
+   "snapDistanceM": 138.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S45",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "English, hindi, marathi Department",
+   "osm": "node/11375798470",
+   "lat": 18.550458,
+   "lng": 73.826932,
+   "nodeId": "670336134",
+   "snapDistanceM": 539.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S46",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Fergusson College",
+   "osm": "way/208180365",
+   "lat": 18.524069,
+   "lng": 73.838834,
+   "nodeId": "10241762861",
+   "snapDistanceM": 147.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S47",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Film and Television Institute of India",
+   "osm": "way/197313929",
+   "lat": 18.51326,
+   "lng": 73.826542,
+   "nodeId": "4704786324",
+   "snapDistanceM": 3.7,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S48",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Gokhale Institute of Politics & Economics",
+   "osm": "node/10699077523",
+   "lat": 18.520869,
+   "lng": 73.832771,
+   "nodeId": "763543037",
+   "snapDistanceM": 79.7,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S49",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Gokhale Institute of Politics and Economics",
+   "osm": "way/208180366",
+   "lat": 18.520608,
+   "lng": 73.836952,
+   "nodeId": "11287750774",
+   "snapDistanceM": 199.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S50",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Government Polytechnic Pune",
+   "osm": "way/281883250",
+   "lat": 18.538081,
+   "lng": 73.832433,
+   "nodeId": "12553620789",
+   "snapDistanceM": 159.7,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S51",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Government Urdu Teachers College (For Women)",
+   "osm": "node/12387348953",
+   "lat": 18.508164,
+   "lng": 73.874341,
+   "nodeId": "678823719",
+   "snapDistanceM": 38.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S52",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Guest house",
+   "osm": "node/11375798474",
+   "lat": 18.556752,
+   "lng": 73.828336,
+   "nodeId": "10801390661",
+   "snapDistanceM": 231.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S53",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "ILS Law College",
+   "osm": "way/53273671",
+   "lat": 18.51714,
+   "lng": 73.827946,
+   "nodeId": "10241567895",
+   "snapDistanceM": 161.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S54",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "IT cell",
+   "osm": "node/11375788768",
+   "lat": 18.548408,
+   "lng": 73.828972,
+   "nodeId": "670336134",
+   "snapDistanceM": 452.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S55",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Indian Institute of Science Education and Research",
+   "osm": "way/268605117",
+   "lat": 18.5454,
+   "lng": 73.807152,
+   "nodeId": "11143226565",
+   "snapDistanceM": 269.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S56",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Indian Institute of Tropical Meteorology (IITM)",
+   "osm": "way/86919000",
+   "lat": 18.536779,
+   "lng": 73.805275,
+   "nodeId": "1065059025",
+   "snapDistanceM": 120.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S57",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Indian Railways Institute of Civil Engineering",
+   "osm": "way/106483319",
+   "lat": 18.528697,
+   "lng": 73.875539,
+   "nodeId": "6925879402",
+   "snapDistanceM": 80.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S58",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Industrial Training Institute, Aundh",
+   "osm": "way/210576101",
+   "lat": 18.558945,
+   "lng": 73.811506,
+   "nodeId": "6240799094",
+   "snapDistanceM": 298.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S59",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Institute of Management Development and Research",
+   "osm": "way/208180367",
+   "lat": 18.520607,
+   "lng": 73.838157,
+   "nodeId": "11287750774",
+   "snapDistanceM": 80.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S60",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Inter University Centre for Astronomy and Astrophysics",
+   "osm": "node/11375798503",
+   "lat": 18.55944,
+   "lng": 73.82561,
+   "nodeId": "4445118052",
+   "snapDistanceM": 584.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S61",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Interdisciplinary School of science",
+   "osm": "node/11375798505",
+   "lat": 18.55682,
+   "lng": 73.826303,
+   "nodeId": "10801390661",
+   "snapDistanceM": 429.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S62",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "International Students Cells",
+   "osm": "node/11375788749",
+   "lat": 18.555621,
+   "lng": 73.82371,
+   "nodeId": "10241885468",
+   "snapDistanceM": 471.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S63",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "MIT Playground",
+   "osm": "way/235084901",
+   "lat": 18.518801,
+   "lng": 73.816235,
+   "nodeId": "2852763565",
+   "snapDistanceM": 72.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S64",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "MIT School of Business",
+   "osm": "way/295821182",
+   "lat": 18.515955,
+   "lng": 73.815834,
+   "nodeId": "2852763539",
+   "snapDistanceM": 57.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S65",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "MIT School of Management",
+   "osm": "way/273755372",
+   "lat": 18.515955,
+   "lng": 73.815012,
+   "nodeId": "2852763539",
+   "snapDistanceM": 47.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S66",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Maharashtra Institute of Technology World Peace University",
+   "osm": "way/218691367",
+   "lat": 18.518202,
+   "lng": 73.815271,
+   "nodeId": "2192941340",
+   "snapDistanceM": 150.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S67",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Maharashtra State Institute of Hotel Management and Catering Technology",
+   "osm": "way/331478725",
+   "lat": 18.531161,
+   "lng": 73.832098,
+   "nodeId": "245647278",
+   "snapDistanceM": 65.7,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S68",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Maitri Bulding",
+   "osm": "way/359916770",
+   "lat": 18.519456,
+   "lng": 73.815925,
+   "nodeId": "2852763565",
+   "snapDistanceM": 143.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S69",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Marathwada Mitramandal College of Commerce",
+   "osm": "way/208180368",
+   "lat": 18.520502,
+   "lng": 73.838819,
+   "nodeId": "11287750774",
+   "snapDistanceM": 33.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S70",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Microbiology Department",
+   "osm": "node/11375798471",
+   "lat": 18.546218,
+   "lng": 73.829784,
+   "nodeId": "13105492123",
+   "snapDistanceM": 382.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S71",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Modern College",
+   "osm": "way/380417661",
+   "lat": 18.54133,
+   "lng": 73.827892,
+   "nodeId": "6265461833",
+   "snapDistanceM": 48.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S72",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Modern College of Engineering",
+   "osm": "way/91712361",
+   "lat": 18.525506,
+   "lng": 73.846433,
+   "nodeId": "1363428061",
+   "snapDistanceM": 116.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S73",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "N WADIA Science Building",
+   "osm": "node/13640028199",
+   "lat": 18.532991,
+   "lng": 73.879703,
+   "nodeId": "10228089668",
+   "snapDistanceM": 90.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S74",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "N Wadia Arts Building",
+   "osm": "node/13640037168",
+   "lat": 18.532705,
+   "lng": 73.879717,
+   "nodeId": "10228089668",
+   "snapDistanceM": 104.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S75",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "NOWROSJEE WADIA COLLEGE",
+   "osm": "node/10173007828",
+   "lat": 18.532767,
+   "lng": 73.879795,
+   "nodeId": "10228089668",
+   "snapDistanceM": 108.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S76",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Poona College of Pharmacy",
+   "osm": "node/10173007831",
+   "lat": 18.512985,
+   "lng": 73.820485,
+   "nodeId": "2192941173",
+   "snapDistanceM": 59.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S77",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Pune University MBA(PUMBA)",
+   "osm": "node/11375798472",
+   "lat": 18.547166,
+   "lng": 73.829922,
+   "nodeId": "13105492123",
+   "snapDistanceM": 455.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S78",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Rajiv Gandhi Academy of E-Learning",
+   "osm": "way/342557169",
+   "lat": 18.492142,
+   "lng": 73.853813,
+   "nodeId": "10223490714",
+   "snapDistanceM": 45.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S79",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "S.B.B alias Appasaheb Jedhe Arts, Commerce & Science College",
+   "osm": "node/12005356770",
+   "lat": 18.506909,
+   "lng": 73.857189,
+   "nodeId": "2162277857",
+   "snapDistanceM": 27.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S80",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "SCAC",
+   "osm": "node/14168842428",
+   "lat": 18.522321,
+   "lng": 73.829842,
+   "nodeId": "2087084446",
+   "snapDistanceM": 235.6,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S81",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "SNDT Women's University",
+   "osm": "way/208588882",
+   "lat": 18.50887,
+   "lng": 73.827408,
+   "nodeId": "10023337563",
+   "snapDistanceM": 124.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S82",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "SSPP College",
+   "osm": "way/273752898",
+   "lat": 18.517071,
+   "lng": 73.815819,
+   "nodeId": "2192941308",
+   "snapDistanceM": 67.2,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S83",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Savitribai Phule Pune University",
+   "osm": "way/995138926",
+   "lat": 18.551235,
+   "lng": 73.826107,
+   "nodeId": "10241901768",
+   "snapDistanceM": 611.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S84",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "School of Open Learning, SPPU",
+   "osm": "node/11375798499",
+   "lat": 18.556955,
+   "lng": 73.82631,
+   "nodeId": "10801390661",
+   "snapDistanceM": 434.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S85",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Shahu College",
+   "osm": "way/218193801",
+   "lat": 18.491734,
+   "lng": 73.844624,
+   "nodeId": "10836934538",
+   "snapDistanceM": 107.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S86",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Symbiosis College of Arts & Commerce",
+   "osm": "way/331478728",
+   "lat": 18.522466,
+   "lng": 73.829843,
+   "nodeId": "10241581572",
+   "snapDistanceM": 242.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S87",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Symbiosis Institute of Management Studies (SIMS)",
+   "osm": "way/235115299",
+   "lat": 18.548552,
+   "lng": 73.839437,
+   "nodeId": "2383922369",
+   "snapDistanceM": 7.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S88",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Tata Assembly Hall",
+   "osm": "node/13640028200",
+   "lat": 18.532991,
+   "lng": 73.879703,
+   "nodeId": "10228089668",
+   "snapDistanceM": 90.3,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S89",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Tilak Ayurveda Mahavidyalay",
+   "osm": "way/296193749",
+   "lat": 18.518369,
+   "lng": 73.862566,
+   "nodeId": "633121789",
+   "snapDistanceM": 60.1,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S90",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Tilak Maharashtra Vidyapeeth",
+   "osm": "way/213830169",
+   "lat": 18.493463,
+   "lng": 73.86493,
+   "nodeId": "10801336021",
+   "snapDistanceM": 60.5,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S91",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "University Press",
+   "osm": "node/10172993858",
+   "lat": 18.547734,
+   "lng": 73.828358,
+   "nodeId": "670336134",
+   "snapDistanceM": 354.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S92",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "V.M. Gany Sports Complex & Pavilion",
+   "osm": "node/3991591624",
+   "lat": 18.504507,
+   "lng": 73.876337,
+   "nodeId": "4703358625",
+   "snapDistanceM": 156.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S93",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Vyas Building",
+   "osm": "way/1570586160",
+   "lat": 18.520078,
+   "lng": 73.817484,
+   "nodeId": "2852763564",
+   "snapDistanceM": 176.8,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S94",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "Zoology Department",
+   "osm": "node/11375788760",
+   "lat": 18.549368,
+   "lng": 73.823783,
+   "nodeId": "10232706102",
+   "snapDistanceM": 444.0,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S95",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "department of psychology",
+   "osm": "node/11375798477",
+   "lat": 18.556667,
+   "lng": 73.827399,
+   "nodeId": "10801390661",
+   "snapDistanceM": 315.4,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S96",
+   "kind": "shelter",
+   "shelterType": "college",
+   "name": "College (S96)",
+   "osm": "way/202296451",
+   "lat": 18.517854,
+   "lng": 73.84095,
+   "nodeId": "1534475772",
+   "snapDistanceM": 31.9,
+   "capacity": 500,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S97",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Acharya Atre Sabhagruha",
+   "osm": "way/290528069",
+   "lat": 18.505698,
+   "lng": 73.853893,
+   "nodeId": "2162277822",
+   "snapDistanceM": 18.6,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S98",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Agricultural collage EXHIBITION GROUND",
+   "osm": "node/4547352089",
+   "lat": 18.544036,
+   "lng": 73.841221,
+   "nodeId": "10241885960",
+   "snapDistanceM": 91.0,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S99",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Ambar Hall",
+   "osm": "way/250116178",
+   "lat": 18.503408,
+   "lng": 73.81915,
+   "nodeId": "2192940907",
+   "snapDistanceM": 48.6,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S100",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Anand Magal Karyalaya",
+   "osm": "node/1392873184",
+   "lat": 18.50103,
+   "lng": 73.855182,
+   "nodeId": "245646537",
+   "snapDistanceM": 28.9,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S101",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Bharatkunj Society",
+   "osm": "way/448216788",
+   "lat": 18.499241,
+   "lng": 73.826648,
+   "nodeId": "2265579984",
+   "snapDistanceM": 22.3,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S102",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Boat Club Road",
+   "osm": "node/13629477268",
+   "lat": 18.539605,
+   "lng": 73.877704,
+   "nodeId": "6262965116",
+   "snapDistanceM": 38.9,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S103",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "CSIR - N C L Community Center",
+   "osm": "way/1432747069",
+   "lat": 18.540423,
+   "lng": 73.816454,
+   "nodeId": "10801425072",
+   "snapDistanceM": 115.7,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S104",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Eknath Mangal Karyalay",
+   "osm": "node/10968771876",
+   "lat": 18.517891,
+   "lng": 73.858829,
+   "nodeId": "2266620613",
+   "snapDistanceM": 22.7,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S105",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Gananjay Sabhagruha",
+   "osm": "way/197909153",
+   "lat": 18.499533,
+   "lng": 73.804502,
+   "nodeId": "2081066752",
+   "snapDistanceM": 16.8,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S106",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Hari Ganga ClubHouse",
+   "osm": "way/1348192539",
+   "lat": 18.555304,
+   "lng": 73.879038,
+   "nodeId": "10242096380",
+   "snapDistanceM": 116.6,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S107",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Indradhanushya Environment Centre",
+   "osm": "way/852697721",
+   "lat": 18.504477,
+   "lng": 73.839455,
+   "nodeId": "2162277713",
+   "snapDistanceM": 33.4,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S108",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Indraprasta Karyalay",
+   "osm": "node/1747611958",
+   "lat": 18.538729,
+   "lng": 73.830199,
+   "nodeId": "2087084505",
+   "snapDistanceM": 39.3,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S109",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Manohar Mangal Karyalay",
+   "osm": "way/274027021",
+   "lat": 18.505118,
+   "lng": 73.831377,
+   "nodeId": "2265580153",
+   "snapDistanceM": 47.9,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S110",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Pittie Hall",
+   "osm": "way/249174577",
+   "lat": 18.521936,
+   "lng": 73.834722,
+   "nodeId": "7153874699",
+   "snapDistanceM": 134.6,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S111",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Rambaug Vikas Mandal",
+   "osm": "way/656975441",
+   "lat": 18.511168,
+   "lng": 73.81558,
+   "nodeId": "1110374643",
+   "snapDistanceM": 13.2,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S112",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "SHB Social Foundation",
+   "osm": "node/14293078529",
+   "lat": 18.557638,
+   "lng": 73.804544,
+   "nodeId": "7120601413",
+   "snapDistanceM": 25.3,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S113",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Shree Mahalaxmi Sabhagruha",
+   "osm": "node/1892069373",
+   "lat": 18.495833,
+   "lng": 73.8516,
+   "nodeId": "4703405775",
+   "snapDistanceM": 47.7,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S114",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Swastishri Sabhagruha",
+   "osm": "node/4658294489",
+   "lat": 18.497046,
+   "lng": 73.824571,
+   "nodeId": "2194045970",
+   "snapDistanceM": 51.7,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S115",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Theosophical Society Poona Lodge",
+   "osm": "way/1476379438",
+   "lat": 18.51988,
+   "lng": 73.840085,
+   "nodeId": "834082714",
+   "snapDistanceM": 40.0,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S116",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Toastmasters Club of Pune-West",
+   "osm": "node/5810802097",
+   "lat": 18.502309,
+   "lng": 73.826831,
+   "nodeId": "2165021526",
+   "snapDistanceM": 39.3,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S117",
+   "kind": "shelter",
+   "shelterType": "community_hall",
+   "name": "Vishnukrupa",
+   "osm": "node/6244655383",
+   "lat": 18.519171,
+   "lng": 73.849913,
+   "nodeId": "672157422",
+   "snapDistanceM": 32.1,
+   "capacity": 150,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S118",
+   "kind": "shelter",
+   "shelterType": "municipal_hall",
+   "name": "Shiv Samartha Hall and Garden",
+   "osm": "node/3134939179",
+   "lat": 18.512589,
+   "lng": 73.813787,
+   "nodeId": "2192941177",
+   "snapDistanceM": 70.0,
+   "capacity": 200,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S119",
+   "kind": "shelter",
+   "shelterType": "municipal_hall",
+   "name": "Swapna Poorti Hall",
+   "osm": "node/3130906154",
+   "lat": 18.519485,
+   "lng": 73.816838,
+   "nodeId": "2852763565",
+   "snapDistanceM": 109.2,
+   "capacity": 200,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S120",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Aandra association primary school",
+   "osm": "node/10724927253",
+   "lat": 18.519259,
+   "lng": 73.84536,
+   "nodeId": "2266979817",
+   "snapDistanceM": 52.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S121",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Aaruni Vidhya Mandir School (Vidhyapeet School)",
+   "osm": "way/1030256746",
+   "lat": 18.548013,
+   "lng": 73.830081,
+   "nodeId": "4342574141",
+   "snapDistanceM": 517.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S122",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Acharya Vinoba Bhave Vidyalay",
+   "osm": "way/290034466",
+   "lat": 18.50856,
+   "lng": 73.865287,
+   "nodeId": "4340841807",
+   "snapDistanceM": 71.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S123",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Adarsh Vidyalay",
+   "osm": "way/380363652",
+   "lat": 18.510327,
+   "lng": 73.854852,
+   "nodeId": "678445495",
+   "snapDistanceM": 45.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S124",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Agarkar Madhyamik Vidyalay",
+   "osm": "way/380363653",
+   "lat": 18.520858,
+   "lng": 73.865206,
+   "nodeId": "2266620652",
+   "snapDistanceM": 56.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S125",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Ahilyadevi Girls' Highschool",
+   "osm": "way/217773603",
+   "lat": 18.518313,
+   "lng": 73.851398,
+   "nodeId": "2701228468",
+   "snapDistanceM": 49.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S126",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Aksharnandan",
+   "osm": "way/331532101",
+   "lat": 18.533471,
+   "lng": 73.8279,
+   "nodeId": "6978446257",
+   "snapDistanceM": 29.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S127",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "All Saints' High School",
+   "osm": "way/1272877055",
+   "lat": 18.558503,
+   "lng": 73.845925,
+   "nodeId": "2848506102",
+   "snapDistanceM": 56.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S128",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Anglo Urdu Boys High School",
+   "osm": "node/3991591625",
+   "lat": 18.505036,
+   "lng": 73.874985,
+   "nodeId": "678823290",
+   "snapDistanceM": 91.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S129",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Annabhau Sathe Shalagruh",
+   "osm": "way/282054946",
+   "lat": 18.513727,
+   "lng": 73.850551,
+   "nodeId": "678443373",
+   "snapDistanceM": 47.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S130",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Annasaheb Patil School",
+   "osm": "node/10574633157",
+   "lat": 18.506433,
+   "lng": 73.80289,
+   "nodeId": "11250854649",
+   "snapDistanceM": 16.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S131",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Anusayabai Khilare Shala",
+   "osm": "way/281844134",
+   "lat": 18.506665,
+   "lng": 73.833163,
+   "nodeId": "2162277841",
+   "snapDistanceM": 76.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S132",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Apte Prashala & Jn. College",
+   "osm": "way/217431353",
+   "lat": 18.518323,
+   "lng": 73.843341,
+   "nodeId": "2852763567",
+   "snapDistanceM": 60.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S133",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Army Public School Khadki",
+   "osm": "node/13974254801",
+   "lat": 18.549873,
+   "lng": 73.871188,
+   "nodeId": "2629943135",
+   "snapDistanceM": 69.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S134",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Ashok Vidyalay",
+   "osm": "way/380363654",
+   "lat": 18.511364,
+   "lng": 73.845438,
+   "nodeId": "11235706272",
+   "snapDistanceM": 19.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S135",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Athrava Ved School",
+   "osm": "node/10574663122",
+   "lat": 18.498528,
+   "lng": 73.809438,
+   "nodeId": "2164185730",
+   "snapDistanceM": 27.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S136",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Baburao Sanas Kanyashala",
+   "osm": "way/666675665",
+   "lat": 18.522994,
+   "lng": 73.863596,
+   "nodeId": "11402600838",
+   "snapDistanceM": 26.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S137",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Bal Shikshan Mandir",
+   "osm": "way/202062068",
+   "lat": 18.518122,
+   "lng": 73.83927,
+   "nodeId": "674074923",
+   "snapDistanceM": 34.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S138",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Bharat English School",
+   "osm": "way/909292767",
+   "lat": 18.531672,
+   "lng": 73.849045,
+   "nodeId": "10793687693",
+   "snapDistanceM": 85.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S139",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Bharatiya Vidyabhavan",
+   "osm": "way/331478717",
+   "lat": 18.531232,
+   "lng": 73.831188,
+   "nodeId": "2251843480",
+   "snapDistanceM": 57.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S140",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Bhaskaracharya Pratishthan",
+   "osm": "way/249147717",
+   "lat": 18.515064,
+   "lng": 73.825278,
+   "nodeId": "1223958749",
+   "snapDistanceM": 40.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S141",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Brihan Maharashtra College of Commerce",
+   "osm": "way/208180363",
+   "lat": 18.52105,
+   "lng": 73.835372,
+   "nodeId": "763543046",
+   "snapDistanceM": 182.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S142",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Centre for Performing arts Pune Univ",
+   "osm": "node/4524259589",
+   "lat": 18.552537,
+   "lng": 73.825855,
+   "nodeId": "10801390661",
+   "snapDistanceM": 571.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S143",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Class CCNA",
+   "osm": "node/4520210890",
+   "lat": 18.51022,
+   "lng": 73.834955,
+   "nodeId": "10230107785",
+   "snapDistanceM": 25.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S144",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "College of Agriculture",
+   "osm": "node/1884439681",
+   "lat": 18.53198,
+   "lng": 73.844666,
+   "nodeId": "13805751981",
+   "snapDistanceM": 48.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S145",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "DAV Public School",
+   "osm": "way/210343962",
+   "lat": 18.559972,
+   "lng": 73.803928,
+   "nodeId": "10239593275",
+   "snapDistanceM": 73.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S146",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Dr. Kalmadi Shamarao High School",
+   "osm": "way/132813468",
+   "lat": 18.502353,
+   "lng": 73.826748,
+   "nodeId": "2165021526",
+   "snapDistanceM": 36.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S147",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "E-learning school pmc",
+   "osm": "node/10724973517",
+   "lat": 18.516457,
+   "lng": 73.831309,
+   "nodeId": "10241567892",
+   "snapDistanceM": 27.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S148",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Erandawane Madhyamik Vidyalay",
+   "osm": "way/331532102",
+   "lat": 18.509717,
+   "lng": 73.829157,
+   "nodeId": "2192941086",
+   "snapDistanceM": 28.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S149",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "GR Palkar Primary School",
+   "osm": "way/359988654",
+   "lat": 18.492875,
+   "lng": 73.822992,
+   "nodeId": "2194045773",
+   "snapDistanceM": 23.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S150",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Gogate Prashala",
+   "osm": "way/218059562",
+   "lat": 18.514968,
+   "lng": 73.846782,
+   "nodeId": "2266580469",
+   "snapDistanceM": 38.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S151",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Gopal Highschool",
+   "osm": "way/217773606",
+   "lat": 18.510678,
+   "lng": 73.851747,
+   "nodeId": "2270799586",
+   "snapDistanceM": 57.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S152",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Government Technical Highschool",
+   "osm": "way/218405515",
+   "lat": 18.524498,
+   "lng": 73.845073,
+   "nodeId": "8008456137",
+   "snapDistanceM": 104.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S153",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Grammangal",
+   "osm": "node/6457239788",
+   "lat": 18.495305,
+   "lng": 73.804086,
+   "nodeId": "763446446",
+   "snapDistanceM": 87.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S154",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Gurudev Ravindranath Tagore Vidyaniketan",
+   "osm": "way/666675670",
+   "lat": 18.525228,
+   "lng": 73.864983,
+   "nodeId": "769097660",
+   "snapDistanceM": 33.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S155",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "His Highness Chintamanrao Patwardhan Highschool",
+   "osm": "way/217773608",
+   "lat": 18.515073,
+   "lng": 73.853023,
+   "nodeId": "2266580478",
+   "snapDistanceM": 89.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S156",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Hutatma Rajguru Vidyalay",
+   "osm": "way/331478723",
+   "lat": 18.526643,
+   "lng": 73.834089,
+   "nodeId": "2251843355",
+   "snapDistanceM": 79.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S157",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Jidnyasa",
+   "osm": "node/6457253485",
+   "lat": 18.518717,
+   "lng": 73.806306,
+   "nodeId": "7991860135",
+   "snapDistanceM": 111.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S158",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Jnana Prabodhini Prashala",
+   "osm": "way/207872395",
+   "lat": 18.511851,
+   "lng": 73.845509,
+   "nodeId": "2266580440",
+   "snapDistanceM": 23.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S159",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Jog College",
+   "osm": "way/275490280",
+   "lat": 18.505233,
+   "lng": 73.818475,
+   "nodeId": "2192940924",
+   "snapDistanceM": 35.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S160",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "KLAY preschool and Daycare",
+   "osm": "node/10724957170",
+   "lat": 18.555339,
+   "lng": 73.810402,
+   "nodeId": "4705115043",
+   "snapDistanceM": 37.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S161",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Kalmadi Shamrao Highschool",
+   "osm": "way/298298055",
+   "lat": 18.511695,
+   "lng": 73.833679,
+   "nodeId": "2265580209",
+   "snapDistanceM": 21.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S162",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Kataria Highschool",
+   "osm": "way/213830162",
+   "lat": 18.497698,
+   "lng": 73.866605,
+   "nodeId": "679052278",
+   "snapDistanceM": 144.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S163",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Kendriya Vidyalaya Ganeshkhind",
+   "osm": "way/210343967",
+   "lat": 18.554462,
+   "lng": 73.818358,
+   "nodeId": "7979977137",
+   "snapDistanceM": 77.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S164",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Kendriya Vidyalaya Range Hill Estate",
+   "osm": "way/1283234649",
+   "lat": 18.553953,
+   "lng": 73.841746,
+   "nodeId": "2385076441",
+   "snapDistanceM": 105.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S165",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Khanderao Junawane Government School",
+   "osm": "node/10724952845",
+   "lat": 18.554728,
+   "lng": 73.816391,
+   "nodeId": "10239624293",
+   "snapDistanceM": 29.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S166",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Kridaniketan Shala",
+   "osm": "way/331532104",
+   "lat": 18.492119,
+   "lng": 73.832156,
+   "nodeId": "10232351196",
+   "snapDistanceM": 81.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S167",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Lal Bahadur Shastri Vidyalay",
+   "osm": "way/317550149",
+   "lat": 18.523065,
+   "lng": 73.850594,
+   "nodeId": "2252429230",
+   "snapDistanceM": 44.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S168",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Loyola High School",
+   "osm": "way/229849148",
+   "lat": 18.538199,
+   "lng": 73.820203,
+   "nodeId": "2384119790",
+   "snapDistanceM": 325.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S169",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "MES Bal Shikshan Mandir English Medium School",
+   "osm": "way/235117501",
+   "lat": 18.503876,
+   "lng": 73.817037,
+   "nodeId": "2265580089",
+   "snapDistanceM": 35.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S170",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "MES Sou vimlabai garware high school",
+   "osm": "node/10724950766",
+   "lat": 18.513831,
+   "lng": 73.840526,
+   "nodeId": "2192941208",
+   "snapDistanceM": 20.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S171",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "MIT School and Junior College of Commerce & Science",
+   "osm": "way/218697333",
+   "lat": 18.508666,
+   "lng": 73.820283,
+   "nodeId": "11240483661",
+   "snapDistanceM": 43.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S172",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "MODERN ENGLISH MEDIUM SCHOOL (NCL SCHOOL)",
+   "osm": "way/1432747071",
+   "lat": 18.540544,
+   "lng": 73.815158,
+   "nodeId": "10801425072",
+   "snapDistanceM": 250.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S173",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "MP international school and junior college",
+   "osm": "node/10724940584",
+   "lat": 18.522125,
+   "lng": 73.833191,
+   "nodeId": "7153874699",
+   "snapDistanceM": 49.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S174",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Maharashtriya Mandal",
+   "osm": "way/217773611",
+   "lat": 18.509743,
+   "lng": 73.847749,
+   "nodeId": "2270799563",
+   "snapDistanceM": 63.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S175",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Mahesh Vidyalaya",
+   "osm": "way/250116192",
+   "lat": 18.50006,
+   "lng": 73.802546,
+   "nodeId": "9956920722",
+   "snapDistanceM": 98.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S176",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Marathwada Mitramandal College of Engineering",
+   "osm": "way/109754327",
+   "lat": 18.490395,
+   "lng": 73.809273,
+   "nodeId": "1715922959",
+   "snapDistanceM": 205.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S177",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Millennium National School",
+   "osm": "way/109748020",
+   "lat": 18.491637,
+   "lng": 73.810232,
+   "nodeId": "10239511745",
+   "snapDistanceM": 137.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S178",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Modern Highschool",
+   "osm": "way/218405516",
+   "lat": 18.524901,
+   "lng": 73.848309,
+   "nodeId": "10225169311",
+   "snapDistanceM": 56.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S179",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Moula Mohammed Ali Johar Urdu School",
+   "osm": "way/180530085",
+   "lat": 18.514868,
+   "lng": 73.861392,
+   "nodeId": "1911008658",
+   "snapDistanceM": 27.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S180",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Muktangan English School",
+   "osm": "way/145694256",
+   "lat": 18.49001,
+   "lng": 73.851955,
+   "nodeId": "11242827603",
+   "snapDistanceM": 41.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S181",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "N. V. Gadgil Vidyalay",
+   "osm": "way/281844137",
+   "lat": 18.518594,
+   "lng": 73.853469,
+   "nodeId": "2270799793",
+   "snapDistanceM": 46.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S182",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Naad insitute",
+   "osm": "node/10724823959",
+   "lat": 18.514241,
+   "lng": 73.834707,
+   "nodeId": "1223958932",
+   "snapDistanceM": 18.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S183",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Navin Marathi Shala",
+   "osm": "way/210576104",
+   "lat": 18.518388,
+   "lng": 73.849153,
+   "nodeId": "2701228466",
+   "snapDistanceM": 63.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S184",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "New English School , Tilak Road",
+   "osm": "way/207872400",
+   "lat": 18.510712,
+   "lng": 73.84453,
+   "nodeId": "2270799624",
+   "snapDistanceM": 83.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S185",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "New English School Ramanbag",
+   "osm": "way/208240055",
+   "lat": 18.517232,
+   "lng": 73.849148,
+   "nodeId": "2266580492",
+   "snapDistanceM": 110.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S186",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Noble English School",
+   "osm": "node/10596055593",
+   "lat": 18.505995,
+   "lng": 73.862313,
+   "nodeId": "10227701577",
+   "snapDistanceM": 16.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S187",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Nutan Marathi Vidyalaya",
+   "osm": "way/217773612",
+   "lat": 18.515398,
+   "lng": 73.854361,
+   "nodeId": "10226917396",
+   "snapDistanceM": 46.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S188",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Nutan Marathi Vidyalaya",
+   "osm": "way/217773613",
+   "lat": 18.516824,
+   "lng": 73.853262,
+   "nodeId": "10225137007",
+   "snapDistanceM": 26.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S189",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Ornellas Highschool",
+   "osm": "way/380363663",
+   "lat": 18.516667,
+   "lng": 73.869888,
+   "nodeId": "248436313",
+   "snapDistanceM": 71.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S190",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Panditrao Agashe School",
+   "osm": "way/218834781",
+   "lat": 18.517364,
+   "lng": 73.8302,
+   "nodeId": "2251843261",
+   "snapDistanceM": 47.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S191",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Paranjape Nursery School",
+   "osm": "way/208958214",
+   "lat": 18.501642,
+   "lng": 73.808612,
+   "nodeId": "12334181834",
+   "snapDistanceM": 88.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S192",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Perugate Bhave School",
+   "osm": "way/217773614",
+   "lat": 18.510978,
+   "lng": 73.847298,
+   "nodeId": "2266580432",
+   "snapDistanceM": 49.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S193",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Pune Vidyarthi Gruha",
+   "osm": "way/217773618",
+   "lat": 18.509123,
+   "lng": 73.851754,
+   "nodeId": "10230107788",
+   "snapDistanceM": 41.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S194",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "RIMYI Iyengar Yoga Institute",
+   "osm": "node/5257379221",
+   "lat": 18.533707,
+   "lng": 73.838668,
+   "nodeId": "10241845504",
+   "snapDistanceM": 24.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S195",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Raja Dhanraj Girji Madhyamik Vidyalay",
+   "osm": "way/380363664",
+   "lat": 18.518525,
+   "lng": 73.863602,
+   "nodeId": "2999866973",
+   "snapDistanceM": 57.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S196",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Raja Shree Shivrai Pratishthan School",
+   "osm": "way/235293162",
+   "lat": 18.511228,
+   "lng": 73.812199,
+   "nodeId": "2199397374",
+   "snapDistanceM": 65.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S197",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Range hills secondary school",
+   "osm": "node/4546778694",
+   "lat": 18.551966,
+   "lng": 73.843156,
+   "nodeId": "2383922414",
+   "snapDistanceM": 18.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S198",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Rasta Peth Education Society",
+   "osm": "way/282102070",
+   "lat": 18.521828,
+   "lng": 73.86659,
+   "nodeId": "10976156115",
+   "snapDistanceM": 43.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S199",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Ratanben Chunilal Mehta (RCM) Gujarati High School",
+   "osm": "node/3681735096",
+   "lat": 18.519473,
+   "lng": 73.86055,
+   "nodeId": "2273609019",
+   "snapDistanceM": 46.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S200",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Renuka Swaroop Highschool",
+   "osm": "way/217773619",
+   "lat": 18.510158,
+   "lng": 73.849674,
+   "nodeId": "2266580422",
+   "snapDistanceM": 84.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S201",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "SHARF",
+   "osm": "node/10724748486",
+   "lat": 18.515719,
+   "lng": 73.834841,
+   "nodeId": "2251843243",
+   "snapDistanceM": 20.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S202",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "SM Choksey High School",
+   "osm": "way/65158127",
+   "lat": 18.515007,
+   "lng": 73.87481,
+   "nodeId": "247739731",
+   "snapDistanceM": 103.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S203",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "SSCD{symbiosis schools central dictorate}",
+   "osm": "node/10724949840",
+   "lat": 18.515849,
+   "lng": 73.831099,
+   "nodeId": "12240505035",
+   "snapDistanceM": 30.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S204",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sadhu Vaswani Mission",
+   "osm": "way/67170414",
+   "lat": 18.524307,
+   "lng": 73.87719,
+   "nodeId": "2258420215",
+   "snapDistanceM": 65.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S205",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sahyadri Internationsal School",
+   "osm": "node/10574645036",
+   "lat": 18.506595,
+   "lng": 73.803099,
+   "nodeId": "11250854651",
+   "snapDistanceM": 25.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S206",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Saint Anne's High School",
+   "osm": "way/53455444",
+   "lat": 18.513451,
+   "lng": 73.875564,
+   "nodeId": "674918015",
+   "snapDistanceM": 93.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S207",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Saint Vincent's School",
+   "osm": "way/53370636",
+   "lat": 18.512776,
+   "lng": 73.87445,
+   "nodeId": "679048553",
+   "snapDistanceM": 106.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S208",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Saraswati Mandir",
+   "osm": "way/380363666",
+   "lat": 18.509919,
+   "lng": 73.854119,
+   "nodeId": "2266580415",
+   "snapDistanceM": 37.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S209",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sardar Dastur High School",
+   "osm": "way/108227535",
+   "lat": 18.520549,
+   "lng": 73.878076,
+   "nodeId": "245647086",
+   "snapDistanceM": 119.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S210",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sardar Kanhoji Angre Vidyalay",
+   "osm": "way/290034472",
+   "lat": 18.508892,
+   "lng": 73.858621,
+   "nodeId": "10227055841",
+   "snapDistanceM": 24.1,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S211",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sardar Laxmibai Raste Prathamik Vidyalay",
+   "osm": "way/380363667",
+   "lat": 18.520246,
+   "lng": 73.865293,
+   "nodeId": "10225156632",
+   "snapDistanceM": 23.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S212",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Satyanarayan Shivlal Agarwal Shala",
+   "osm": "way/331532106",
+   "lat": 18.500657,
+   "lng": 73.841827,
+   "nodeId": "4703535409",
+   "snapDistanceM": 40.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S213",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sevasadan",
+   "osm": "way/264444881",
+   "lat": 18.514167,
+   "lng": 73.852949,
+   "nodeId": "678450636",
+   "snapDistanceM": 62.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S214",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sevasadan English Medium School",
+   "osm": "way/251878756",
+   "lat": 18.501052,
+   "lng": 73.832076,
+   "nodeId": "10230246665",
+   "snapDistanceM": 62.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S215",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Shri Shivaji Preparatory Military School",
+   "osm": "way/280784413",
+   "lat": 18.526807,
+   "lng": 73.852958,
+   "nodeId": "245647185",
+   "snapDistanceM": 57.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S216",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Shrimati Nathibai Damodar Thakarsi Kanyashala",
+   "osm": "way/217773620",
+   "lat": 18.516084,
+   "lng": 73.851235,
+   "nodeId": "10813990665",
+   "snapDistanceM": 39.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S217",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sinhagad Spring Dale School",
+   "osm": "way/331532108",
+   "lat": 18.507946,
+   "lng": 73.835532,
+   "nodeId": "6265401231",
+   "snapDistanceM": 38.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S218",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Sir Parshurambhau College",
+   "osm": "way/207872410",
+   "lat": 18.506212,
+   "lng": 73.848584,
+   "nodeId": "2165021607",
+   "snapDistanceM": 179.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S219",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "St. Edmund Campion Preschool",
+   "osm": "node/9965869775",
+   "lat": 18.535998,
+   "lng": 73.819293,
+   "nodeId": "2384119790",
+   "snapDistanceM": 473.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S220",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "St. Joseph's Girl's Convent",
+   "osm": "way/229849153",
+   "lat": 18.539596,
+   "lng": 73.819905,
+   "nodeId": "2384119790",
+   "snapDistanceM": 229.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S221",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "St. Vincent's High School",
+   "osm": "way/53455430",
+   "lat": 18.512882,
+   "lng": 73.87445,
+   "nodeId": "679048553",
+   "snapDistanceM": 117.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S222",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Symbiosis Nursery School",
+   "osm": "node/761948537",
+   "lat": 18.533081,
+   "lng": 73.837743,
+   "nodeId": "10241850512",
+   "snapDistanceM": 27.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S223",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Symbiosis Open School",
+   "osm": "node/3376012873",
+   "lat": 18.515854,
+   "lng": 73.830887,
+   "nodeId": "763549133",
+   "snapDistanceM": 27.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S224",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "T.I.M.E kids aundh",
+   "osm": "node/10724993217",
+   "lat": 18.559801,
+   "lng": 73.801327,
+   "nodeId": "1194079740",
+   "snapDistanceM": 92.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S225",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vasantrao Vaidya Vidyalay",
+   "osm": "way/290034473",
+   "lat": 18.504296,
+   "lng": 73.84092,
+   "nodeId": "2162277692",
+   "snapDistanceM": 29.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S226",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vidya Bhavan High School And Junior College",
+   "osm": "way/331478729",
+   "lat": 18.530903,
+   "lng": 73.838493,
+   "nodeId": "2251843470",
+   "snapDistanceM": 45.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S227",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vidya Niketan",
+   "osm": "way/218059568",
+   "lat": 18.502458,
+   "lng": 73.813513,
+   "nodeId": "14344174335",
+   "snapDistanceM": 35.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S228",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vikhe Patil Memorial School",
+   "osm": "way/217278791",
+   "lat": 18.522709,
+   "lng": 73.826076,
+   "nodeId": "1229141071",
+   "snapDistanceM": 143.6,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S229",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vimlabai Garware Prashala",
+   "osm": "way/207872411",
+   "lat": 18.513524,
+   "lng": 73.840617,
+   "nodeId": "12119590890",
+   "snapDistanceM": 38.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S230",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Vivero international pre school and childcare",
+   "osm": "node/10725000985",
+   "lat": 18.557869,
+   "lng": 73.804172,
+   "nodeId": "763455221",
+   "snapDistanceM": 17.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S231",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Wadia College",
+   "osm": "way/215998838",
+   "lat": 18.53243,
+   "lng": 73.879906,
+   "nodeId": "10228089668",
+   "snapDistanceM": 138.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S232",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "Yashwantrao Chavan Academy of Development Administration",
+   "osm": "way/402368938",
+   "lat": 18.546392,
+   "lng": 73.822564,
+   "nodeId": "10232706102",
+   "snapDistanceM": 134.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S233",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "ahilyadevi high school",
+   "osm": "node/13390674189",
+   "lat": 18.518441,
+   "lng": 73.85139,
+   "nodeId": "2701228468",
+   "snapDistanceM": 35.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S234",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "ayan businness school",
+   "osm": "node/10724941696",
+   "lat": 18.518049,
+   "lng": 73.841945,
+   "nodeId": "2273970923",
+   "snapDistanceM": 59.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S235",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "bhisma school of indic studies",
+   "osm": "node/10724950765",
+   "lat": 18.517835,
+   "lng": 73.844963,
+   "nodeId": "2266979781",
+   "snapDistanceM": 52.8,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S236",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "chandrakant Darode school",
+   "osm": "node/10724952066",
+   "lat": 18.522309,
+   "lng": 73.833197,
+   "nodeId": "7153874699",
+   "snapDistanceM": 38.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S237",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "fairyland children's center",
+   "osm": "node/10724942844",
+   "lat": 18.515873,
+   "lng": 73.84157,
+   "nodeId": "2192941245",
+   "snapDistanceM": 16.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S238",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "indira kids",
+   "osm": "node/10724942627",
+   "lat": 18.559776,
+   "lng": 73.809871,
+   "nodeId": "6240799094",
+   "snapDistanceM": 267.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S239",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "indus early learning centre aundh",
+   "osm": "node/10724999994",
+   "lat": 18.557657,
+   "lng": 73.80289,
+   "nodeId": "4609651870",
+   "snapDistanceM": 95.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S240",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "kedar bhagwat music academy",
+   "osm": "node/10724927032",
+   "lat": 18.518675,
+   "lng": 73.830409,
+   "nodeId": "674074917",
+   "snapDistanceM": 48.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S241",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "kiddis nook",
+   "osm": "node/10724984551",
+   "lat": 18.558975,
+   "lng": 73.803295,
+   "nodeId": "1194079736",
+   "snapDistanceM": 33.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S242",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "leapbridge early childhood",
+   "osm": "node/10724871527",
+   "lat": 18.515374,
+   "lng": 73.835863,
+   "nodeId": "2251843240",
+   "snapDistanceM": 36.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S243",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "little miracles",
+   "osm": "node/10724823960",
+   "lat": 18.515552,
+   "lng": 73.833498,
+   "nodeId": "2251843248",
+   "snapDistanceM": 43.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S244",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "maharastra vidya mandal",
+   "osm": "node/10724934783",
+   "lat": 18.517411,
+   "lng": 73.830238,
+   "nodeId": "2251843261",
+   "snapDistanceM": 42.3,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S245",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "prasanna autism centre",
+   "osm": "node/10724949171",
+   "lat": 18.518435,
+   "lng": 73.840352,
+   "nodeId": "834083239",
+   "snapDistanceM": 43.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S246",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "rajal enterprices",
+   "osm": "node/10724952253",
+   "lat": 18.514342,
+   "lng": 73.838765,
+   "nodeId": "2279109712",
+   "snapDistanceM": 48.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S247",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "school of culture and language",
+   "osm": "node/10724970333",
+   "lat": 18.514676,
+   "lng": 73.834548,
+   "nodeId": "9186308199",
+   "snapDistanceM": 22.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S248",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "swatarang sangeet vidyalaya",
+   "osm": "node/10724964228",
+   "lat": 18.514334,
+   "lng": 73.836991,
+   "nodeId": "2192941207",
+   "snapDistanceM": 47.4,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S249",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "symbiosis sports center and primary and secondary school",
+   "osm": "node/10724871528",
+   "lat": 18.515614,
+   "lng": 73.831166,
+   "nodeId": "12240505035",
+   "snapDistanceM": 41.0,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S250",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "vidya mahamandal",
+   "osm": "node/10724889771",
+   "lat": 18.517941,
+   "lng": 73.84245,
+   "nodeId": "2192111582",
+   "snapDistanceM": 60.5,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S251",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "School (S251)",
+   "osm": "node/10172966009",
+   "lat": 18.541993,
+   "lng": 73.830465,
+   "nodeId": "2251843561",
+   "snapDistanceM": 45.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S252",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "School (S252)",
+   "osm": "way/1105747977",
+   "lat": 18.490698,
+   "lng": 73.815878,
+   "nodeId": "6263254698",
+   "snapDistanceM": 71.7,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S253",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "School (S253)",
+   "osm": "way/448218376",
+   "lat": 18.503912,
+   "lng": 73.825199,
+   "nodeId": "2613323376",
+   "snapDistanceM": 38.9,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
+  },
+  {
+   "id": "S254",
+   "kind": "shelter",
+   "shelterType": "school",
+   "name": "School (S254)",
+   "osm": "way/641140495",
+   "lat": 18.556097,
+   "lng": 73.814248,
+   "nodeId": "2204241591",
+   "snapDistanceM": 198.2,
+   "capacity": 300,
+   "simulated": [
+    "capacity"
+   ]
   }
  ],
  "units": [

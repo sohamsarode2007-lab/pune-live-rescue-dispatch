@@ -169,6 +169,18 @@ button.burst { border-color: #b45309; color: #fde68a; font-weight: 700; }
 .sos-secondary { margin: 4px 16px 0; }
 .sos-secondary button { width: 100%; padding: 12px; font-size: 1rem; border-color: #1d4ed8; color: #bfdbfe; }
 
+/* ---------- Phase 6: coverage, placement, evacuation, scenario ---------- */
+.pin.shelter { background: #15803d; }
+.dot.shelter { background: #22c55e; }
+.pin.station-suggest { background: #fde047; color: #1c1917; border-color: #1c1917; font-size: 13px; border-radius: 6px; }
+.pin.station-suggest.F { background: #60a5fa; }
+.spark { width: 100%; height: 46px; display: block; margin-top: 6px; background: var(--panel-2); border-radius: 6px; }
+.scenario { margin-bottom: 10px; }
+.scenario-btn { width: 100%; padding: 10px; font-size: .95rem; font-weight: 700; color: #fff; border-color: #1d4ed8;
+  background: linear-gradient(135deg, #1d4ed8, #0e7490); }
+.coverage-mini { font-size: .8rem; margin-bottom: 10px; }
+.cmp tbody tr[class] { cursor: pointer; }
+
 /* ---------- algorithms page ---------- */
 .scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
 .ramp { height: 10px; border-radius: 5px; margin-top: 10px; }

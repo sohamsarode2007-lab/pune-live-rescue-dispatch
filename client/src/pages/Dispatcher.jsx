@@ -11,9 +11,10 @@ import TrafficPanel from '../components/TrafficPanel.jsx';
 import OsrmPanel from '../components/OsrmPanel.jsx';
 import { TrapZoneWarning, SpofPanel, CrossingsPanel } from '../components/NetworkPanels.jsx';
 import { FloodPanel, RerouteLog, CrowdPanel } from '../components/FloodPanels.jsx';
+import { ScenarioControl, CoverageMini, CoveragePanel, PlacementPanel, EvacuationPanel } from '../components/PlanningPanels.jsx';
 import { UNIT_LABEL, TYPE_ICON } from '../components/mapParts.jsx';
 
-const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals' };
+const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals', shelter: 'Shelters (schools, halls)' };
 const SPEEDS = [1, 5, 10, 30];
 const UNIT_STATUSES = ['AVAILABLE', 'EN_ROUTE', 'ON_SCENE', 'TO_HOSPITAL', 'RETURNING'];
 
@@ -35,7 +36,7 @@ export default function Dispatcher() {
   const [summary, setSummary] = useState(null);
   const [fac, setFac] = useState({ facilities: [], units: [], meta: null });
   const [loadError, setLoadError] = useState(null);
-  const [layers, setLayers] = useState({ fire_station: true, police: true, hospital: true });
+  const [layers, setLayers] = useState({ fire_station: true, police: true, hospital: true, shelter: false });
   const [showIdle, setShowIdle] = useState(false);
   const [showResolved, setShowResolved] = useState(false);
   const [selectedIncidentId, setSelectedIncidentId] = useState(null);
@@ -79,6 +80,29 @@ export default function Dispatcher() {
     if (!zoneCount) { setZones([]); return; }
     api.scc().then((s) => setZones(s.zones)).catch(() => {});
   }, [zoneCount, netVersion]);
+  // Phase 6: coverage isochrones (road geometry fetched once, then only the band string per update),
+  // station placement and evacuation (computed by the server in the background, fetched when ready).
+  const [showCoverage, setShowCoverage] = useState(false);
+  const [coverageKind, setCoverageKind] = useState('fire');
+  const [roadGeometry, setRoadGeometry] = useState(null);
+  const [coverageBands, setCoverageBands] = useState(null);
+  const [placement, setPlacement] = useState(null);
+  const [evacuation, setEvacuation] = useState(null);
+  const [showPlacement, setShowPlacement] = useState(false);
+  const [showEvac, setShowEvac] = useState(false);
+  const [evacScenario, setEvacScenario] = useState('flood');
+  const coverageVersion = live.coverage?.version;
+  useEffect(() => {
+    if (!showCoverage) return;
+    if (!roadGeometry) api.roadGeometry().then(setRoadGeometry).catch(() => {});
+    api.coverage(coverageKind).then((c) => setCoverageBands(c.bands)).catch(() => {});
+  }, [showCoverage, coverageKind, coverageVersion]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (tab !== 'network' && !showPlacement && !showEvac) return;
+    api.placement().then(setPlacement).catch(() => {});
+    api.evacuation().then(setEvacuation).catch(() => {});
+  }, [tab, live.planningReady]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Phase 5: flooded junctions for the map, refetched as the flood spreads or recedes.
   const [floodPoints, setFloodPoints] = useState([]);
   const floodKey = `${live.flood?.level}|${live.flood?.floodedNow}`;
@@ -224,6 +248,11 @@ export default function Dispatcher() {
             cursor={tab === 'live' && testMode ? 'crosshair' : ''}
             trafficRoads={trafficRoads} compare={compareResult}
             floodPoints={floodPoints} crowdRoads={live.crowd}
+            planning={{
+              geometry: roadGeometry, bands: showCoverage ? coverageBands : null,
+              placement: showPlacement ? placement : null,
+              evac: showEvac && evacuation && !evacuation.computing ? evacuation[evacScenario] : null,
+            }}
             reroutes={live.reroutes.filter((r) => Date.now() - r.seenAt < 120000 || r.seenAt === 0).slice(-10)}
             network={tab === 'network'
               ? { rivers, spof, showAll: showAllSpof, crossings: crossingState?.ranking ?? [], selectedCrossingId, onSelectCrossing: setSelectedCrossingId, onSetCrossingStatus: setCrossing, zones }
@@ -249,7 +278,10 @@ export default function Dispatcher() {
 
           {tab === 'network' && (
             <>
+              <CoveragePanel coverage={live.coverage} kind={coverageKind} onKind={setCoverageKind} show={showCoverage} onShow={setShowCoverage} />
               <CrossingsPanel state={crossingState} selectedId={selectedCrossingId} onSelect={setSelectedCrossingId} onSetStatus={setCrossing} />
+              <PlacementPanel placement={placement} show={showPlacement} onShow={setShowPlacement} />
+              <EvacuationPanel evac={evacuation} scenario={evacScenario} onScenario={setEvacScenario} show={showEvac} onShow={setShowEvac} />
               <SpofPanel spof={spof} showAll={showAllSpof} onShowAll={setShowAllSpof} />
             </>
           )}
@@ -260,6 +292,8 @@ export default function Dispatcher() {
             <>
               <section className="panel">
                 <h2>Simulation</h2>
+                <ScenarioControl scenario={live.scenario} onStarted={() => { setShowCoverage(true); setCoverageKind('fire'); }} />
+                <CoverageMini coverage={live.coverage} />
                 <div className="btn-row">
                   {SPEEDS.map((s) => (
                     <button key={s} type="button" className={live.speed === s ? 'on' : ''} onClick={() => getSocket().emit('sim:speed', { speed: s })}>{s}×</button>

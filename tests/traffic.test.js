@@ -135,7 +135,7 @@ test('daily cap is enforced in code and persisted; a new UTC day resets it', { s
     assert.equal(fake.log.length, 25, 'stops at the cap');
     assert.equal(r1.capReached, true);
     assert.equal(svc.snapshot.partial, true);
-    const r2 = await svc.refresh();
+    const r2 = await svc.refresh({ force: true });
     assert.equal(r2.reason, 'DAILY_CAP');
     assert.equal(fake.log.length, 25, 'no request once the cap is reached');
     assert.ok(svc.snapshot, 'the last snapshot is kept');
@@ -143,6 +143,30 @@ test('daily cap is enforced in code and persisted; a new UTC day resets it', { s
     assert.equal(reopened.count('tomtom'), 25, 'a restart cannot reset the counter');
     now = Date.parse('2026-11-13T00:00:01Z');
     assert.equal(reopened.remaining('tomtom'), 25, 'new UTC day');
+  } finally {
+    resetFactors(store.graph);
+  }
+});
+
+test('manual only: with a key and an old snapshot nothing is fetched until refresh(); a 2nd refresh within 15 min needs force', { skip }, async () => {
+  const store = await loadPune();
+  let now = Date.parse('2026-11-12T10:00:00Z');
+  const { svc, fake, dir, calls } = makeService(store, { now: () => now });
+  try {
+    await svc.refresh();
+    const n = fake.log.length;
+    now += 3 * 3600 * 1000;                                     // the snapshot is now 3 hours old
+    const restarted = makeService(store, { dir, calls, now: () => now });
+    assert.equal(typeof restarted.svc.maybeAutoRefresh, 'undefined', 'there is no automatic refresh path');
+    assert.equal(restarted.fake.log.length, 0, 'startup with a key and a stale snapshot makes no TomTom call');
+    restarted.svc.status(); restarted.svc.roadsView();
+    assert.equal(restarted.fake.log.length, 0);
+    now += 60 * 1000;
+    const again = await svc.refresh();
+    assert.equal(again.ok, true, 'snapshot from 3 h ago: a manual refresh runs');
+    const soon = await svc.refresh();
+    assert.equal(soon.reason, 'TOO_SOON');
+    assert.equal(fake.log.length, n * 2, 'the refused refresh made no call');
   } finally {
     resetFactors(store.graph);
   }

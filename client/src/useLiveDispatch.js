@@ -20,6 +20,7 @@ const initial = {
   mode: 'hungarian', comparisons: [], comparisonTotals: null,
   traffic: null, externalCalls: null, network: null,
   flood: null, crowd: [], reroutes: [],
+  coverage: null, scenario: { running: false }, planningReady: 0,
 };
 
 function reducer(state, a) {
@@ -40,6 +41,9 @@ function reducer(state, a) {
     case 'network': return { ...state, network: a.n };
     case 'flood': return { ...state, flood: a.f };
     case 'crowd': return { ...state, crowd: a.c };
+    case 'coverage': return { ...state, coverage: a.c };
+    case 'scenario': return { ...state, scenario: a.s };
+    case 'planning': return { ...state, planningReady: state.planningReady + 1 };
     case 'reroute': return { ...state, reroutes: [...state.reroutes, { ...a.r, seenAt: Date.now() }].slice(-30) };
     case 'unit': { const units = new Map(state.units); units.set(a.u.id, { ...units.get(a.u.id), ...a.u }); return { ...state, units }; }
     case 'incident': { const incidents = new Map(state.incidents); incidents.set(a.i.id, a.i); return { ...state, incidents }; }
@@ -86,6 +90,9 @@ export function useLiveDispatch() {
       'flood:updated': (f) => dispatch({ type: 'flood', f }),
       'crowd:updated': (c) => dispatch({ type: 'crowd', c }),
       'unit:rerouted': (r) => dispatch({ type: 'reroute', r }),
+      'coverage:updated': (c) => dispatch({ type: 'coverage', c }),
+      'scenario:updated': (s) => dispatch({ type: 'scenario', s }),
+      'planning:updated': () => dispatch({ type: 'planning' }),
     };
     Object.entries(handlers).forEach(([e, h]) => s.on(e, h));
     if (s.connected) join();

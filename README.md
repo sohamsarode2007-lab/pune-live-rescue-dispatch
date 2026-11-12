@@ -10,9 +10,12 @@ This is a Data Structures course project: all routing, assignment and spatial se
 > **Demo simulation — in a real emergency call 112.** This app never contacts any emergency service.
 > Hospital beds, every rescue vehicle and all unit timings are **simulated**.
 
-The plan of record is [PLAN.md](PLAN.md). **Status: Phases 1–5 done, plus Tarjan from Phase 6** (real Pune
-graph, live SOS loop, dispatch intelligence, live traffic + OSRM comparison, flood realism + rerouting,
-single points of failure / trap zones / river crossings).
+The plan of record is [PLAN.md](PLAN.md). **Status: Phases 1–6 done** (real Pune graph, live SOS loop,
+dispatch intelligence, live traffic + OSRM comparison, flood realism + rerouting, planning tools: coverage,
+station placement, single points of failure, evacuation flow). Phase 7 (benchmarks, load test, replay) is next.
+
+**Demo in one click:** open the dispatcher and press **▶ Monsoon flood demo** (Live dispatch → Simulation).
+See [section 3f](#3f-planning-tools-and-the-one-click-demo-phase-6).
 The earlier fictional-city version ("Meridian") is kept, unused, in `legacy/meridian/`.
 
 ## 1. Run it
@@ -21,7 +24,10 @@ Requires Node.js 18+ (developed on Node 24).
 
 The only key is optional: put `TOMTOM_API_KEY=...` in **`.env`** (git-ignored; copy `.env.example`, which must
 stay without a real key because it is committed). Without a key the app runs fully: it uses the saved
-traffic snapshot if there is one, otherwise free-flow, and says so on the dashboard.
+traffic snapshot if there is one, otherwise free-flow, and says so on the dashboard. **TomTom is never called
+automatically**: not on startup, not when a dispatcher connects, not on a timer. Only the **Refresh traffic**
+button calls it, after a confirmation that shows how many of today's calls it will use. For development and
+rehearsals, start the server with `TOMTOM_DISABLED=1`.
 
 ```bash
 npm install
@@ -36,6 +42,7 @@ node scripts/find-burst-seed.mjs 300   # how the burst seed was chosen
 node scripts/bench-burst.mjs 300       # greedy vs Hungarian on 300 seeds -> server/data/burst-benchmark.json
 node scripts/e2e-traffic.mjs [--no-refresh]   # traffic refresh (~60 TomTom calls!), toggle, OSRM comparison
 node scripts/e2e-flood.mjs     # flood rise -> closures, reroutes, ranking, trap zones; crowd reports; recede
+node scripts/e2e-scenario.mjs 70   # one-click monsoon demo, watched for 70 s (flood, coverage, reroutes)
 ```
 
 **Demo script for greedy vs optimal:**
@@ -209,9 +216,11 @@ Socket events added: `burst:create` (ack with created and merged ids and the com
      (`shared/spatial/edgeMatcher.js`). TomTom segments are long: the first real fetch matched 630 roads from
      60 samples. Roads without a sample stay at 1.0.
    - **Direction:** a two-way road is one road object here, so one direction's factor applies to both.
-2. **When it refreshes:** there is no timer.
-   - When a dispatcher connects, it refreshes if the snapshot is missing or older than 15 min.
-   - The **Refresh traffic** button refreshes on demand.
+2. **When it refreshes: manual only.**
+   - The **Refresh traffic** button is the only trigger. There is no refresh on startup, on connect or on a
+     timer (tested).
+   - The button first confirms the cost. A second refresh within 15 min of the last one needs another
+     confirmation.
    - One refresh = 60 calls.
 3. **Daily cap:** `ExternalCalls` checks the **200 TomTom calls/day** cap before every request. The count is
    saved to `server/data/external-calls.json` (UTC day, git-ignored), so a restart cannot reset it. The
@@ -354,6 +363,75 @@ REST: `GET /api/network/spof`, `/api/network/scc`, `/api/network/crossings`, `/a
 Socket events: `flood:set`, `flood:glofas`, `flood:updated`, `crowd:updated`, `unit:rerouted`.
 REST: `GET /api/flood`, `/api/crowd`.
 
+## 3f. Planning tools and the one-click demo (Phase 6)
+
+1. **Shelters** (`scripts/build_shelters.py`)
+   - **Why these buildings:** OSM rarely tags flood shelters in India. In practice Pune moves flood-affected
+     families into schools and municipal halls, so OSM `amenity=school|college|university|community_centre|townhall`
+     are used.
+   - **Result:** 263 raw records merge into **254 shelters** (135 schools, 96 colleges/universities,
+     21 community halls, 2 municipal halls), each snapped to a junction.
+   - **Capacities are simulated** by type: school 300, college 500, community hall 150, municipal hall 200
+     (92,050 in total). They are labelled "simulated" in the UI.
+   - **Facilities:** shelters count as facilities in the Tarjan cut-off and trap-zone analyses (e.g. "contains
+     3 shelters: COEP …").
+   - **Other facilities untouched:** hospitals, stations and units are unchanged (the script only adds shelters).
+2. **Coverage isochrones**
+   - **Method:** multi-source Dijkstra from the 5 fire stations, and separately from the 42 ambulance bases, on
+     the *current* network. Every road is coloured < 5 / 5–8 / 8–12 / > 12 min / unreachable / closed.
+   - **% of road length within 8 min:** fire stations 89.5%, ambulances 100% (free-flow).
+   - **Recomputed on every closure.** In the demo, fire coverage shrinks from 89.5% to about 81.5% as the
+     water reaches 10 m, with a sparkline of the history.
+3. **New station placement (greedy k-center)**
+   - **Candidates:** Gonzalez farthest-first picks plus the worst-served junctions, 120 in total.
+   - **Choice:** best-improvement greedy, i.e. the candidate with the smallest new worst case (one Dijkstra per
+     candidate).
+   - **Two scenarios:** run for **normal** (every road open) and for the **fully spread 10 m flood** (its exact
+     BLOCKED / HIGH_RISK statuses, applied temporarily and restored). Both use the traffic state at startup.
+   - **The suggestions differ:**
+
+     | | Suggested site | Worst-case fire response | Roads ≤ 8 min |
+     |---|---|---|---|
+     | Normal | near Diversion (SPPU / north-west) | 12 min 53 s → 9 min 05 s | 88.2% → 99.1% |
+     | 10 m flood | a different junction | 23 min 13 s → 22 min 24 s | 82.4% → 91.6% |
+
+   - **Why the flood barely moves the worst case:** the slowest junction under the flood is cut off behind the
+     water, so no single new station fixes it. The average and the coverage still improve.
+4. **Evacuation feasibility (Edmonds-Karp)**
+   - **Network:** super-source → the 351 junctions that the 10 m flood floods or endangers (250 people each,
+     simulated; ~87,750 people) → roads → shelters → super-sink.
+   - **Road capacities:** PLAN.md's vehicles/hour (trunk 2,000; primary/secondary 1,200; tertiary/residential
+     400; HIGH_RISK 50%) × 4 people/vehicle × a 1-hour window. Two-way roads are two opposite edges.
+   - **Shelter capacities:** the simulated values above.
+   - **Results:**
+
+     | | Evacuable | Boat-only | Min cut |
+     |---|---|---|---|
+     | Normal | 78,850 (89.9%) | 0 | 14 roads (35,200) + shelters (43,650) |
+     | 10 m flood | 50,000 (57%) | 31,250 | 7 roads (7,200) + shelters + people already out |
+
+   - **Bottlenecks:** the min-cut roads (Ganeshkhind Road, Karve Road, … normally; Sinhagad Road … under the
+     flood) are drawn in magenta.
+   - **Max-flow = min-cut** is asserted on the real data.
+5. **▶ Monsoon flood demo** (`server/services/scenario.js`), one click:
+   - **Setup:** reset incidents, closures, crowd reports and the flood; **free-flow** traffic; **10×** speed;
+     Hungarian dispatch.
+   - **Flood:** the Mutha rises **0 → 10 m** in 2 m steps every 2 sim-minutes.
+   - **SOS calls:** **12 seeded calls on both banks** (250–900 m from the river, ≥ 300 m apart, so none merge)
+     over 11 sim-minutes.
+   - **Scripted event:** at sim 5:00, **police close New Sangam Bridge** as the Mula-Mutha rises. In this
+     seeded run fire truck FT-2 is driving to INC-005 over it, so the demo always shows a reroute
+     (+5 min 53 s).
+   - **What it shows:** the flood spreading, bridges closing, rerouting, trap-zone warnings, and coverage
+     shrinking, with no manual setup.
+   - **Determinism:** the server now advances simulated time by a **fixed step per tick** (not measured wall
+     time), so the scenario plays out identically every time. A test runs it twice headless and compares
+     every incident, assignment, reroute and the flood state.
+
+Socket events: `scenario:start`, `scenario:updated`, `coverage:updated`, `planning:updated`.
+REST: `GET /api/coverage?kind=fire|ambulance`, `/api/geometry/roads`, `/api/placement`, `/api/evacuation`,
+`/api/shelters`, `/api/scenario`.
+
 ## 4. Road graph and cost model
 
 - **Area** (`server/config.js` `DEMO_BBOX`): N 18.56, S 18.49, E 73.88, W 73.80. Covers Kothrud, Deccan,
@@ -440,6 +518,9 @@ Every item also has an explanation card on `/algorithms`.
 | Flood spread: nearest river point (k-d tree) + multi-source BFS over low ground | `floodModel.js` | O(V log V) setup, O(V + E) per level |
 | Dynamic rerouting (upcoming roads from the trip timeline, A* from the next junction) | `dispatchService.js` | O(U·R) + one A* per affected unit |
 | Crowd report quorum (hash map of phone → time per road, 15-min sliding window) | `crowdReports.js` | O(log S) snap + O(1) avg |
+| Coverage isochrones (multi-source Dijkstra + road bands) | `planningService.js` | O((V + E) log V) per source set |
+| Greedy k-center (Gonzalez farthest-first + best-improvement over candidates) | `kcenter.js` | O(C · (V + E) log V) |
+| Edmonds-Karp max flow + min cut (BFS augmenting paths, residual edge pairs) | `edmondsKarp.js` | O(V · E²) |
 | Greedy assignment (priority order, nearest free unit) | `hungarian.js` | O(n·m) |
 | Priority aging (heap rebuilt every tick) | `dispatchService.js` | O(p log p) per tick |
 | Discrete-event queue (min-heap by time, FIFO ties) | `EventQueue.js` | push/pop O(log n) |
@@ -455,7 +536,32 @@ distance for all 7,695 junctions (tested).
 
 ## 7. Tests
 
-`npm test` runs 125 tests in about 25 s. The 300-seed burst benchmark takes most of that time.
+`npm test` runs 137 tests in about 30 s. The 300-seed burst benchmark takes most of that time.
+
+Phase 6 reference comparisons:
+- **Edmonds-Karp:**
+  - the CLRS figure 26.6 network gives max flow 23, with the hand-solved cut
+  - a hand-solved evacuation-like network gives 140 of 160
+  - **max flow = brute-force minimum cut over all 2ⁿ vertex subsets** on 300 random tiny networks, with
+    flow conservation checked
+- **k-center:**
+  - with every junction as a candidate, the greedy pick equals the brute-force best single station
+  - Gonzalez farthest-first stays within 2× the brute-force optimal k-center (k = 2, 3)
+- **Coverage:** the % within 8 min equals an independent computation, and it never grows while the flood rises.
+- **Placement:** improves the worst case in both scenarios, the graph is restored exactly, and the flood
+  scenario equals the live fully spread flood.
+- **Evacuation on Pune:**
+  - cut capacity = flow
+  - the flood evacuates no more than normal
+  - boat-only people are counted
+  - bottlenecks are open roads
+- **Shelters:** capacities follow the documented types, are flagged simulated, and are counted by Tarjan.
+- **TomTom:** with a key and a stale snapshot, nothing is fetched until the button is pressed, and a second
+  refresh within 15 min needs `force`.
+- **Monsoon demo:**
+  - deterministic (two headless runs are identical)
+  - all 12 calls arrive, on both banks, near the river
+  - the scripted bridge closure reroutes a unit at exactly 300 s
 
 Phase 5 reference comparisons:
 - **Flood plan:** equals a brute-force connectivity search (eligible junctions reachable from river-side seeds
@@ -588,6 +694,7 @@ python -m venv .venv
 .venv\Scripts\python -m pip install -r scripts/requirements.txt   # Windows (macOS/Linux: .venv/bin/python)
 npm run data:graph && npm run data:facilities
 .venv\Scripts\python scripts/build_river.py && .venv\Scripts\python scripts/build_elevation.py
+.venv\Scripts\python scripts/build_shelters.py
 ```
 
 Some Python packages are pinned to older versions because Windows Application Control blocked the newest
@@ -610,5 +717,9 @@ pandas/pyproj DLLs on the development machine.
   - There is no flow or volume physics. It is a level-based "bathtub with connectivity", and the recede is
     instant.
   - A rerouted unit whose incident becomes unreachable stops at its next junction straight away.
+- **Planning numbers are model outputs, not forecasts.** Population per junction (250), people per vehicle (4),
+  the 1-hour window and the shelter capacities are simulated assumptions.
+- **Station placement:** evaluates 120 candidate junctions (not all 7,695) and is computed once at startup.
+- **The fixed sim step is deterministic but can lag wall-clock time** slightly if the server is busy.
 - State lives in server memory: restarting the server clears incidents (event log and replay come in Phase 7).
 - The Marathi and Hindi texts were written for the demo and should be checked by a native speaker.

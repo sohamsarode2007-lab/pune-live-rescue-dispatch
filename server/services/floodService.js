@@ -54,11 +54,48 @@ export class FloodService {
     if (!this.model) throw new Error('Flood model unavailable (run scripts/build_elevation.py)');
     const l = Math.max(0, Math.min(MAX_LEVEL_M, Number(level)));
     if (!Number.isFinite(l)) throw new Error('Invalid level');
+    // Flood times are kept ABSOLUTE (sim seconds). When the water rises in steps, a junction already under
+    // water stays under water (earliest time wins) and the new BFS continues from now; when it falls,
+    // junctions not in the new plan recede.
+    const rel = this.model.plan(l);
+    const merged = new Map();
+    for (const [id, t] of rel.floodTimeS) {
+      const prev = this.plan?.floodTimeS.get(id);
+      merged.set(id, prev !== undefined ? Math.min(prev, simNowS + t) : simNowS + t);
+    }
     this.level = l;
     this.levelSource = source;
-    this.startS = simNowS;
-    this.plan = this.model.plan(l);
+    this.levelSetAtS = simNowS;
+    this.startS = 0;
+    this.plan = { ...rel, floodTimeS: merged };
     return this.status();
+  }
+
+  // The sim clock restarted at simS (sim reset): replan the current level from scratch at that time. The
+  // roads the flood owns stay owned, so tick() reopens / recloses them correctly as the water spreads again.
+  restartAt(simS) {
+    if (!this.model || this.level <= 0) return;
+    const { level, levelSource } = this;
+    this.plan = this.model.plan(0);
+    this.setLevel(level, simS, levelSource);
+  }
+
+  // Back to a dry river (used by sim reset and the demo scenario).
+  reset() {
+    if (!this.model) return;
+    this.plan = this.model.plan(0);
+    this.level = 0; this.levelSource = 'none'; this.levelSetAtS = 0; this.startS = 0; this.floodedNow = 0;
+    this.applied.clear();
+  }
+
+  // Road statuses once a level has fully spread (for planning: placement and evacuation under a flood).
+  finalStatuses(level) {
+    if (!this.model) return { blocked: new Set(), highRisk: new Set(), flooded: new Set(), risk: new Set() };
+    const plan = this.model.plan(level);
+    const { statuses } = this.model.roadStatuses(plan, Infinity);
+    const blocked = new Set(), highRisk = new Set();
+    for (const [id, s] of statuses) (s === 'BLOCKED' ? blocked : highRisk).add(id);
+    return { blocked, highRisk, flooded: new Set(plan.floodTimeS.keys()), risk: plan.risk };
   }
 
   // Applies the statuses due at simNowS. Returns { blocked: [...], highRisk: [...], reopened: [...] }.

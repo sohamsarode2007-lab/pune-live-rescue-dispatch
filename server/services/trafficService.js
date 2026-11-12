@@ -8,7 +8,8 @@
 // 3. The segment shape is matched to our roads with the EdgeIndex (nearest-edge matching) and the factor
 //    is set on those roads (the largest factor wins if two samples hit one road). Roads without a sample
 //    stay at 1.0.
-// No timer: refresh only when a dispatcher connects (at most every 15 min) or on "Refresh traffic".
+// Manual only: TomTom is called solely from the dispatcher's "Refresh traffic" button (never on startup,
+// on connect or on a timer). TOMTOM_DISABLED=1 ignores the key entirely (development / rehearsals).
 // Every successful fetch is saved to disk and the last snapshot is loaded on startup (offline demo).
 // Daily cap (200 calls) is enforced through ExternalCalls before every request.
 import fs from 'node:fs';
@@ -159,15 +160,14 @@ export class TrafficService {
     }
   }
 
-  // Dispatcher connected: refresh only if we have a key and the snapshot is missing or older than 15 min.
-  maybeAutoRefresh() {
-    if (!this.apiKey) return null;
-    const age = this.snapshot ? this.now() - Date.parse(this.snapshot.fetchedAt) : Infinity;
-    if (age < this.minRefreshMs) return null;
-    return this.refresh({ reason: 'auto' });
-  }
-
-  refresh({ reason = 'manual' } = {}) {
+  // The ONLY way to call TomTom: the dispatcher's "Refresh traffic" button (manual). There is no automatic
+  // refresh, so quota is spent only when someone chooses to. A second refresh within minRefreshMs of a
+  // successful one is refused unless forced, to protect against double clicks.
+  refresh({ reason = 'manual', force = false } = {}) {
+    const age = this.snapshot && this.snapshotSource === 'fetched' ? this.now() - Date.parse(this.snapshot.fetchedAt) : Infinity;
+    if (!force && age < this.minRefreshMs) {
+      return Promise.resolve(this.lastResult = { ok: false, reason: 'TOO_SOON', message: `Traffic was refreshed ${Math.round(age / 60000)} min ago; refreshing again within 15 min needs a confirmation.` });
+    }
     if (!this.refreshing) this.refreshing = this.#doRefresh(reason).finally(() => { this.refreshing = null; });
     return this.refreshing;
   }
