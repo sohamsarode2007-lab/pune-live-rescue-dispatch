@@ -85,6 +85,13 @@ export function partialToNextJunction(trip, t) {
   return { junction: j, prefix: { points, times } };
 }
 
+// Roads the vehicle has not started yet at time t (after its next junction). The road it is on now is
+// not included: a vehicle already on a road finishes it to the next junction.
+export function upcomingRoadIds(trip, t) {
+  const m = trip.marks.findIndex((x) => x.time >= t);
+  return m === -1 ? [] : trip.roadIds.slice(m);
+}
+
 // Remaining geometry from time t (for drawing what is still ahead).
 export function remainingPoints(trip, t) {
   const pos = positionAt(trip, t);

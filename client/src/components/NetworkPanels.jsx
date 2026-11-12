@@ -26,7 +26,8 @@ export function TrapZoneWarning({ summary }) {
           </li>
         ))}
       </ul>
-      <p className="note">Strongly connected components of the directed road graph (Tarjan SCC), recomputed after every closure. Units cannot get out of a trap, and nobody can get into a no-entry zone.</p>
+      {summary.trivialZones > 0 && <p className="note">Not listed: {fmtInt(summary.trivialJunctions)} junction{summary.trivialJunctions > 1 ? 's' : ''} in {fmtInt(summary.trivialZones)} tiny zone{summary.trivialZones > 1 ? 's' : ''} (1–2 junctions, e.g. under flood water, no facility).</p>}
+      <p className="note">Strongly connected components of the directed road graph (Tarjan SCC), recomputed after every closure. Units cannot get out of a trap, and nobody can get into a no-entry zone. Zones with ≥ 3 junctions or a facility are listed.</p>
     </section>
   );
 }

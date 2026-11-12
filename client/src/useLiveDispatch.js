@@ -19,6 +19,7 @@ const initial = {
   units: new Map(), incidents: new Map(), queue: [], beds: {}, closedRoads: [],
   mode: 'hungarian', comparisons: [], comparisonTotals: null,
   traffic: null, externalCalls: null, network: null,
+  flood: null, crowd: [], reroutes: [],
 };
 
 function reducer(state, a) {
@@ -30,12 +31,16 @@ function reducer(state, a) {
       incidents: new Map(a.s.incidents.map((i) => [i.id, i])),
       beds: Object.fromEntries(a.s.hospitals.map((h) => [h.id, h.bedsFree])),
       mode: a.s.mode, comparisons: a.s.comparisons ?? [], comparisonTotals: a.s.comparisonTotals ?? null,
+      reroutes: (a.s.reroutes ?? []).map((r) => ({ ...r, seenAt: 0 })),
     };
     case 'comparison': return { ...state, comparisons: [...state.comparisons, a.c.latest].slice(-20), comparisonTotals: a.c.totals };
     case 'mode': return { ...state, mode: a.mode };
     case 'traffic': return { ...state, traffic: a.t };
     case 'calls': return { ...state, externalCalls: a.c };
     case 'network': return { ...state, network: a.n };
+    case 'flood': return { ...state, flood: a.f };
+    case 'crowd': return { ...state, crowd: a.c };
+    case 'reroute': return { ...state, reroutes: [...state.reroutes, { ...a.r, seenAt: Date.now() }].slice(-30) };
     case 'unit': { const units = new Map(state.units); units.set(a.u.id, { ...units.get(a.u.id), ...a.u }); return { ...state, units }; }
     case 'incident': { const incidents = new Map(state.incidents); incidents.set(a.i.id, a.i); return { ...state, incidents }; }
     case 'positions': {
@@ -78,6 +83,9 @@ export function useLiveDispatch() {
       'traffic:updated': (t) => dispatch({ type: 'traffic', t }),
       'external:calls': (c) => dispatch({ type: 'calls', c }),
       'network:updated': (n) => dispatch({ type: 'network', n }),
+      'flood:updated': (f) => dispatch({ type: 'flood', f }),
+      'crowd:updated': (c) => dispatch({ type: 'crowd', c }),
+      'unit:rerouted': (r) => dispatch({ type: 'reroute', r }),
     };
     Object.entries(handlers).forEach(([e, h]) => s.on(e, h));
     if (s.connected) join();

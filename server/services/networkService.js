@@ -134,13 +134,21 @@ export class NetworkService {
     if (this.cache.scc?.version === this.graph.version) return this.cache.scc.value;
     const t0 = performance.now();
     const r = trapZones(this.graph, { facilityNodes: this.facilityNodes });
-    const zones = r.zones.map((z) => ({
+    // Warn only about meaningful zones (>= 3 junctions or a facility inside). Single junctions whose roads
+    // are all closed (e.g. under flood water) are counted, not listed.
+    const significant = r.zones.filter((z) => z.junctions >= 3 || z.facilitiesTotal > 0);
+    const trivial = r.zones.length - significant.length;
+    const trivialJunctions = r.zones.reduce((s, z) => s + z.junctions, 0) - significant.reduce((s, z) => s + z.junctions, 0);
+    const zones = significant.map((z) => ({
       ...z,
       facilityList: z.nodeIds.flatMap((id) => (this.facilityByNode.get(id) ?? []).map((f) => ({ id: f.id, name: f.name, kind: f.kind }))),
       points: z.nodeIds.slice(0, 400).map((id) => { const l = this.graph.getLocation(id); return [l.lat, l.lng]; }),
       nodeIds: undefined,
     }));
-    const value = { components: r.components, mainSize: r.mainSize ?? this.graph.locations.size, zones, ms: Math.round(performance.now() - t0) };
+    const value = {
+      components: r.components, mainSize: r.mainSize ?? this.graph.locations.size, zones,
+      trivialZones: trivial, trivialJunctions, ms: Math.round(performance.now() - t0),
+    };
     this.cache.scc = { version: this.graph.version, value };
     return value;
   }
@@ -231,6 +239,7 @@ export class NetworkService {
     return {
       version: this.graph.version,
       trapZones: scc.zones.map(({ points, ...z }) => z),
+      trivialZones: scc.trivialZones, trivialJunctions: scc.trivialJunctions,
       sccComponents: scc.components,
       crossings: { status: this.crossingState.status, stale: this.crossingState.version !== this.graph.version, count: this.crossingDefs.length },
     };

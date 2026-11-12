@@ -58,6 +58,7 @@ export class GraphStore {
     this.units = facilitiesJson?.units ?? [];
     this.facilitiesMeta = facilitiesJson?.meta ?? null;
     this.loadMs = performance.now() - t0;
+    this.closureSource = new Map();
     maxHeuristicSpeedMps(this.graph);
   }
 
@@ -141,8 +142,10 @@ export class GraphStore {
     };
   }
 
-  setRoadStatus(roadId, status) {
+  // source: who closed it ('manual' | 'flood' | 'crowd' | 'crossing'), shown in the closures list.
+  setRoadStatus(roadId, status, source = 'manual') {
     this.graph.setRoadStatus(roadId, status);
+    if (status === 'OPEN') this.closureSource.delete(roadId); else this.closureSource.set(roadId, source);
     return this.roadInfo(roadId);
   }
 
@@ -152,6 +155,7 @@ export class GraphStore {
     return {
       id: r.id, name: r.name, highway: r.highway, status: r.status, lengthM: r.lengthM, oneWay: r.oneWay,
       maxspeedKmh: r.maxspeedKmh, baseTimeS: r.baseTimeS, trafficFactor: r.trafficFactor, riskPenaltyS: r.riskPenaltyS,
+      bridge: r.bridge, source: this.closureSource.get(r.id) ?? null,
       geometry: this.graph.roadGeometry(r.id, r.from),
     };
   }
@@ -161,5 +165,5 @@ export class GraphStore {
     return [...this.graph.roads.values()].filter((r) => r.status !== ROAD_STATUS.OPEN).map((r) => this.roadInfo(r.id));
   }
 
-  resetRoads() { this.graph.reset(); }
+  resetRoads() { this.graph.reset(); this.closureSource?.clear(); }
 }

@@ -29,6 +29,10 @@ export const T = {
     offline: 'Connection lost — reconnecting…', simNote: 'Simulated units and times.',
     merged: 'Others nearby already reported this emergency. Your call was added to the same request.',
     calls: 'calls',
+    reportRoad: 'Report a flooded road', reportPick: 'Tap the flooded road on the map', reportSend: 'Report this road',
+    reportSent: (road, k, n) => `Report received for ${road} (${k} of ${n} reports needed to close it).`,
+    reportClosed: (road) => `${road} is now closed to rescue vehicles. Thank you.`,
+    reportNoRoad: 'No road found there. Tap closer to the road.', back: 'Back',
   },
   mr: {
     banner: 'हे केवळ डेमो सिम्युलेशन आहे — खऱ्या आपत्कालीन परिस्थितीत 112 वर कॉल करा.',
@@ -56,6 +60,10 @@ export const T = {
     offline: 'कनेक्शन तुटले — पुन्हा जोडत आहे…', simNote: 'पथके आणि वेळा सिम्युलेटेड आहेत.',
     merged: 'जवळच्या इतरांनी ही आपत्कालीन स्थिती आधीच कळवली आहे. तुमचा कॉल त्याच विनंतीत जोडला आहे.',
     calls: 'कॉल',
+    reportRoad: 'पाण्याखाली गेलेला रस्ता कळवा', reportPick: 'नकाशावर पाण्याखालील रस्त्यावर टॅप करा', reportSend: 'हा रस्ता कळवा',
+    reportSent: (road, k, n) => `${road} साठी तक्रार मिळाली (बंद करण्यासाठी ${n} पैकी ${k} तक्रारी).`,
+    reportClosed: (road) => `${road} आता बचाव वाहनांसाठी बंद आहे. धन्यवाद.`,
+    reportNoRoad: 'तेथे रस्ता सापडला नाही. रस्त्याच्या जवळ टॅप करा.', back: 'मागे',
   },
   hi: {
     banner: 'यह केवल डेमो सिमुलेशन है — वास्तविक आपातकाल में 112 पर कॉल करें।',
@@ -83,5 +91,9 @@ export const T = {
     offline: 'कनेक्शन टूट गया — फिर से जुड़ रहा है…', simNote: 'दल और समय सिमुलेटेड हैं।',
     merged: 'पास के अन्य लोगों ने यह आपातकाल पहले ही बताया है। आपकी कॉल उसी अनुरोध में जोड़ दी गई है।',
     calls: 'कॉल',
+    reportRoad: 'पानी में डूबी सड़क की सूचना दें', reportPick: 'मानचित्र पर डूबी सड़क पर टैप करें', reportSend: 'इस सड़क की सूचना दें',
+    reportSent: (road, k, n) => `${road} की सूचना मिली (बंद करने के लिए ${n} में से ${k} सूचनाएँ)।`,
+    reportClosed: (road) => `${road} अब बचाव वाहनों के लिए बंद है। धन्यवाद।`,
+    reportNoRoad: 'वहाँ कोई सड़क नहीं मिली। सड़क के पास टैप करें।', back: 'वापस',
   },
 };

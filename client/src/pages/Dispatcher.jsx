@@ -10,6 +10,7 @@ import ComparisonPanel from '../components/ComparisonPanel.jsx';
 import TrafficPanel from '../components/TrafficPanel.jsx';
 import OsrmPanel from '../components/OsrmPanel.jsx';
 import { TrapZoneWarning, SpofPanel, CrossingsPanel } from '../components/NetworkPanels.jsx';
+import { FloodPanel, RerouteLog, CrowdPanel } from '../components/FloodPanels.jsx';
 import { UNIT_LABEL, TYPE_ICON } from '../components/mapParts.jsx';
 
 const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals' };
@@ -78,6 +79,14 @@ export default function Dispatcher() {
     if (!zoneCount) { setZones([]); return; }
     api.scc().then((s) => setZones(s.zones)).catch(() => {});
   }, [zoneCount, netVersion]);
+  // Phase 5: flooded junctions for the map, refetched as the flood spreads or recedes.
+  const [floodPoints, setFloodPoints] = useState([]);
+  const floodKey = `${live.flood?.level}|${live.flood?.floodedNow}`;
+  useEffect(() => {
+    if (!live.flood?.level && !live.flood?.floodedNow) { setFloodPoints([]); return; }
+    api.flood().then((f) => setFloodPoints(f.points)).catch(() => {});
+  }, [floodKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const setCrossing = async (id, status) => {
     try { await api.setCrossingStatus(id, status); setVersion((v) => v + 1); } catch (e) { setRouteError(e.message); }
   };
@@ -214,6 +223,8 @@ export default function Dispatcher() {
             selectedIncidentId={selectedIncidentId} onSelectIncident={setSelectedIncidentId} beds={live.beds}
             cursor={tab === 'live' && testMode ? 'crosshair' : ''}
             trafficRoads={trafficRoads} compare={compareResult}
+            floodPoints={floodPoints} crowdRoads={live.crowd}
+            reroutes={live.reroutes.filter((r) => Date.now() - r.seenAt < 120000 || r.seenAt === 0).slice(-10)}
             network={tab === 'network'
               ? { rivers, spof, showAll: showAllSpof, crossings: crossingState?.ranking ?? [], selectedCrossingId, onSelectCrossing: setSelectedCrossingId, onSetCrossingStatus: setCrossing, zones }
               : { zones }}
@@ -232,6 +243,9 @@ export default function Dispatcher() {
           </div>
 
           <TrapZoneWarning summary={live.network} />
+          {tab !== 'planner' && <FloodPanel flood={live.flood} />}
+          {tab === 'live' && <RerouteLog reroutes={live.reroutes} />}
+          {tab === 'live' && <CrowdPanel crowd={live.crowd} />}
 
           {tab === 'network' && (
             <>
@@ -446,9 +460,15 @@ export default function Dispatcher() {
             <h2>Closures {live.closedRoads.length > 0 && <span className="pill BLOCKED">{live.closedRoads.length}</span>}</h2>
             {live.closedRoads.length === 0 ? <p className="muted">No closed roads.</p> : (
               <>
+                {(() => {
+                  const byFlood = live.closedRoads.filter((r) => r.source === 'flood');
+                  return byFlood.length > 0 && (
+                    <p className="note" style={{ marginTop: 0 }}>Flood: {byFlood.filter((r) => r.status === 'BLOCKED').length} blocked, {byFlood.filter((r) => r.status !== 'BLOCKED').length} high-risk (controlled by the flood slider).</p>
+                  );
+                })()}
                 <ul className="closed">
-                  {live.closedRoads.map((r) => (
-                    <li key={r.id}><span>{r.name || 'Unnamed road'} <span className="muted">({r.id})</span></span>
+                  {live.closedRoads.filter((r) => r.source !== 'flood').map((r) => (
+                    <li key={r.id}><span>{r.name || 'Unnamed road'} <span className="muted">({r.source ?? 'manual'}{r.status === 'HIGH_RISK' ? ', high-risk' : ''})</span></span>
                       <button type="button" className="sm" onClick={() => setStatus([r.id], 'OPEN')}>Reopen</button></li>
                   ))}
                 </ul>

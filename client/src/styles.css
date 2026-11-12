@@ -159,6 +159,16 @@ button.burst { border-color: #b45309; color: #fde68a; font-weight: 700; }
 .pin.crossing.closed { background: #475569; text-decoration: line-through; }
 .pin.crossing.sel { outline: 3px solid #fbbf24; outline-offset: 1px; }
 
+/* ---------- Phase 5: flood, reroutes, crowd ---------- */
+.flood-panel { border-color: #1d4ed8; }
+.slider-label { margin-top: 10px; }
+.slider-row { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+.slider-row input { flex: 1; accent-color: #3b82f6; }
+.slider-row b { color: var(--ink); min-width: 48px; text-align: right; }
+.pin.reroute { background: #f59e0b; color: #1c1917; font-size: 13px; border-color: #fff7ed; animation: pulse 1.6s ease-out infinite; }
+.sos-secondary { margin: 4px 16px 0; }
+.sos-secondary button { width: 100%; padding: 12px; font-size: 1rem; border-color: #1d4ed8; color: #bfdbfe; }
+
 /* ---------- algorithms page ---------- */
 .scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
 .ramp { height: 10px; border-radius: 5px; margin-top: 10px; }

@@ -9,3 +9,4 @@ osmnx==2.1.1
 pandas==2.2.3
 pyproj==3.6.1
 geopandas==1.0.1
+srtm.py==0.3.7   # Phase 5 elevation (downloads the SRTM tile once)

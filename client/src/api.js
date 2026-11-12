@@ -18,6 +18,7 @@ export const api = {
   scc: () => call('/api/network/scc'),
   crossings: () => call('/api/network/crossings'),
   rivers: () => call('/api/rivers'),
+  flood: () => call('/api/flood'),
   setCrossingStatus: (id, status) => post(`/api/crossings/${encodeURIComponent(id)}/status`, { status }),
   setRoadStatus: (id, status) => post(`/api/roads/${encodeURIComponent(id)}/status`, { status }),
   resetRoads: () => post('/api/roads/reset'),

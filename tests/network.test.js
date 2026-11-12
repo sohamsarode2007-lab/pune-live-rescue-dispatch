@@ -57,7 +57,7 @@ test('closing a critical Tarjan bridge creates an isolated zone of exactly the p
     const { net: n, store } = await net();
     const spof = n.spof();
     assert.ok(spof.counts.criticalBridges > 0 && spof.counts.criticalBridges < spof.counts.bridges);
-    const b = spof.bridges.find((x) => x.critical);
+    const b = spof.bridges.find((x) => x.critical && x.cutJunctions >= 3);
     assert.equal(n.scc().zones.length, 0);
     try {
       store.setRoadStatus(b.roadId, 'BLOCKED');

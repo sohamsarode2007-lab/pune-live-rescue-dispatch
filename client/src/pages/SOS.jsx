@@ -29,6 +29,27 @@ export default function SOS() {
   const [unit, setUnit] = useState(null);
   const [connected, setConnected] = useState(true);
   const [merged, setMerged] = useState(false);
+  // Phase 5: crowd "flooded road" report (separate from the SOS itself)
+  const [reportMode, setReportMode] = useState(false);
+  const [reportPoint, setReportPoint] = useState(null);
+  const [reportMsg, setReportMsg] = useState(null);
+
+  const startReport = () => {
+    setReportMode(true); setReportMsg(null); setReportPoint(null);
+    if (window.isSecureContext && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => setReportPoint({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+        () => {}, { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 },
+      );
+    }
+  };
+  const sendReport = async () => {
+    try {
+      const r = await emitAck('road:report', { ...reportPoint, clientId: clientId() });
+      if (r.ok) setReportMsg({ ok: true, text: r.blocked ? t.reportClosed(r.name) : t.reportSent(r.name, r.count, r.needed) });
+      else setReportMsg({ ok: false, text: r.error === 'OUTSIDE_AREA' ? t.outside : r.error === 'NO_ROAD_NEARBY' ? t.reportNoRoad : r.error === 'TOO_FAST' ? t.tooFast : t.sendFailed });
+    } catch { setReportMsg({ ok: false, text: t.sendFailed }); }
+  };
 
   useEffect(() => { store.set(LANG_KEY, lang); document.documentElement.lang = lang; }, [lang]);
 
@@ -132,7 +153,19 @@ export default function SOS() {
       </header>
       {!connected && <div className="alert sos-offline">{t.offline}</div>}
 
-      {(phase === 'form' || phase === 'locating' || phase === 'sending') && (
+      {reportMode && bbox && (
+        <div className="sos-report">
+          <p className="sos-tap">{t.reportPick}</p>
+          <SosMap bbox={bbox} me={reportPoint} unit={null} picking onPick={(p) => { setReportPoint(p); setReportMsg(null); }} />
+          <div className="sos-actions">
+            <button type="button" className="danger-btn small" disabled={!reportPoint} onClick={sendReport}>{t.reportSend}</button>
+            <button type="button" onClick={() => setReportMode(false)}>{t.back}</button>
+          </div>
+          {reportMsg && <p className={reportMsg.ok ? 'okmsg sos-secondary' : 'alert sos-secondary'} role="status">{reportMsg.text}</p>}
+        </div>
+      )}
+
+      {!reportMode && (phase === 'form' || phase === 'locating' || phase === 'sending') && (
         <main className="sos-form">
           <fieldset>
             <legend>{t.typeQ}</legend>
@@ -164,6 +197,9 @@ export default function SOS() {
             {phase === 'locating' ? t.locating : phase === 'sending' ? t.sending : t.danger}
           </button>
           {notice && <p className="alert" role="alert">{t[notice]}</p>}
+          <div className="sos-secondary" style={{ margin: 0 }}>
+            <button type="button" onClick={startReport} disabled={!bbox}>≈ {t.reportRoad}</button>
+          </div>
         </main>
       )}
 

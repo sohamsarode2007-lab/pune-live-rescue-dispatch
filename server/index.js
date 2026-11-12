@@ -3,7 +3,9 @@
 // Socket.IO events
 //   phone -> server : sos:new {lat,lng,accuracyM,type,severity,people,clientId}  (ack: {ok, incident} | {ok:false, error})
 //                     sos:watch {incidentId}   (re-join an incident's updates after a reload/reconnect)
-//                     road:report {lat,lng,clientId}  (stored; Phase 5 turns 3 reports into a closure)
+//                     road:report {lat,lng,clientId}  (3 different phones within 15 min close the road)
+//   dispatcher (5)  : flood:set {level}, flood:glofas {apply}
+//   server (5)      : flood:updated, crowd:updated, unit:rerouted
 //   dispatcher      : dispatch:join, sim:speed {speed}, sim:reset, burst:create, dispatch:mode,
 //                     traffic:refresh, traffic:mode {mode: 'live'|'free-flow'}
 //   server -> all   : incident:updated, unit:updated, unit:position, queue:updated, hospital:updated,
@@ -25,7 +27,9 @@ import { TrafficService } from './services/trafficService.js';
 import { OsrmService } from './services/osrmService.js';
 import { CompareService } from './services/compareService.js';
 import { NetworkService } from './services/networkService.js';
-import { RIVER_FILE } from './config.js';
+import { FloodService } from './services/floodService.js';
+import { CrowdReports } from './services/crowdReports.js';
+import { ELEVATION_FILE, FLOOD_CURRENT_FILE, FLOOD_HISTORY_FILE, RIVER_FILE } from './config.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -56,6 +60,21 @@ const traffic = new TrafficService({
   onChange: (st) => { io.to('dispatch').emit('traffic:updated', st); network.roadsChanged(); },
 });
 network.rankCrossings().then((c) => console.log(`River crossings: ${c.ranking?.length ?? 0} ranked in ${c.ms} ms`));
+
+// Phase 5: flood model + crowd reports.
+const readJson = (f) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
+const flood = new FloodService({
+  store, elevation: readJson(ELEVATION_FILE), rivers: network.rivers, calls,
+  historyFile: FLOOD_HISTORY_FILE, currentFile: FLOOD_CURRENT_FILE,
+});
+const crowd = new CrowdReports({ store });
+const floodChanged = () => io.to('dispatch').emit('flood:updated', flood.status());
+console.log(`Flood model: ${flood.status().available ? 'ready' : 'unavailable (run scripts/build_elevation.py)'}`);
+flood.refreshGlofas().then((g) => {
+  console.log(g.ok ? `GloFAS: ${g.status} (peak ${g.peak.m3s} m3/s; p90 ${g.p90?.toFixed(1)}, p99 ${g.p99?.toFixed(1)}) -> initial level ${g.suggestedLevel} m` : `GloFAS: ${g.error}`);
+  flood.applyGlofasSuggestion(dispatch.now);           // PLAN: GloFAS sets the initial slider level
+  floodChanged();
+});
 const osrm = new OsrmService({ calls, ...(OSRM_BASE_URL ? { baseUrl: OSRM_BASE_URL } : {}) });
 const compare = new CompareService({ store, osrm, traffic, logFile: OSRM_LOG_FILE });
 const ts = traffic.status();
@@ -127,6 +146,11 @@ app.get('/api/roads/:id', (req, res) => {
 });
 
 const hazardChanged = () => { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); };
+// Every closure path (manual, crossing, flood, crowd) ends here: reroute affected units, then broadcast.
+const roadsClosed = (ids) => { if (ids.length) dispatch.roadsBlocked(ids); hazardChanged(); };
+
+app.get('/api/flood', (_req, res) => res.json({ status: flood.status(), points: flood.floodedPoints(dispatch.now) }));
+app.get('/api/crowd', (_req, res) => res.json(crowd.pending()));
 
 app.get('/api/network/spof', (_req, res) => res.json(network.spof()));
 app.get('/api/network/scc', (_req, res) => res.json(network.scc()));
@@ -139,8 +163,8 @@ app.post('/api/crossings/:id/status', (req, res) => {
   const { status } = req.body ?? {};
   if (!c) return res.status(404).json({ error: 'Unknown crossing' });
   if (!['OPEN', 'BLOCKED'].includes(status)) return bad(res, 'status must be OPEN or BLOCKED');
-  for (const id of c.roadIds) store.setRoadStatus(id, status);
-  hazardChanged();
+  for (const id of c.roadIds) { store.setRoadStatus(id, status, 'crossing'); flood.forget(id); }
+  roadsClosed(status === 'BLOCKED' ? c.roadIds : []);
   res.json({ ok: true, roadIds: c.roadIds });
 });
 
@@ -148,12 +172,14 @@ app.post('/api/roads/:id/status', (req, res) => {
   const { status } = req.body ?? {};
   if (!store.graph.getRoad(req.params.id)) return res.status(404).json({ error: 'Unknown road' });
   if (!Object.values(ROAD_STATUS).includes(status)) return bad(res, 'status must be OPEN, HIGH_RISK or BLOCKED');
-  const info = store.setRoadStatus(req.params.id, status);
-  hazardChanged();
+  const info = store.setRoadStatus(req.params.id, status, 'manual');
+  flood.forget(req.params.id);                     // a dispatcher's decision overrides the flood model
+  roadsClosed(status === 'BLOCKED' ? [req.params.id] : []);
   res.json(info);
 });
 
-app.post('/api/roads/reset', (_req, res) => { store.resetRoads(); hazardChanged(); res.json({ ok: true }); });
+// Reopens everything; an active flood re-applies itself on the next tick.
+app.post('/api/roads/reset', (_req, res) => { store.resetRoads(); flood.applied.clear(); crowd.clear(); hazardChanged(); res.json({ ok: true }); });
 
 // ---------------- Socket.IO ----------------
 const SOS_MIN_INTERVAL_MS = 3000;  // per connection, to stop accidental double-taps / floods
@@ -168,6 +194,8 @@ io.on('connection', (socket) => {
     socket.emit('traffic:updated', traffic.status());
     socket.emit('external:calls', calls.view());
     socket.emit('network:updated', network.summary());
+    socket.emit('flood:updated', flood.status());
+    socket.emit('crowd:updated', crowd.pending());
     // PLAN: no timer; refresh only while a dispatcher is connected, at most every 15 minutes.
     traffic.maybeAutoRefresh()?.then(() => io.to('dispatch').emit('traffic:updated', traffic.status()));
   });
@@ -211,11 +239,31 @@ io.on('connection', (socket) => {
     ack({ ok: true, incident: dispatch.incidentView(inc), unit: inc.unitId ? dispatch.unitView(dispatch.units.get(inc.unitId)) : null });
   });
 
+  // Phase 5: crowd "flooded road" reports; 3 different phones within 15 min close the road.
+  let lastReport = 0;
   socket.on('road:report', (msg, ack = () => {}) => {
     const lat = Number(msg?.lat), lng = Number(msg?.lng);
     if (!inArea(lat, lng)) return ack({ ok: false, error: 'OUTSIDE_AREA' });
-    dispatch.reportRoad({ lat, lng, clientId: String(msg?.clientId ?? socket.id).slice(0, 64) });
-    ack({ ok: true });
+    if (Date.now() - lastReport < 2000) return ack({ ok: false, error: 'TOO_FAST' });
+    lastReport = Date.now();
+    const r = crowd.report({ lat, lng, clientId: typeof msg?.clientId === 'string' ? msg.clientId.slice(0, 64) : socket.id });
+    if (r.newlyBlocked) { flood.forget(r.roadId); roadsClosed([r.roadId]); }
+    io.to('dispatch').emit('crowd:updated', crowd.pending());
+    ack(r);
+  });
+
+  // Phase 5: "Khadakwasla dam release" slider and GloFAS refresh (dispatcher only).
+  socket.on('flood:set', (msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false });
+    try { flood.setLevel(Number(msg?.level), dispatch.now, 'manual'); floodChanged(); ack({ ok: true, status: flood.status() }); } catch (e) { ack({ ok: false, message: e.message }); }
+  });
+
+  socket.on('flood:glofas', async (msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false });
+    const g = await flood.refreshGlofas({ force: true });
+    if (msg?.apply && g.ok) flood.applyGlofasSuggestion(dispatch.now);
+    floodChanged();
+    ack(g);
   });
 
   socket.on('sim:speed', (msg) => {
@@ -240,15 +288,23 @@ io.on('connection', (socket) => {
   socket.on('sim:reset', () => {
     if (!socket.rooms.has('dispatch')) return;
     dispatch.reset();
+    if (flood.level > 0) flood.setLevel(flood.level, 0, flood.levelSource);   // sim clock restarted at 0
     io.to('dispatch').emit('state:init', dispatch.snapshot());
+    floodChanged();
   });
 });
 
 let last = Date.now();
+let lastFloodKey = '';
 setInterval(() => {
   const nowMs = Date.now();
   dispatch.tick(nowMs - last);
   last = nowMs;
+  // The flood spreads with simulated time: apply due road closures, reroute units, refresh analyses.
+  const ch = flood.tick(dispatch.now);
+  if (ch.blocked.length || ch.highRisk.length || ch.reopened.length) roadsClosed(ch.blocked);
+  const key = `${flood.level}|${flood.floodedNow}|${flood.applied.size}`;
+  if (key !== lastFloodKey) { lastFloodKey = key; floodChanged(); }
 }, TICK_MS);
 
 // Production: serve the built client (npm run build) from the same port, with SPA fallback.

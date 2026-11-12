@@ -42,6 +42,11 @@ export const EXTERNAL_CALLS_FILE = path.join(DATA_DIR, 'external-calls.json');
 export const OSRM_LOG_FILE = path.join(DATA_DIR, 'osrm-comparisons.jsonl');
 export const BURST_BENCHMARK_FILE = path.join(DATA_DIR, 'burst-benchmark.json');
 export const RIVER_FILE = path.join(DATA_DIR, 'river.json');
+// Phase 5: SRTM elevations (generated), Open-Meteo Flood API history (committed, for offline use) and the
+// latest current-discharge result (committed too, refreshed at most every 6 h).
+export const ELEVATION_FILE = path.join(DATA_DIR, 'elevation.json');
+export const FLOOD_HISTORY_FILE = path.join(DATA_DIR, 'flood-history.json');
+export const FLOOD_CURRENT_FILE = path.join(DATA_DIR, 'flood-current.json');
 // Endpoint overrides, only for testing against a local mock (defaults are the real services).
 export const TOMTOM_FLOW_URL = process.env.TOMTOM_FLOW_URL || undefined;
 export const OSRM_BASE_URL = process.env.OSRM_BASE_URL || undefined;

@@ -25,7 +25,8 @@ import { hungarian, greedyAssignment } from '../../shared/dispatch/hungarian.js'
 import { SosClusterer } from '../../shared/dispatch/sosClusterer.js';
 import { EventQueue } from '../../shared/sim/EventQueue.js';
 import { SimClock } from '../../shared/sim/simClock.js';
-import { buildTrip, positionAt, partialToNextJunction, remainingPoints } from '../../shared/sim/trip.js';
+import { buildTrip, positionAt, partialToNextJunction, remainingPoints, upcomingRoadIds } from '../../shared/sim/trip.js';
+import { astar } from '../../shared/graph/astar.js';
 import { burstPattern, BURST_SEED } from './burst.js';
 
 export const INCIDENT_TYPES = Object.freeze(['medical', 'fire', 'flood']);
@@ -74,7 +75,7 @@ export class DispatchService {
         trip: null, tripSeq: 0, incidentId: null, hospitalId: null, phaseEndS: null,
       }];
     }));
-    this.roadReports = [];
+    this.reroutes = [];
     this.comparisons = [];
     this.batchSeq = 0;
     this.lastQueueKey = '';
@@ -383,12 +384,80 @@ export class DispatchService {
 
   setSpeed(speed) { this.clock.setSpeed(speed); }
 
-  // Crowd road reports are stored now; Phase 5 turns 3 reports from different clients into a closure.
-  reportRoad({ lat, lng, clientId }) {
-    const snap = this.store.nearest(lat, lng);
-    const report = { lat, lng, clientId, nodeId: snap.nodeId, atS: this.now };
-    this.roadReports.push(report);
-    return report;
+  // ---------- Phase 5: dynamic rerouting ----------
+  // Roads were just closed. Every moving unit whose remaining route uses one of them finishes the road it
+  // is on, then re-plans (A*) from the next junction to the same destination. If the destination can no
+  // longer be reached: an incident goes back to the queue, a patient goes to another hospital, a
+  // returning unit becomes available where it stands.
+  roadsBlocked(roadIds) {
+    const blocked = new Set(roadIds);
+    if (!blocked.size) return [];
+    const events = [];
+    for (const u of [...this.units.values()]) {
+      if (!MOVING.has(u.status) || !u.trip) continue;
+      const hit = upcomingRoadIds(u.trip, this.now).filter((id) => blocked.has(id));
+      if (!hit.length) continue;
+      const part = partialToNextJunction(u.trip, this.now);
+      const from = part.junction.nodeId, dest = u.trip.path.at(-1), oldEndS = u.trip.endS;
+      const pos = positionAt(u.trip, this.now);
+      const route = from === dest ? null : astar(this.graph, from, dest);
+      const ev = { unitId: u.id, status: u.status, atS: round1(this.now), lat: round6(pos.lat), lng: round6(pos.lng), closedRoadIds: hit, incidentId: u.incidentId };
+      if (route?.reachable) {
+        const type = { EN_ROUTE: 'ARRIVE_SCENE', TO_HOSPITAL: 'ARRIVE_HOSPITAL', RETURNING: 'ARRIVE_HOME' }[u.status];
+        this.#startTrip(u, route, part.prefix, u.status, { type, incidentId: u.incidentId });
+        Object.assign(ev, { outcome: 'rerouted', extraS: round1(u.trip.endS - oldEndS) });
+        if (u.status === UNIT_STATUS.EN_ROUTE) {
+          const inc = this.incidents.get(u.incidentId);
+          inc.etaS = u.trip.endS;
+          inc.reroutes = (inc.reroutes ?? 0) + 1;
+          this.#incidentChanged(inc);
+        }
+      } else {
+        ev.outcome = this.#cannotReach(u, from, part);
+      }
+      events.push(ev);
+      this.reroutes.push(ev);
+      if (this.reroutes.length > 50) this.reroutes.shift();
+      const rooms = ['dispatch'];
+      if (ev.incidentId) rooms.push(`inc:${ev.incidentId}`);
+      this.emit('unit:rerouted', ev, rooms);
+    }
+    if (events.some((e) => e.outcome !== 'rerouted')) this.dispatchBatch('reroute');
+    return events;
+  }
+
+  // The unit's destination became unreachable. It stops at the next junction (after finishing its road).
+  #cannotReach(u, junctionId, part) {
+    const loc = this.graph.getLocation(junctionId);
+    const stopAt = () => Object.assign(u, { nodeId: junctionId, lat: loc.lat, lng: loc.lng, trip: null, tripSeq: u.tripSeq + 1 });
+    if (u.status === UNIT_STATUS.TO_HOSPITAL) {
+      const inc = this.incidents.get(u.incidentId);
+      stopAt();
+      const other = this.#chooseHospital({ ...inc, nodeId: junctionId });
+      if (other && other.route.roadIds.length) {
+        u.hospitalId = other.hospital.id;
+        inc.hospitalId = other.hospital.id;
+        this.#incidentChanged(inc);
+        this.#startTrip(u, other.route, part.prefix, UNIT_STATUS.TO_HOSPITAL, { type: 'ARRIVE_HOSPITAL' });
+        return 'other-hospital';
+      }
+      this.#resolve(inc);
+      this.#becomeAvailable(u);
+      return 'no-hospital-reachable';
+    }
+    if (u.status === UNIT_STATUS.EN_ROUTE) {
+      const inc = this.incidents.get(u.incidentId);
+      Object.assign(inc, { status: INCIDENT_STATUS.PENDING, unitId: null, assignedS: null, etaS: null });
+      this.#incidentChanged(inc);
+      stopAt();
+      Object.assign(u, { status: UNIT_STATUS.AVAILABLE, incidentId: null, phaseEndS: null });
+      this.#unitChanged(u);
+      return 'incident-unreachable';
+    }
+    stopAt();                                    // RETURNING: home cut off, wait where it is
+    Object.assign(u, { status: UNIT_STATUS.AVAILABLE, incidentId: null, hospitalId: null, phaseEndS: null });
+    this.#unitChanged(u);
+    return 'home-unreachable';
   }
 
   // ---------- views ----------
@@ -416,6 +485,7 @@ export class DispatchService {
       hospitals: [...this.hospitals.values()].map((h) => ({ id: h.id, bedsFree: h.bedsFree })),
       comparisons: this.comparisons.slice(-20),
       comparisonTotals: this.comparisonTotals(),
+      reroutes: this.reroutes.slice(-20),
     };
   }
 

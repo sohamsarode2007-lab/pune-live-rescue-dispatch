@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { MapContainer, Polyline, Marker, Popup } from 'react-leaflet';
+import { MapContainer, Polyline, Marker, Popup, CircleMarker } from 'react-leaflet';
 import { AreaBox, BaseTiles, ClickHandler, MapFrame, divIcon, UNIT_LABEL, UNIT_LETTER, TYPE_ICON } from './mapParts.jsx';
 import { trafficColor } from './TrafficPanel.jsx';
 import NetworkLayer from './NetworkLayer.jsx';
@@ -20,7 +20,7 @@ function fleetText(units) {
 export default function RescueMap({
   bbox, facilities, fleet, layers, origin, destination, route, closedRoads, onMapClick, onReopenRoad, onPickOrigin,
   incidents = [], liveUnits = [], showIdle = false, selectedIncidentId = null, onSelectIncident, beds = {}, cursor = '',
-  trafficRoads = [], compare = null, network = null,
+  trafficRoads = [], compare = null, network = null, floodPoints = [], crowdRoads = [], reroutes = [],
 }) {
   const fleetByStation = useMemo(() => {
     const m = new Map();
@@ -48,7 +48,25 @@ export default function RescueMap({
             </Polyline>
           ))}
 
+          {floodPoints.map((p, i) => (
+            <CircleMarker key={`fl-${i}`} center={p} radius={7} interactive={false}
+              pathOptions={{ stroke: false, fillColor: '#3b82f6', fillOpacity: 0.55 }} />
+          ))}
+
           {network && <NetworkLayer {...network} />}
+
+          {crowdRoads.map((c) => (
+            <Polyline key={`cr-${c.roadId}`} positions={c.geometry}
+              pathOptions={{ color: '#facc15', weight: 7, opacity: 0.8, dashArray: c.blocked ? undefined : '6 6' }}>
+              <Popup><b>{c.name}</b><br />Crowd reports: {c.reports}/{c.needed} phones{c.blocked ? ' · closed' : ''}</Popup>
+            </Polyline>
+          ))}
+
+          {reroutes.map((r, i) => (
+            <Marker key={`rr-${r.unitId}-${r.atS}-${i}`} position={[r.lat, r.lng]} zIndexOffset={1300} icon={divIcon('reroute', '↻', 22)}>
+              <Popup><b>{r.unitId}</b> rerouted ({r.outcome}) at sim {Math.round(r.atS)} s: {r.closedRoadIds.length} closed road(s) ahead.</Popup>
+            </Marker>
+          ))}
 
           {trafficRoads.map((r) => (
             <Polyline key={`t-${r.id}`} positions={r.geometry} pathOptions={{ color: trafficColor(r.factor), weight: 5, opacity: 0.85 }}>
