@@ -93,9 +93,17 @@ def osmid_key(v):
 
 
 def main():
+    # Optional (benchmark only): --place "Pune, Maharashtra, India" --out pune-full.graph.json
+    args = sys.argv[1:]
+    place = args[args.index("--place") + 1] if "--place" in args else None
+    out = os.path.join(ROOT, "server", "data", args[args.index("--out") + 1]) if "--out" in args else OUT
     setup()
-    print("Downloading drive network for", BBOX, file=sys.stderr)
-    G = with_overpass_fallback(lambda: ox.graph_from_bbox(BBOX_TUPLE, network_type="drive", simplify=True))
+    if place:
+        print("Downloading drive network for", place, file=sys.stderr)
+        G = with_overpass_fallback(lambda: ox.graph_from_place(place, network_type="drive", simplify=True), attempts_per_url=1)
+    else:
+        print("Downloading drive network for", BBOX, file=sys.stderr)
+        G = with_overpass_fallback(lambda: ox.graph_from_bbox(BBOX_TUPLE, network_type="drive", simplify=True))
     raw_nodes, raw_edges = G.number_of_nodes(), G.number_of_edges()
     G = ox.truncate.largest_component(G, strongly=True)
     print(f"Raw {raw_nodes} nodes / {raw_edges} directed edges; "
@@ -148,7 +156,7 @@ def main():
     unmatched = sum(waiting_reverse.values())
     out = {
         "meta": {
-            "area": "Central Pune (Kothrud, Deccan, Shivajinagar, Swargate, Camp)",
+            "area": place or "Central Pune (Kothrud, Deccan, Shivajinagar, Swargate, Camp)",
             "bbox": BBOX,
             "source": "OpenStreetMap contributors (ODbL), downloaded with OSMnx " + ox.__version__,
             "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -166,11 +174,11 @@ def main():
         "nodes": nodes,
         "edges": edges,
     }
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as f:
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(out, f, separators=(",", ":"))
     print(json.dumps(out["meta"]["counts"]), file=sys.stderr)
-    print(f"Wrote {OUT} ({os.path.getsize(OUT) / 1e6:.1f} MB)", file=sys.stderr)
+    print(f"Wrote {out} ({os.path.getsize(out) / 1e6:.1f} MB)", file=sys.stderr)
 
 
 if __name__ == "__main__":

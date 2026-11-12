@@ -5,9 +5,11 @@ import './styles.css';
 import Dispatcher from './pages/Dispatcher.jsx';
 import SOS from './pages/SOS.jsx';
 import Algorithms from './pages/Algorithms.jsx';
+import Replay from './pages/Replay.jsx';
+import Benchmarks from './pages/Benchmarks.jsx';
 
-// Pages by path (the server and Vite both fall back to index.html). Phase 7 adds /benchmarks.
-const PAGES = { '/': Dispatcher, '/sos': SOS, '/algorithms': Algorithms };
+// Pages by path (the server and Vite both fall back to index.html).
+const PAGES = { '/': Dispatcher, '/sos': SOS, '/algorithms': Algorithms, '/replay': Replay, '/benchmarks': Benchmarks };
 const path = window.location.pathname.replace(/\/+$/, '') || '/';
 const Page = PAGES[path] ?? Dispatcher;
 

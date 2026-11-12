@@ -10,12 +10,19 @@ This is a Data Structures course project: all routing, assignment and spatial se
 > **Demo simulation — in a real emergency call 112.** This app never contacts any emergency service.
 > Hospital beds, every rescue vehicle and all unit timings are **simulated**.
 
-The plan of record is [PLAN.md](PLAN.md). **Status: Phases 1–6 done** (real Pune graph, live SOS loop,
-dispatch intelligence, live traffic + OSRM comparison, flood realism + rerouting, planning tools: coverage,
-station placement, single points of failure, evacuation flow). Phase 7 (benchmarks, load test, replay) is next.
+The plan of record is [PLAN.md](PLAN.md). **Status: all 7 phases done.**
+- real Pune graph
+- live SOS loop
+- dispatch intelligence
+- live traffic + OSRM comparison
+- flood realism + rerouting
+- planning tools (coverage, station placement, single points of failure, evacuation flow)
+- evaluation (benchmarks, load test, event log + replay)
 
 **Demo in one click:** open the dispatcher and press **▶ Monsoon flood demo** (Live dispatch → Simulation).
-See [section 3f](#3f-planning-tools-and-the-one-click-demo-phase-6).
+See [section 3f](#3f-planning-tools-and-the-one-click-demo-phase-6), the timed demo script in
+[DEMO.md](DEMO.md) and the oral-exam notes in [VIVA.md](VIVA.md). If anything fails during a demo, `/replay`
+plays a saved recording of the whole scenario with no network.
 The earlier fictional-city version ("Meridian") is kept, unused, in `legacy/meridian/`.
 
 ## 1. Run it
@@ -43,6 +50,9 @@ node scripts/bench-burst.mjs 300       # greedy vs Hungarian on 300 seeds -> ser
 node scripts/e2e-traffic.mjs [--no-refresh]   # traffic refresh (~60 TomTom calls!), toggle, OSRM comparison
 node scripts/e2e-flood.mjs     # flood rise -> closures, reroutes, ranking, trap zones; crowd reports; recede
 node scripts/e2e-scenario.mjs 70   # one-click monsoon demo, watched for 70 s (flood, coverage, reroutes)
+node scripts/bench.mjs             # all benchmarks -> /benchmarks page and the README tables (2-4 min)
+node scripts/sos-bots.mjs 100      # load test: 100 simulated phones over Socket.IO (server must be running)
+node scripts/record-demo.mjs       # re-record the saved replay server/data/replays/monsoon-demo.jsonl
 ```
 
 **Demo script for greedy vs optimal:**
@@ -106,22 +116,29 @@ moving within 0.2 s.
 ## 2. Structure
 
 ```
-shared/   pure JS, no React/DOM. Used by the server and the tests
-  graph/     Graph.js MinHeap.js dijkstra.js astar.js bfs.js dfs.js
-  dispatch/  EmergencyPriorityQueue.js requestConstants.js
-  spatial/   kdtree.js haversine.js
-  sim/       EventQueue.js simClock.js trip.js
+shared/   pure JS algorithms, no React/DOM. Used by the server, the client and the tests
+  graph/     Graph MinHeap dijkstra astar bfs dfs tarjan kcenter
+  dispatch/  EmergencyPriorityQueue requestConstants hungarian sosClusterer
+  spatial/   kdtree haversine geohash edgeMatcher
+  flow/      edmondsKarp
+  sim/       EventQueue simClock trip floodModel random
 server/   Express + Socket.IO
   index.js config.js
-  services/  graphStore.js (graph, routing, traversal)  dispatchService.js (live simulation)
-  data/      pune-central.graph.json facilities.json (generated)
+  services/  graphStore dispatchService burst burstBenchmark trafficService osrmService compareService
+             externalCalls networkService floodService crowdReports planningService scenario eventLog
+  data/      pune-central.graph.json facilities.json river.json elevation.json flood-*.json
+             traffic-snapshot.json burst-benchmark.json benchmarks.json sos-bots-result.json
+             replays/monsoon-demo.jsonl   (all generated, committed so the app runs offline)
+  logs/      session event logs (git-ignored)
 client/   React + Vite + Leaflet (react-leaflet)
-  src/pages/  Dispatcher.jsx SOS.jsx Algorithms.jsx
-  src/components/  RescueMap SosMap AlgoMap mapParts NavLinks SafetyBanner
-  src/data/algorithmInfo.js   explanation cards (add one per new algorithm)
-scripts/  build_graph.py build_facilities.py osm_common.py run-python.mjs e2e-sos.mjs browser-check.mjs
+  src/pages/  Dispatcher SOS Algorithms Replay Benchmarks
+  src/components/  maps, panels (traffic, flood, network, planning, comparison)
+  src/data/algorithmInfo.js   explanation cards shown on /algorithms
+scripts/  data: build_graph build_facilities build_shelters build_river build_elevation (Python, OSMnx)
+          checks: e2e-* browser-check bench sos-bots record-demo find-burst-seed bench-burst
 tests/    *.test.js (node:test)
 legacy/   previous fictional-city version, not built or tested
+DEMO.md   7-8 minute demo script with fallbacks · VIVA.md  algorithms, assumptions, likely questions
 ```
 
 ## 3. Live SOS loop (Phase 2)
@@ -266,7 +283,8 @@ key is read from `.env` again.
    - **Cut-off analysis:** the same pass accumulates subtree sizes and facility counts. For each bridge or
      articulation point it reports the junctions cut off (the smaller side), the facilities inside that part,
      and the facility kinds it can no longer reach.
-   - **On Pune:** 2,140 bridges and 1,795 articulation points in about 60 ms. Only **54 + 53 are critical**
+   - **On Pune (every road open):** 2,141 bridges and 1,797 articulation points in about 50 ms. Only
+     **55 + 55 are critical**
      (cut off ≥ 50 junctions or any facility). The other ~3,800 are dead-end lanes; the Network tab hides
      them by default, says how many it filtered, and has a toggle to show them all.
    - **No single road cuts off 50 or more junctions** (the largest cut-off is 49). Every critical item is
@@ -383,7 +401,8 @@ REST: `GET /api/flood`, `/api/crowd`.
    - **Recomputed on every closure.** In the demo, fire coverage shrinks from 89.5% to about 81.5% as the
      water reaches 10 m, with a sparkline of the history.
 3. **New station placement (greedy k-center)**
-   - **Candidates:** Gonzalez farthest-first picks plus the worst-served junctions, 120 in total.
+   - **Candidates:** Gonzalez farthest-first picks plus the worst-served junctions, about 120 (116 after
+     duplicates are removed).
    - **Choice:** best-improvement greedy, i.e. the candidate with the smallest new worst case (one Dijkstra per
      candidate).
    - **Two scenarios:** run for **normal** (every road open) and for the **fully spread 10 m flood** (its exact
@@ -431,6 +450,80 @@ REST: `GET /api/flood`, `/api/crowd`.
 Socket events: `scenario:start`, `scenario:updated`, `coverage:updated`, `planning:updated`.
 REST: `GET /api/coverage?kind=fire|ambulance`, `/api/geometry/roads`, `/api/placement`, `/api/evacuation`,
 `/api/shelters`, `/api/scenario`.
+
+## 3g. Evaluation: benchmarks, load test, event log and replay (Phase 7)
+
+### Benchmarks
+
+<!-- BENCHMARKS:START -->
+Generated by `node scripts/bench.mjs` on 2026-11-12 (Intel(R) Core(TM) Ultra 5 225U, 14 threads, Node v24.21.0); took 162.4 s. Also shown on `/benchmarks`.
+
+**Shortest paths: Dijkstra vs A\*** (mean time / mean junctions settled per query)
+
+| Graph | Dijkstra | A* | A* settles | A* speed-up | Same cost |
+|---|---|---|---|---|---|
+| Central Pune (7,695 junctions, 500 pairs) | 7.34 ms / 3,742 | 4.94 ms / 2,161 | 57.8% | 1.49× | 500/500 |
+| Full Pune | — | — | — | — | skipped: server/data/pune-full.graph.json not present (full-Pune OSMnx download did not finish within the 15-minute budget). |
+
+**Nearest junction: k-d tree vs brute force** (10,000 queries over 7,695 junctions)
+
+| k-d tree | Brute force | Speed-up | Same answer | Nodes visited per query | Build |
+|---|---|---|---|---|---|
+| 47.1 ms | 492.5 ms | 10.5× | 10,000/10,000 | 24.6 | 75.3 ms |
+
+**Greedy vs Hungarian** (300 random 8-incident bursts; seconds of total ETA saved by Hungarian, over bursts where both serve the same incidents)
+
+| Units | Comparable bursts | Hungarian better / equal / worse | Mean | Median | Max | Mean when better |
+|---|---|---|---|---|---|---|
+| All free | 300 | 116 / 184 / 0 | 31.1 s (1.6%) | 0 s | 451.9 s (18.4%) | 80.3 s |
+| Half busy (seeded) | 300 (avg 7.4 served) | 167 / 133 / 0 | 59.6 s (2.7%) | 17 s | 404.3 s (20%) | 107.1 s |
+
+Hungarian served more incidents than greedy in 0 (all free) and 0 (half busy) bursts. The demo burst (seed 92) is the clearest of the 300 (451.9 s). A 50 × 50 matrix takes 0.25 ms (Hungarian) vs 0.03 ms (greedy).
+
+**Other algorithms on central Pune**
+
+| Algorithm | Time | Result |
+|---|---|---|
+| Tarjan bridges + articulation points (iterative) | 45.9 ms | 2,141 bridges, 1,797 articulation points |
+| Tarjan SCC (iterative) | 13.9 ms | 1 component(s) |
+| Multi-source Dijkstra (5 fire stations) | 23.6 ms | every junction's time to the nearest station |
+| Coverage isochrones (fire) | 25.6 ms | 89.5% of road length within 8 min |
+| Edmonds-Karp evacuation, normal | 308 ms | 553 augmenting paths, 78,850 of 87,750 people |
+| Edmonds-Karp evacuation, 10 m flood | 120 ms | 339 augmenting paths, 50,000 people |
+| Greedy k-center placement (2 scenarios) | 12130 ms | 116 candidates each (one Dijkstra per candidate) |
+<!-- BENCHMARKS:END -->
+
+### Load test: 100 simulated phones (`scripts/sos-bots.mjs`)
+
+**Setup:**
+- 100 phones, each on its own Socket.IO connection, send one SOS from a seeded random road point within
+  20 s, to a local server (TomTom disabled) running at 30× sim speed.
+- 30% of them call about one of 10 "hotspots" (within 40 m), as several neighbours reporting the same
+  emergency would.
+
+<!-- SOSBOTS:START -->
+Run on 2026-11-12: `node scripts/sos-bots.mjs 100` (calls spread over 20 s, sim speed 30×, observed for 90 s).
+
+| Calls sent / accepted | Incidents created | Merged by clustering | Ack latency p50 / p95 | Assigned immediately | Assignment latency p50 / p95 (all) | Response time (SOS → on scene) |
+|---|---|---|---|---|---|---|
+| 100 / 100 | 87 | 13 calls (13%; 23 hotspot calls) | 58 / 241 ms | 81 (p50 64 ms, p95 243 ms) | 67 ms / 41.1 s | avg 376 sim-s, p95 1301 sim-s (84 incidents arrived) |
+
+Incidents that found a free unit were assigned in tens of milliseconds. 19 calls had to wait in the priority queue until a unit came free (57 units for 87 incidents), which is what the long p95 shows; 0 were still waiting at the end.
+<!-- SOSBOTS:END -->
+
+### Event log and replay
+
+- **What is logged:** every event the dispatcher sees, one JSON line each, stamped with **simulated** time,
+  e.g. `{"t":300,"type":"unit:rerouted","data":{…}}`.
+  - Road-closure lists are stored as ids (no shapes) and unit routes are rounded.
+  - Logs go to `server/logs/` (git-ignored). A new file starts on server start, sim reset and scenario start.
+- **`/replay`:** plays any log at **1× / 5× / 10×** (and 30×) of simulated time, with play, pause, a scrubber,
+  the map (incidents, moving units, closures, flood) and an event feed.
+- **Saved recording:** `server/data/replays/monsoon-demo.jsonl` is one full **Monsoon flood demo** run.
+  - Recorded headless by `scripts/record-demo.mjs` with the same `simStep()` as the server; the scenario is
+    seeded and deterministic.
+  - 625 events over 30 sim-minutes: 12 SOS, flood to 10 m, the New Sangam closure, 3 reroutes.
+  - It replays with no network, no TomTom and no phone; only the base map tiles need the internet.
 
 ## 4. Road graph and cost model
 
@@ -536,7 +629,12 @@ distance for all 7,695 junctions (tested).
 
 ## 7. Tests
 
-`npm test` runs 137 tests in about 30 s. The 300-seed burst benchmark takes most of that time.
+`npm test` runs 139 tests in about 30 s. The 300-seed burst benchmark takes most of that time.
+
+Phase 7 additions:
+- the event log writes JSONL with simulated timestamps and compacts large payloads
+- the saved Monsoon demo log is ordered in time and contains the whole story (12 SOS, flood to 10 m,
+  closures, the New Sangam closure, a reroute, unit movement)
 
 Phase 6 reference comparisons:
 - **Edmonds-Karp:**
@@ -700,7 +798,7 @@ npm run data:graph && npm run data:facilities
 Some Python packages are pinned to older versions because Windows Application Control blocked the newest
 pandas/pyproj DLLs on the development machine.
 
-## 9. Limitations (so far)
+## 9. Limitations
 
 - Free-flow speeds and all unit/scene timings are assumptions.
 - **Traffic covers 60 sample points:**
@@ -719,7 +817,13 @@ pandas/pyproj DLLs on the development machine.
   - A rerouted unit whose incident becomes unreachable stops at its next junction straight away.
 - **Planning numbers are model outputs, not forecasts.** Population per junction (250), people per vehicle (4),
   the 1-hour window and the shelter capacities are simulated assumptions.
-- **Station placement:** evaluates 120 candidate junctions (not all 7,695) and is computed once at startup.
+- **Station placement:** evaluates about 120 candidate junctions (not all 7,695) and is computed once at
+  startup.
 - **The fixed sim step is deterministic but can lag wall-clock time** slightly if the server is busy.
-- State lives in server memory: restarting the server clears incidents (event log and replay come in Phase 7).
+- **State lives in server memory:** restarting the server clears incidents. The event log keeps a record that
+  `/replay` can play back, but the server cannot resume from it.
+- **Full-Pune benchmark not run:** the OSMnx download of all of Pune timed out after the 15-minute budget
+  (Nominatim answered 503, then one Overpass mirror timed out and another never answered). The script supports
+  it: `scripts/build_graph.py --place "Pune, Maharashtra, India" --out pune-full.graph.json`, then
+  `node scripts/bench.mjs`.
 - The Marathi and Hindi texts were written for the demo and should be checked by a native speaker.

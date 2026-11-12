@@ -32,6 +32,8 @@ import { CrowdReports } from './services/crowdReports.js';
 import { ELEVATION_FILE, FLOOD_CURRENT_FILE, FLOOD_HISTORY_FILE, RIVER_FILE } from './config.js';
 import { PlanningService } from './services/planningService.js';
 import { ScenarioRunner, monsoonScenario, simStep } from './services/scenario.js';
+import { EventLog, listReplays } from './services/eventLog.js';
+import { LOG_DIR, REPLAY_DIR, BENCHMARKS_FILE } from './config.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -47,19 +49,29 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: false }, maxHttpBufferSize: 1e5 });
 
+// Phase 7 event log: everything the dispatcher sees, stamped with simulated time (JSONL, replayable).
+const eventLog = new EventLog({ dir: LOG_DIR });
+let simNow = () => 0;
+const toDispatch = (event, payload) => { eventLog.write(event, payload, simNow()); io.to('dispatch').emit(event, payload); };
+
 const dispatch = new DispatchService(store, {
   speed: SIM_SPEED,
-  emit: (event, payload, rooms) => io.to(rooms).emit(event, payload),
+  emit: (event, payload, rooms) => {
+    if (rooms.includes('dispatch')) eventLog.write(event, payload, simNow());   // per-incident copies are not logged twice
+    io.to(rooms).emit(event, payload);
+  },
 });
+simNow = () => dispatch.now;
+eventLog.open('session');
 
 // Phase 4: external services (TomTom traffic, OSRM baseline) with a persisted daily call counter.
-const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => io.to('dispatch').emit('external:calls', v) });
+const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => toDispatch('external:calls', v) });
 // Network resilience (Tarjan, trap zones, river crossings). Recomputed after closures / traffic changes.
-const network = NetworkService.fromFile(store, RIVER_FILE, { onChange: (e) => io.to('dispatch').emit('network:updated', e.summary) });
+const network = NetworkService.fromFile(store, RIVER_FILE, { onChange: (e) => toDispatch('network:updated', e.summary) });
 const traffic = new TrafficService({
   store, apiKey: TOMTOM_API_KEY, snapshotFile: TRAFFIC_SNAPSHOT_FILE, calls,
   ...(TOMTOM_FLOW_URL ? { baseUrl: TOMTOM_FLOW_URL } : {}),
-  onChange: (st) => { io.to('dispatch').emit('traffic:updated', st); network.roadsChanged(); },
+  onChange: (st) => { toDispatch('traffic:updated', st); network.roadsChanged(); },
 });
 network.rankCrossings().then((c) => console.log(`River crossings: ${c.ranking?.length ?? 0} ranked in ${c.ms} ms`));
 
@@ -70,7 +82,7 @@ const flood = new FloodService({
   historyFile: FLOOD_HISTORY_FILE, currentFile: FLOOD_CURRENT_FILE,
 });
 const crowd = new CrowdReports({ store });
-const floodChanged = () => io.to('dispatch').emit('flood:updated', flood.status());
+const floodChanged = () => toDispatch('flood:updated', flood.status());
 console.log(`Flood model: ${flood.status().available ? 'ready' : 'unavailable (run scripts/build_elevation.py)'}`);
 // Phase 6 planning: coverage isochrones, station placement (k-center), evacuation (Edmonds-Karp).
 const planning = new PlanningService({ store, flood });
@@ -78,14 +90,14 @@ let geometryJson = null;
 let coverageTimer = null;
 const coverageChanged = () => {
   clearTimeout(coverageTimer);
-  coverageTimer = setTimeout(() => io.to('dispatch').emit('coverage:updated', planning.coverageSummary(dispatch.now)), 250);
+  coverageTimer = setTimeout(() => toDispatch('coverage:updated', planning.coverageSummary(dispatch.now)), 250);
 };
 setTimeout(async () => {
   const p = await planning.computePlacement();
   console.log(`Station placement (k-center) ready in ${p.ms} ms; normal and 10 m flood suggestions ${p.sameSuggestion ? 'are the same' : 'differ'}`);
   const e = await planning.computeEvacuation();
   if (e) console.log(`Evacuation (Edmonds-Karp): normal ${e.normal.pct}% vs 10 m flood ${e.flood.pct}% of ${e.normal.totalPeople} people`);
-  io.to('dispatch').emit('planning:updated', { placement: Boolean(p), evacuation: Boolean(e) });
+  toDispatch('planning:updated', { placement: Boolean(p), evacuation: Boolean(e) });
 }, 300);
 
 // One-click demo scenario (deterministic: fixed sim steps, seeded calls).
@@ -167,7 +179,7 @@ app.get('/api/roads/:id', (req, res) => {
   info ? res.json(info) : res.status(404).json({ error: 'Unknown road' });
 });
 
-const hazardChanged = () => { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); };
+const hazardChanged = () => { toDispatch('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); };
 // Every closure path (manual, crossing, flood, crowd) ends here: reroute affected units, then broadcast.
 const roadsClosed = (ids) => { if (ids.length) dispatch.roadsBlocked(ids); hazardChanged(); };
 
@@ -184,6 +196,21 @@ app.get('/api/placement', (_req, res) => res.json(planning.placementResult ?? { 
 app.get('/api/evacuation', (_req, res) => res.json(planning.evacuationResult ?? { computing: true }));
 app.get('/api/shelters', (_req, res) => res.json({ meta: store.facilitiesMeta?.shelters ?? null, shelters: store.facilities.filter((f) => f.kind === 'shelter') }));
 app.get('/api/scenario', (_req, res) => res.json({ definition: MONSOON, status: runner.status() }));
+
+// Phase 7: replays (saved demo logs + session logs) and benchmark results.
+app.get('/api/replays', (_req, res) => { eventLog.flushSync(); res.json(listReplays(REPLAY_DIR, LOG_DIR)); });
+app.get('/api/replays/:name', (req, res) => {
+  const name = req.params.name;
+  if (!/^[\w.-]+\.jsonl$/.test(name)) return bad(res, 'Bad log name');
+  const file = [path.join(REPLAY_DIR, name), path.join(LOG_DIR, name)].find((f) => fs.existsSync(f));
+  if (!file) return res.status(404).json({ error: 'Unknown log' });
+  eventLog.flushSync();
+  res.type('application/x-ndjson').sendFile(file);
+});
+app.get('/api/benchmarks', (_req, res) => {
+  if (!fs.existsSync(BENCHMARKS_FILE)) return res.status(404).json({ error: 'Run node scripts/bench.mjs' });
+  res.type('application/json').send(fs.readFileSync(BENCHMARKS_FILE, 'utf8'));
+});
 
 app.get('/api/flood', (_req, res) => res.json({ status: flood.status(), points: flood.floodedPoints(dispatch.now) }));
 app.get('/api/crowd', (_req, res) => res.json(crowd.pending()));
@@ -240,9 +267,9 @@ io.on('connection', (socket) => {
 
   socket.on('traffic:refresh', async (msg, ack = () => {}) => {
     if (!socket.rooms.has('dispatch')) return ack({ ok: false, reason: 'NOT_DISPATCHER' });
-    io.to('dispatch').emit('traffic:updated', { ...traffic.status(), refreshing: true });
+    toDispatch('traffic:updated', { ...traffic.status(), refreshing: true });
     const r = await traffic.refresh({ reason: 'manual', force: msg?.force === true });
-    io.to('dispatch').emit('traffic:updated', traffic.status());
+    toDispatch('traffic:updated', traffic.status());
     ack(r);
   });
 
@@ -286,7 +313,7 @@ io.on('connection', (socket) => {
     lastReport = Date.now();
     const r = crowd.report({ lat, lng, clientId: typeof msg?.clientId === 'string' ? msg.clientId.slice(0, 64) : socket.id });
     if (r.newlyBlocked) { flood.forget(r.roadId); roadsClosed([r.roadId]); }
-    io.to('dispatch').emit('crowd:updated', crowd.pending());
+    toDispatch('crowd:updated', crowd.pending());
     ack(r);
   });
 
@@ -307,7 +334,7 @@ io.on('connection', (socket) => {
   socket.on('sim:speed', (msg) => {
     if (!socket.rooms.has('dispatch') || !SIM_SPEEDS.includes(Number(msg?.speed))) return;
     dispatch.setSpeed(Number(msg.speed));
-    io.to('dispatch').emit('sim:speed', { speed: dispatch.clock.speed });
+    toDispatch('sim:speed', { speed: dispatch.clock.speed });
   });
 
   // Phase 3: 8 simultaneous incidents (fixed seeded pattern), dispatched as one batch.
@@ -320,17 +347,18 @@ io.on('connection', (socket) => {
   socket.on('dispatch:mode', (msg) => {
     if (!socket.rooms.has('dispatch') || !DISPATCH_MODES.includes(msg?.mode)) return;
     dispatch.setMode(msg.mode);
-    io.to('dispatch').emit('dispatch:mode', { mode: dispatch.mode });
+    toDispatch('dispatch:mode', { mode: dispatch.mode });
   });
 
   socket.on('sim:reset', () => {
     if (!socket.rooms.has('dispatch')) return;
     runner.stop();
     dispatch.reset();
+    eventLog.open('reset');
     flood.restartAt(0);                                // sim clock restarted at 0
     planning.clearHistory();
-    io.to('dispatch').emit('state:init', dispatch.snapshot());
-    io.to('dispatch').emit('scenario:updated', runner.status());
+    toDispatch('state:init', dispatch.snapshot());
+    toDispatch('scenario:updated', runner.status());
     floodChanged();
   });
 
@@ -348,10 +376,11 @@ io.on('connection', (socket) => {
     dispatch.setSpeed(MONSOON.speed);
     dispatch.setMode(MONSOON.dispatchMode);
     runner.start(MONSOON, dispatch.now);
-    io.to('dispatch').emit('state:init', dispatch.snapshot());
-    io.to('dispatch').emit('sim:speed', { speed: dispatch.clock.speed });
-    io.to('dispatch').emit('dispatch:mode', { mode: dispatch.mode });
-    io.to('dispatch').emit('scenario:updated', runner.status());
+    eventLog.open('monsoon', { scenario: MONSOON.id, name: MONSOON.name });
+    toDispatch('state:init', dispatch.snapshot());
+    toDispatch('sim:speed', { speed: dispatch.clock.speed });
+    toDispatch('dispatch:mode', { mode: dispatch.mode });
+    toDispatch('scenario:updated', runner.status());
     hazardChanged();
     floodChanged();
     ack({ ok: true, status: runner.status() });
@@ -364,10 +393,14 @@ let lastFloodKey = '';
 setInterval(() => {
   const { roadsChanged, scenarioChanged } = simStep({ dispatch, flood, runner }, TICK_MS);
   // (reroutes caused by changes.blocked were already broadcast by the dispatch service)
-  if (roadsChanged) { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); }
-  if (scenarioChanged) io.to('dispatch').emit('scenario:updated', runner.status());
+  if (roadsChanged) { toDispatch('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); }
+  if (scenarioChanged) toDispatch('scenario:updated', runner.status());
   const key = `${flood.level}|${flood.floodedNow}|${flood.applied.size}`;
-  if (key !== lastFloodKey) { lastFloodKey = key; floodChanged(); }
+  if (key !== lastFloodKey) {
+    lastFloodKey = key;
+    floodChanged();
+    eventLog.write('flood:points', flood.floodedPoints(dispatch.now), dispatch.now);   // for replay maps
+  }
 }, TICK_MS);
 
 // Production: serve the built client (npm run build) from the same port, with SPA fallback.

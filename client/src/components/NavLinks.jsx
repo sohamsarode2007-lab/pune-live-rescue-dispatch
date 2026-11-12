@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LINKS = [['/', 'Dispatcher'], ['/sos', 'SOS phone'], ['/algorithms', 'Algorithms']];
+const LINKS = [['/', 'Dispatcher'], ['/sos', 'SOS phone'], ['/algorithms', 'Algorithms'], ['/replay', 'Replay'], ['/benchmarks', 'Benchmarks']];
 
 export default function NavLinks() {
   const here = window.location.pathname;

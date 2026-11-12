@@ -181,6 +181,13 @@ button.burst { border-color: #b45309; color: #fde68a; font-weight: 700; }
 .coverage-mini { font-size: .8rem; margin-bottom: 10px; }
 .cmp tbody tr[class] { cursor: pointer; }
 
+/* ---------- Phase 7: replay, benchmarks ---------- */
+.feed { list-style: none; margin: 0; padding: 0; font-size: .8rem; line-height: 1.5; }
+.feed li { padding: 3px 0; border-bottom: 1px solid var(--line); }
+.feed li.warn { color: #fde68a; } .feed li.ok { color: #bbf7d0; } .feed li.flood { color: #93c5fd; } .feed li.sos { color: #fecaca; }
+.bench { padding: 16px; display: grid; gap: 12px; max-width: 1200px; }
+.bench .cmp td, .bench .cmp th { font-size: .82rem; }
+
 /* ---------- algorithms page ---------- */
 .scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
 .ramp { height: 10px; border-radius: 5px; margin-top: 10px; }

@@ -4,6 +4,8 @@ client/dist
 .venv
 scripts/.osm_cache
 __pycache__
+server/logs
+server/data/pune-full.graph.json
 server/data/external-calls.json
 server/data/osrm-comparisons.jsonl
 .env*

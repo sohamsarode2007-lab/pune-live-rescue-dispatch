@@ -1,0 +1,34 @@
+{
+ "generatedAt": "2026-11-12T13:10:25.841Z",
+ "url": "http://localhost:3001",
+ "phones": 100,
+ "spreadS": 20,
+ "simSpeed": 30,
+ "waitS": 90,
+ "sent": 100,
+ "accepted": 100,
+ "rejected": 0,
+ "incidentsCreated": 87,
+ "mergedCalls": 13,
+ "mergeRatio": 13,
+ "hotspotCalls": 23,
+ "ackMs": {
+  "p50": 58,
+  "p95": 241
+ },
+ "assignment": {
+  "assigned": 100,
+  "immediately": 81,
+  "neverWithinWait": 0,
+  "p50Ms": 67,
+  "p95Ms": 41063,
+  "immediateP50Ms": 64,
+  "immediateP95Ms": 243
+ },
+ "response": {
+  "incidentsArrived": 84,
+  "avgSimS": 376,
+  "p95SimS": 1301
+ },
+ "sendPhaseS": 82.7
+}

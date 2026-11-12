@@ -1,0 +1,166 @@
+{
+ "generatedAt": "2026-11-12T13:17:32.906Z",
+ "machine": {
+  "node": "v24.21.0",
+  "cpu": "Intel(R) Core(TM) Ultra 5 225U",
+  "cores": 14,
+  "platform": "win32 10.0.26200"
+ },
+ "pathCentral": {
+  "junctions": 7695,
+  "roads": 10218,
+  "pairs": 500,
+  "reachable": 500,
+  "sameCost": 500,
+  "dijkstra": {
+   "meanMs": 7.34,
+   "medianMs": 5.24,
+   "settledMean": 3742
+  },
+  "astar": {
+   "meanMs": 4.94,
+   "medianMs": 3.28,
+   "settledMean": 2161
+  },
+  "settledRatioPct": 57.8,
+  "speedup": 1.49
+ },
+ "pathFull": {
+  "skipped": true,
+  "reason": "server/data/pune-full.graph.json not present (full-Pune OSMnx download did not finish within the 15-minute budget)."
+ },
+ "kdtree": {
+  "points": 7695,
+  "queries": 10000,
+  "buildMs": 75.3,
+  "treeMs": 47.1,
+  "bruteMs": 492.5,
+  "speedup": 10.5,
+  "agree": 10000,
+  "visitedMean": 24.6
+ },
+ "burstFree": {
+  "generatedAt": "2026-11-12T13:18:53.146Z",
+  "seeds": 300,
+  "validSeeds": 300,
+  "busyFraction": 0,
+  "servedMean": 8,
+  "hungarianServedMore": 0,
+  "greedyWorse": 116,
+  "equal": 184,
+  "hungarianWorse": 0,
+  "savingS": {
+   "mean": 31.1,
+   "median": 0,
+   "min": 0,
+   "max": 451.9
+  },
+  "savingPct": {
+   "mean": 1.6,
+   "median": 0,
+   "min": 0,
+   "max": 18.4
+  },
+  "demo": {
+   "seed": 92,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2882.9,
+   "hungarianS": 2431,
+   "savingS": 451.9,
+   "savingPct": 15.7,
+   "isClearest": true
+  },
+  "whenGreedyWorse": {
+   "meanS": 80.3,
+   "meanPct": 4.1
+  },
+  "clearestSeed": 92,
+  "highestPctSeed": {
+   "seed": 75,
+   "savingS": 291.4,
+   "savingPct": 18.4
+  }
+ },
+ "burstHalfBusy": {
+  "generatedAt": "2026-11-12T13:20:01.932Z",
+  "seeds": 300,
+  "validSeeds": 300,
+  "busyFraction": 0.5,
+  "servedMean": 7.4,
+  "hungarianServedMore": 0,
+  "greedyWorse": 167,
+  "equal": 133,
+  "hungarianWorse": 0,
+  "savingS": {
+   "mean": 59.6,
+   "median": 17,
+   "min": 0,
+   "max": 404.3
+  },
+  "savingPct": {
+   "mean": 2.7,
+   "median": 0.8,
+   "min": 0,
+   "max": 20
+  },
+  "demo": {
+   "seed": 92,
+   "created": 8,
+   "greedyAssigned": 6,
+   "hungarianAssigned": 6,
+   "greedyS": 2316.3,
+   "hungarianS": 1921.4,
+   "savingS": 394.9,
+   "savingPct": 17,
+   "isClearest": false
+  },
+  "whenGreedyWorse": {
+   "meanS": 107.1,
+   "meanPct": 4.9
+  },
+  "clearestSeed": 42,
+  "highestPctSeed": {
+   "seed": 138,
+   "savingS": 214.3,
+   "savingPct": 20
+  }
+ },
+ "hungarian50": {
+  "size": "50 x 50 (20% impossible pairs)",
+  "hungarianMs": 0.25,
+  "greedyMs": 0.03
+ },
+ "tarjan": {
+  "bridgesApMs": 45.9,
+  "bridges": 2141,
+  "articulationPoints": 1797,
+  "sccMs": 13.9,
+  "components": 1
+ },
+ "planning": {
+  "multiSourceMs": 23.6,
+  "coverageMs": 25.6,
+  "coveragePct8": 89.5,
+  "edmondsKarp": {
+   "normal": {
+    "ms": 308,
+    "augmentations": 553,
+    "evacuable": 78850,
+    "total": 87750
+   },
+   "flood": {
+    "ms": 120,
+    "augmentations": 339,
+    "evacuable": 50000
+   }
+  },
+  "kcenter": {
+   "totalMs": 12130,
+   "candidates": 116,
+   "scenarios": 2
+  }
+ },
+ "totalS": 162.4
+}

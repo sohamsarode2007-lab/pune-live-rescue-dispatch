@@ -42,6 +42,10 @@ export const EXTERNAL_CALLS_FILE = path.join(DATA_DIR, 'external-calls.json');
 export const OSRM_LOG_FILE = path.join(DATA_DIR, 'osrm-comparisons.jsonl');
 export const BURST_BENCHMARK_FILE = path.join(DATA_DIR, 'burst-benchmark.json');
 export const RIVER_FILE = path.join(DATA_DIR, 'river.json');
+// Phase 7: session event logs (git-ignored), saved replays (committed), benchmark results (committed).
+export const LOG_DIR = path.join(ROOT, 'server', 'logs');
+export const REPLAY_DIR = path.join(DATA_DIR, 'replays');
+export const BENCHMARKS_FILE = path.join(DATA_DIR, 'benchmarks.json');
 // Phase 5: SRTM elevations (generated), Open-Meteo Flood API history (committed, for offline use) and the
 // latest current-discharge result (committed too, refreshed at most every 6 h).
 export const ELEVATION_FILE = path.join(DATA_DIR, 'elevation.json');
