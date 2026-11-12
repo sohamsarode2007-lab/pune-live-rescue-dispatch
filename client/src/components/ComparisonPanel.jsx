@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fmtDuration } from '../format.js';
+import { api } from '../api.js';
 
 const TRIGGER = { sos: 'new SOS', burst: 'burst', 'unit-free': 'unit freed', retry: 'retry' };
 const pct = (a, b) => (b > 0 ? `${((100 * (b - a)) / b).toFixed(1)}%` : '—');
+
+// 300-seed benchmark summary (scripts/bench-burst.mjs), shown under the live comparison.
+function BenchmarkNote() {
+  const [b, setB] = useState(null);
+  useEffect(() => { api.burstBenchmark().then(setB).catch(() => setB(false)); }, []);
+  if (!b) return null;
+  return (
+    <div className="subnote">
+      <b>Benchmark, {b.seeds} random burst patterns</b> (every unit at its station, free-flow): Hungarian was better on {b.greedyWorse},
+      equal on {b.equal}, worse on {b.hungarianWorse}. Saving per burst: mean {fmtDuration(b.savingS.mean)} ({b.savingPct.mean}%),
+      median {fmtDuration(b.savingS.median)}, min {fmtDuration(b.savingS.min)}, max {fmtDuration(b.savingS.max)} ({b.savingPct.max}% max).
+      {b.whenGreedyWorse && <> When greedy is worse, Hungarian saves {fmtDuration(b.whenGreedyWorse.meanS)} ({b.whenGreedyWorse.meanPct}%) on average.</>}
+      {' '}The demo pattern (seed {b.demo.seed}, {fmtDuration(b.demo.savingS)} / {b.demo.savingPct}%) is the <b>clearest of the {b.seeds}</b> by time saved
+      {b.highestPctSeed && b.highestPctSeed.seed !== b.demo.seed && <> (seed {b.highestPctSeed.seed} has the highest percentage, {b.highestPctSeed.savingPct}%)</>}, so it is not a typical case.
+    </div>
+  );
+}
 
 // Greedy vs optimal: every dispatch batch is planned both ways on the same incidents and units.
 export default function ComparisonPanel({ comparisons, totals, mode }) {
@@ -14,6 +32,7 @@ export default function ComparisonPanel({ comparisons, totals, mode }) {
       <section className="panel">
         <h2>Greedy vs optimal</h2>
         <p className="muted">No dispatch yet. Press <b>Burst</b> to send 8 simultaneous incidents.</p>
+        <BenchmarkNote />
       </section>
     );
   }
@@ -67,6 +86,7 @@ export default function ComparisonPanel({ comparisons, totals, mode }) {
           {multi.slice(-6).map((b) => <button key={b.id} type="button" className={`sm ${b.id === c.id ? 'on' : ''}`} onClick={() => setPick(b.id)}>#{b.id}</button>)}
         </div>
       )}
+      <BenchmarkNote />
       <p className="note">Both plans use the same ETA matrix (one reverse Dijkstra per incident). Greedy: incidents in priority order, each takes its nearest free unit. Hungarian: minimum total ETA, O(n³). If units are short, priority decides which incidents are served, for both.</p>
     </section>
   );

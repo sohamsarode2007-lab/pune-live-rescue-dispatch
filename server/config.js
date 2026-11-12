@@ -30,3 +30,13 @@ export const TICK_MS = 500;
 
 export const GRAPH_FILE = path.join(DATA_DIR, 'pune-central.graph.json');
 export const FACILITIES_FILE = path.join(DATA_DIR, 'facilities.json');
+
+// Phase 4: traffic snapshot (committed, so the demo works offline), daily call counter and OSRM log
+// (machine-local, git-ignored), burst benchmark.
+export const TRAFFIC_SNAPSHOT_FILE = path.join(DATA_DIR, 'traffic-snapshot.json');
+export const EXTERNAL_CALLS_FILE = path.join(DATA_DIR, 'external-calls.json');
+export const OSRM_LOG_FILE = path.join(DATA_DIR, 'osrm-comparisons.jsonl');
+export const BURST_BENCHMARK_FILE = path.join(DATA_DIR, 'burst-benchmark.json');
+// Endpoint overrides, only for testing against a local mock (defaults are the real services).
+export const TOMTOM_FLOW_URL = process.env.TOMTOM_FLOW_URL || undefined;
+export const OSRM_BASE_URL = process.env.OSRM_BASE_URL || undefined;

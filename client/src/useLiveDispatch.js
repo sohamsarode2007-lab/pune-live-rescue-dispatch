@@ -18,6 +18,7 @@ const initial = {
   connected: false, simTimeS: 0, speed: 1,
   units: new Map(), incidents: new Map(), queue: [], beds: {}, closedRoads: [],
   mode: 'hungarian', comparisons: [], comparisonTotals: null,
+  traffic: null, externalCalls: null,
 };
 
 function reducer(state, a) {
@@ -32,6 +33,8 @@ function reducer(state, a) {
     };
     case 'comparison': return { ...state, comparisons: [...state.comparisons, a.c.latest].slice(-20), comparisonTotals: a.c.totals };
     case 'mode': return { ...state, mode: a.mode };
+    case 'traffic': return { ...state, traffic: a.t };
+    case 'calls': return { ...state, externalCalls: a.c };
     case 'unit': { const units = new Map(state.units); units.set(a.u.id, { ...units.get(a.u.id), ...a.u }); return { ...state, units }; }
     case 'incident': { const incidents = new Map(state.incidents); incidents.set(a.i.id, a.i); return { ...state, incidents }; }
     case 'positions': {
@@ -71,6 +74,8 @@ export function useLiveDispatch() {
       'sim:speed': ({ speed }) => dispatch({ type: 'speed', speed }),
       'comparison:updated': (c) => dispatch({ type: 'comparison', c }),
       'dispatch:mode': ({ mode }) => dispatch({ type: 'mode', mode }),
+      'traffic:updated': (t) => dispatch({ type: 'traffic', t }),
+      'external:calls': (c) => dispatch({ type: 'calls', c }),
     };
     Object.entries(handlers).forEach(([e, h]) => s.on(e, h));
     if (s.connected) join();

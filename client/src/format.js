@@ -8,6 +8,12 @@ export function fmtDuration(s) {
   return m ? `${m} min ${String(sec).padStart(2, '0')} s` : `${sec} s`;
 }
 
+// Wall-clock time of an ISO timestamp in Pune (IST), e.g. "12 Nov, 14:32".
+export function fmtTime(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
+}
+
 // Simulated clock as hh:mm:ss.
 export function fmtClock(s) {
   const t = Math.max(0, Math.floor(s ?? 0));

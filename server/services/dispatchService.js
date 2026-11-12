@@ -249,7 +249,11 @@ export class DispatchService {
     unit.incidentId = inc.id;          // set first, so the unit broadcast also reaches the incident's room
     unit.hospitalId = null;
     this.#startTrip(unit, route, prefix, UNIT_STATUS.EN_ROUTE, { type: 'ARRIVE_SCENE', incidentId: inc.id });
-    Object.assign(inc, { status: INCIDENT_STATUS.EN_ROUTE, unitId: unit.id, assignedS: this.now, etaS: unit.trip.endS });
+    const from = this.graph.getLocation(originNode);
+    Object.assign(inc, {
+      status: INCIDENT_STATUS.EN_ROUTE, unitId: unit.id, assignedS: this.now, etaS: unit.trip.endS,
+      fromNodeId: originNode, fromLat: from.lat, fromLng: from.lng,      // where the unit's route starts (OSRM comparison)
+    });
     if (unit.type === 'ambulance') {   // two-leg preview: which hospital the patient would go to now
       const h = this.#chooseHospital(inc);
       inc.plannedHospitalId = h?.hospital.id ?? null;

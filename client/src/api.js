@@ -12,6 +12,8 @@ export const api = {
   facilities: () => call('/api/facilities'),
   route: (from, to) => call(`/api/route?fromLat=${from.lat}&fromLng=${from.lng}&toLat=${to.lat}&toLng=${to.lng}&algo=astar,dijkstra`),
   closedRoads: () => call('/api/roads/closed'),
+  traffic: () => call('/api/traffic'),
+  burstBenchmark: () => call('/api/burst-benchmark'),
   setRoadStatus: (id, status) => post(`/api/roads/${encodeURIComponent(id)}/status`, { status }),
   resetRoads: () => post('/api/roads/reset'),
 };

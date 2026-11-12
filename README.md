@@ -10,13 +10,17 @@ This is a Data Structures course project: all routing, assignment and spatial se
 > **Demo simulation — in a real emergency call 112.** This app never contacts any emergency service.
 > Hospital beds, every rescue vehicle and all unit timings are **simulated**.
 
-The plan of record is [PLAN.md](PLAN.md). **Status: Phases 1–3 done** (real Pune graph, live SOS loop,
-dispatch intelligence).
+The plan of record is [PLAN.md](PLAN.md). **Status: Phases 1–4 done** (real Pune graph, live SOS loop,
+dispatch intelligence, live traffic + OSRM comparison).
 The earlier fictional-city version ("Meridian") is kept, unused, in `legacy/meridian/`.
 
 ## 1. Run it
 
-Requires Node.js 18+ (developed on Node 24). No keys or accounts needed.
+Requires Node.js 18+ (developed on Node 24).
+
+The only key is optional: put `TOMTOM_API_KEY=...` in **`.env`** (git-ignored; copy `.env.example`, which must
+stay without a real key because it is committed). Without a key the app runs fully: it uses the saved
+traffic snapshot if there is one, otherwise free-flow, and says so on the dashboard.
 
 ```bash
 npm install
@@ -28,15 +32,33 @@ npm run check:sos    # end-to-end socket test against a running server (fake pho
 npm run check:browser  # real browser (Edge/Chrome) test of the SOS page with a faked GPS fix
 node scripts/e2e-burst.mjs   # burst (greedy vs Hungarian) + SOS clustering against a running server
 node scripts/find-burst-seed.mjs 300   # how the burst seed was chosen
+node scripts/bench-burst.mjs 300       # greedy vs Hungarian on 300 seeds -> server/data/burst-benchmark.json
+node scripts/e2e-traffic.mjs [--no-refresh]   # traffic refresh (~60 TomTom calls!), toggle, OSRM comparison
 ```
 
 **Demo script for greedy vs optimal:**
-1. Open the dispatcher and press **Reset**.
+1. Open the dispatcher, set **Traffic → Free-flow** (the figures below are free-flow; with a live snapshot
+   the ETAs, and so the totals, are different) and press **Reset**.
 2. Leave the mode on **Hungarian** and press **Burst**. The "Greedy vs optimal" panel shows both plans for
    the same 8 incidents: greedy 48 min 03 s vs Hungarian 40 min 31 s total ETA, saving 7 min 32 s (15.7%),
    with the 4 swapped boats highlighted.
 3. Press **Reset**, switch to **Greedy** and press **Burst** again. The numbers are identical (same seed, same
    units), but now the units follow the greedy plan.
+
+**The demo pattern is not typical. It is the clearest of 300 random burst patterns.** Benchmark: every unit
+at its station, free-flow, each pattern planned once both ways (`scripts/bench-burst.mjs`):
+
+| | Seconds saved by Hungarian per burst | % of greedy total |
+|---|---|---|
+| Mean | 31.1 s | 1.6% |
+| Median | 0 s | 0% |
+| Min | 0 s | 0% |
+| Max | 451.9 s (seed 92, the demo) | 18.4% (seed 75) |
+
+- Hungarian was better on 116 of 300 patterns and equal on 184. It was **never worse** (tested on all 300).
+- When greedy is worse, Hungarian saves 80.3 s (4.1%) on average.
+- Typical bursts mix unit types, and most units are free, so greedy is often already optimal. The gap
+  appears when a scarce unit type (here the 5 rescue boats) is contested.
 
 | Page | URL | What it does |
 |---|---|---|
@@ -171,6 +193,54 @@ junction.
 Socket events added: `burst:create` (ack with created and merged ids and the comparison), `dispatch:mode`,
 `comparison:updated`. The `sos:new` ack now includes `merged`.
 
+## 3c. Live traffic and "our engine vs OSRM" (Phase 4)
+
+1. **Traffic** (`server/services/trafficService.js`)
+   - **Sample points:** 60 points on major roads (midpoints of the longest trunk, primary and secondary roads,
+     at least 450 m apart, deterministic).
+   - **Fetch:** for each point, TomTom *Traffic Flow Segment Data* (`flowSegmentData`) returns `currentSpeed`,
+     `freeFlowSpeed` and the segment shape.
+   - **Factor:** `trafficFactor = freeFlowSpeed / currentSpeed`, **clamped to [1.0, 4.0]**. A closure or a
+     stopped road counts as 4. Because no road becomes faster than free flow, the A* heuristic stays
+     admissible and A* stays exact. This is tested on 500 Pune pairs with a snapshot applied.
+   - **Matching:** the segment shape is matched to our roads with **nearest-edge matching**
+     (`shared/spatial/edgeMatcher.js`). TomTom segments are long: the first real fetch matched 630 roads from
+     60 samples. Roads without a sample stay at 1.0.
+   - **Direction:** a two-way road is one road object here, so one direction's factor applies to both.
+2. **When it refreshes:** there is no timer.
+   - When a dispatcher connects, it refreshes if the snapshot is missing or older than 15 min.
+   - The **Refresh traffic** button refreshes on demand.
+   - One refresh = 60 calls.
+3. **Daily cap:** `ExternalCalls` checks the **200 TomTom calls/day** cap before every request. The count is
+   saved to `server/data/external-calls.json` (UTC day, git-ignored), so a restart cannot reset it. The
+   dashboard chip and the Traffic panel show the count live.
+4. **Offline:** every successful fetch is saved to `server/data/traffic-snapshot.json` (committed) and loaded
+   on startup. The dashboard shows **"Traffic as of <time>"** (IST), adds "(saved snapshot)" when the data was
+   loaded from disk, and shows "free-flow" otherwise. Failed or capped fetches keep the previous snapshot,
+   and error messages never include the key.
+5. **Live traffic / Free-flow toggle:** switches every factor between the snapshot and 1.0. Routes, dispatch
+   ETAs and the Hungarian matrix all follow the toggle.
+6. **Traffic colours:** an optional map layer colours the sampled roads green (< 1.25×), orange (1.25–2×) or
+   red (≥ 2×).
+7. **Our engine vs OSRM** (`osrmService.js`, `compareService.js`)
+   - **Where:** for the selected dispatch (unit start junction → incident) or the planner route, on request.
+   - **Same endpoints:** OSRM is asked for the same snapped junctions as our engine.
+   - **Rate limit and cache:** at most **1 request per second** (queued), responses cached for 1 h and
+     failures for 30 s, with an 8 s timeout.
+   - **If OSRM is unreachable:** the panel says *"OSRM comparison unavailable: …"* and still shows our route.
+   - **On the map:** ours is cyan (labelled live traffic or free-flow); OSRM is purple dashed (labelled
+     *normal traffic*).
+   - **Log:** every comparison is appended to `server/data/osrm-comparisons.jsonl` (git-ignored), and the
+     panel shows the running mean % difference for the report.
+   - **First real runs** (Shaniwar Wada → Kothrud, 6.3 km): ours 460 s at free-flow and 492 s with live
+     traffic, vs OSRM 408 s. Fire Station → Kothrud: ours 10 min 45 s vs OSRM 9 min 21 s (+15%). Our default
+     speeds are lower than OSRM's car profile.
+8. **Not done:** PLAN.md's optional TomTom raster-tile overlay. The coloured sampled roads cover the same need
+   without exposing the key to the browser or spending tile quota.
+
+Socket events added: `traffic:refresh`, `traffic:mode`, `traffic:updated`, `external:calls`.
+REST added: `GET /api/traffic`, `/api/compare`, `/api/compare/summary`, `/api/burst-benchmark`.
+
 ## 4. Road graph and cost model
 
 - **Area** (`server/config.js` `DEMO_BBOX`): N 18.56, S 18.49, E 73.88, W 73.80. Covers Kothrud, Deccan,
@@ -248,6 +318,8 @@ Every item also has an explanation card on `/algorithms`.
 | Geohash encode/decode + 3×3 neighbour lookup (spatial hash grid) | `geohash.js` | O(precision); query O(1 + hits) |
 | SOS clustering (geohash candidates + haversine, 100 m / 5 min) | `sosClusterer.js` | O(1 + calls in 9 cells) per call |
 | Hungarian algorithm (potentials, rectangular, ∞ = impossible) | `hungarian.js` | O(n²·m), n ≤ m |
+| Traffic-weighted edges (factor in [1, 4], snapshot apply) | `Graph.js`, `trafficService.js` | apply O(roads); routing unchanged |
+| Nearest-edge matching (sampled shapes in a k-d tree + exact point-to-segment) | `edgeMatcher.js` | build O(S log² S); query O(log S + candidates) |
 | Greedy assignment (priority order, nearest free unit) | `hungarian.js` | O(n·m) |
 | Priority aging (heap rebuilt every tick) | `dispatchService.js` | O(p log p) per tick |
 | Discrete-event queue (min-heap by time, FIFO ties) | `EventQueue.js` | push/pop O(log n) |
@@ -263,7 +335,33 @@ distance for all 7,695 junctions (tested).
 
 ## 7. Tests
 
-`npm test` runs 92 tests in about 7 s.
+`npm test` runs 107 tests in about 25 s. The 300-seed burst benchmark takes most of that time.
+
+Phase 4 reference comparisons (no network needed: TomTom and OSRM are faked in the tests):
+- **A* vs Dijkstra:** equal on 500 random Pune pairs with a traffic snapshot applied (factors 1–4 incl.
+  clamped values). Traffic is shown to change some routes.
+- **Traffic factor:** freeFlow/current is clamped to [1, 4] (0.83 → 1, 10 → 4, a closure or a stopped road → 4).
+- **Refresh:**
+  - only matched roads change
+  - the snapshot is saved, and on restart it is reloaded with no fetch and identical factors
+  - the live/free-flow toggle works
+- **Daily cap:**
+  - it stops exactly at the cap and refuses afterwards
+  - the counter survives a restart
+  - a new UTC day resets it
+- **Failures:** HTTP errors and network errors keep the old snapshot and never expose the key. With no key,
+  nothing is fetched.
+- **Nearest-edge matching:** equals a brute-force scan of every road, on a random graph and on Pune (incl.
+  points at the middle of the 30 longest roads).
+- **OSRM:**
+  - requests sent together are spaced by the minimum interval
+  - a repeated route is served from the cache
+  - an unreachable server, an HTTP 429 or a timeout gives `{available: false, reason}`
+  - a failure is cached briefly
+  - the comparison uses the same snapped junctions, computes the % difference and logs only successful
+    comparisons
+- **Burst benchmark:** on all 300 seeds Hungarian never serves fewer incidents and its total is never worse,
+  and the demo seed has the largest saving.
 
 Phase 3 reference comparisons:
 - **Hungarian vs brute force over all permutations, n ≤ 6:**
@@ -316,8 +414,11 @@ Earlier reference comparisons:
   OSM raster tiles are used lightly. The dark look is a CSS filter (CARTO's dark basemap now requires an API
   key). Tiles are never bulk-downloaded.
 - Road network and facilities downloaded with OSMnx via the Overpass API, cached in `scripts/.osm_cache`.
-- Later phases add: TomTom (traffic), OSRM public demo server (comparison only), SRTM (elevation), Open-Meteo
-  Flood API.
+- Live traffic: **TomTom** Traffic Flow Segment Data (free tier, no card). The server-side key is in `.env`,
+  calls are capped at 200/day, and `traffic-snapshot.json` contains TomTom-derived speeds.
+- Comparison baseline: **OSRM** public demo server (`router.project-osrm.org`), max 1 request/s, cached,
+  never presented as our route.
+- Later phases add: SRTM (elevation), Open-Meteo Flood API.
 
 ### Regenerating the map data (optional)
 
@@ -334,7 +435,13 @@ pandas/pyproj DLLs on the development machine.
 
 ## 9. Limitations (so far)
 
-- Free-flow speeds and all unit/scene timings are assumptions. There is no live traffic until Phase 4.
+- Free-flow speeds and all unit/scene timings are assumptions.
+- **Traffic covers 60 sample points:**
+  - roads they don't reach stay at free flow
+  - the factor applies to both directions of a two-way road
+  - in-progress trips keep the timing they started with
+- OSRM's speed profile differs from our default speeds, so part of the ETA difference is the speed model,
+  not traffic.
 - The Hungarian plan minimises the total ETA of the incidents being served. Which incidents are served when
   units are short is decided by priority, not by the optimisation.
 - Clustering compares a call with the incident's first call position (not a moving cluster centre).

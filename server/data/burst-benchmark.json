@@ -1,0 +1,3043 @@
+{
+ "generatedAt": "2026-11-12T09:20:44.016Z",
+ "seeds": 300,
+ "validSeeds": 300,
+ "greedyWorse": 116,
+ "equal": 184,
+ "hungarianWorse": 0,
+ "savingS": {
+  "mean": 31.1,
+  "median": 0,
+  "min": 0,
+  "max": 451.9
+ },
+ "savingPct": {
+  "mean": 1.6,
+  "median": 0,
+  "min": 0,
+  "max": 18.4
+ },
+ "demo": {
+  "seed": 92,
+  "created": 8,
+  "greedyAssigned": 8,
+  "hungarianAssigned": 8,
+  "greedyS": 2882.9,
+  "hungarianS": 2431,
+  "savingS": 451.9,
+  "savingPct": 15.7,
+  "isClearest": true
+ },
+ "whenGreedyWorse": {
+  "meanS": 80.3,
+  "meanPct": 4.1
+ },
+ "clearestSeed": 92,
+ "highestPctSeed": {
+  "seed": 75,
+  "savingS": 291.4,
+  "savingPct": 18.4
+ },
+ "rows": [
+  {
+   "seed": 1,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2330.7,
+   "hungarianS": 2330.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 2,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1634.7,
+   "hungarianS": 1634.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 3,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2121,
+   "hungarianS": 2011.4,
+   "savingS": 109.6,
+   "savingPct": 5.2
+  },
+  {
+   "seed": 4,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2041.3,
+   "hungarianS": 1916.3,
+   "savingS": 124.9,
+   "savingPct": 6.1
+  },
+  {
+   "seed": 5,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1951.8,
+   "hungarianS": 1951.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 6,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2388.5,
+   "hungarianS": 2388.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 7,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1460.2,
+   "hungarianS": 1260.8,
+   "savingS": 199.4,
+   "savingPct": 13.7
+  },
+  {
+   "seed": 8,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1726.2,
+   "hungarianS": 1726.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 9,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2605.1,
+   "hungarianS": 2350.8,
+   "savingS": 254.4,
+   "savingPct": 9.8
+  },
+  {
+   "seed": 10,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1484.7,
+   "hungarianS": 1484.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 11,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2930.6,
+   "hungarianS": 2930.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 12,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1509.7,
+   "hungarianS": 1509.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 13,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1288.5,
+   "hungarianS": 1288.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 14,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1547.4,
+   "hungarianS": 1547.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 15,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1109.9,
+   "hungarianS": 1109.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 16,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2608.6,
+   "hungarianS": 2608.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 17,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1906.1,
+   "hungarianS": 1803.3,
+   "savingS": 102.8,
+   "savingPct": 5.4
+  },
+  {
+   "seed": 18,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1297.9,
+   "hungarianS": 1297.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 19,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1366.1,
+   "hungarianS": 1238.5,
+   "savingS": 127.6,
+   "savingPct": 9.3
+  },
+  {
+   "seed": 20,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1436.4,
+   "hungarianS": 1436.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 21,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2356.5,
+   "hungarianS": 2343.4,
+   "savingS": 13.1,
+   "savingPct": 0.6
+  },
+  {
+   "seed": 22,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2063,
+   "hungarianS": 2029.5,
+   "savingS": 33.5,
+   "savingPct": 1.6
+  },
+  {
+   "seed": 23,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2121.7,
+   "hungarianS": 2121.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 24,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2204.5,
+   "hungarianS": 2204.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 25,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2103.3,
+   "hungarianS": 2103.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 26,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1566,
+   "hungarianS": 1566,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 27,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1309.7,
+   "hungarianS": 1309.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 28,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2340.3,
+   "hungarianS": 2273.7,
+   "savingS": 66.6,
+   "savingPct": 2.8
+  },
+  {
+   "seed": 29,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1616.8,
+   "hungarianS": 1599.5,
+   "savingS": 17.4,
+   "savingPct": 1.1
+  },
+  {
+   "seed": 30,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2587,
+   "hungarianS": 2488.7,
+   "savingS": 98.3,
+   "savingPct": 3.8
+  },
+  {
+   "seed": 31,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2364.9,
+   "hungarianS": 2364.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 32,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1814.3,
+   "hungarianS": 1814.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 33,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1986.5,
+   "hungarianS": 1986.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 34,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1862.5,
+   "hungarianS": 1862.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 35,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1166.5,
+   "hungarianS": 1160.4,
+   "savingS": 6.1,
+   "savingPct": 0.5
+  },
+  {
+   "seed": 36,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1716.7,
+   "hungarianS": 1714.2,
+   "savingS": 2.5,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 37,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1720.3,
+   "hungarianS": 1597.4,
+   "savingS": 122.9,
+   "savingPct": 7.1
+  },
+  {
+   "seed": 38,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2510.3,
+   "hungarianS": 2433.7,
+   "savingS": 76.6,
+   "savingPct": 3.1
+  },
+  {
+   "seed": 39,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1739.2,
+   "hungarianS": 1739.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 40,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1069.3,
+   "hungarianS": 1069.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 41,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1278,
+   "hungarianS": 1278,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 42,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2009.7,
+   "hungarianS": 2009.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 43,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2083.5,
+   "hungarianS": 2083.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 44,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1999.9,
+   "hungarianS": 1797.3,
+   "savingS": 202.6,
+   "savingPct": 10.1
+  },
+  {
+   "seed": 45,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1984.9,
+   "hungarianS": 1879.7,
+   "savingS": 105.2,
+   "savingPct": 5.3
+  },
+  {
+   "seed": 46,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1407.8,
+   "hungarianS": 1407.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 47,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2329.5,
+   "hungarianS": 2329.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 48,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1713.2,
+   "hungarianS": 1713.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 49,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1960.1,
+   "hungarianS": 1960.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 50,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1209.6,
+   "hungarianS": 1209.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 51,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 963.6,
+   "hungarianS": 963.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 52,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2665.7,
+   "hungarianS": 2665.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 53,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2687.4,
+   "hungarianS": 2613.9,
+   "savingS": 73.5,
+   "savingPct": 2.7
+  },
+  {
+   "seed": 54,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1490,
+   "hungarianS": 1490,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 55,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1399.7,
+   "hungarianS": 1390,
+   "savingS": 9.7,
+   "savingPct": 0.7
+  },
+  {
+   "seed": 56,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1294.7,
+   "hungarianS": 1212.4,
+   "savingS": 82.3,
+   "savingPct": 6.4
+  },
+  {
+   "seed": 57,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1689.5,
+   "hungarianS": 1689.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 58,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2282,
+   "hungarianS": 1951.3,
+   "savingS": 330.7,
+   "savingPct": 14.5
+  },
+  {
+   "seed": 59,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1299.7,
+   "hungarianS": 1250.1,
+   "savingS": 49.6,
+   "savingPct": 3.8
+  },
+  {
+   "seed": 60,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2507.1,
+   "hungarianS": 2507.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 61,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1919,
+   "hungarianS": 1919,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 62,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1386.6,
+   "hungarianS": 1162.4,
+   "savingS": 224.2,
+   "savingPct": 16.2
+  },
+  {
+   "seed": 63,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1615.7,
+   "hungarianS": 1615.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 64,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2472.4,
+   "hungarianS": 2472.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 65,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2244.3,
+   "hungarianS": 2233.1,
+   "savingS": 11.2,
+   "savingPct": 0.5
+  },
+  {
+   "seed": 66,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1089.1,
+   "hungarianS": 1089.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 67,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2173,
+   "hungarianS": 2173,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 68,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1903.6,
+   "hungarianS": 1903.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 69,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2133,
+   "hungarianS": 2067.8,
+   "savingS": 65.2,
+   "savingPct": 3.1
+  },
+  {
+   "seed": 70,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2784.3,
+   "hungarianS": 2685.4,
+   "savingS": 98.9,
+   "savingPct": 3.6
+  },
+  {
+   "seed": 71,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1894.3,
+   "hungarianS": 1894.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 72,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1667.4,
+   "hungarianS": 1667.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 73,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1884.6,
+   "hungarianS": 1836.8,
+   "savingS": 47.9,
+   "savingPct": 2.5
+  },
+  {
+   "seed": 74,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1624.5,
+   "hungarianS": 1624.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 75,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1580.9,
+   "hungarianS": 1289.5,
+   "savingS": 291.4,
+   "savingPct": 18.4
+  },
+  {
+   "seed": 76,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1864.9,
+   "hungarianS": 1864.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 77,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2113.6,
+   "hungarianS": 2103.1,
+   "savingS": 10.5,
+   "savingPct": 0.5
+  },
+  {
+   "seed": 78,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1793.9,
+   "hungarianS": 1793.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 79,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1823.2,
+   "hungarianS": 1823.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 80,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2382.9,
+   "hungarianS": 2382.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 81,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1100.5,
+   "hungarianS": 1100.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 82,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2002.6,
+   "hungarianS": 2002.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 83,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3085.5,
+   "hungarianS": 3032.5,
+   "savingS": 53,
+   "savingPct": 1.7
+  },
+  {
+   "seed": 84,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1067.7,
+   "hungarianS": 1067.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 85,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2228.3,
+   "hungarianS": 2228.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 86,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1704.7,
+   "hungarianS": 1704.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 87,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1872.4,
+   "hungarianS": 1733,
+   "savingS": 139.4,
+   "savingPct": 7.4
+  },
+  {
+   "seed": 88,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1391.8,
+   "hungarianS": 1391.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 89,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1895.3,
+   "hungarianS": 1895,
+   "savingS": 0.3,
+   "savingPct": 0
+  },
+  {
+   "seed": 90,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1486.5,
+   "hungarianS": 1466,
+   "savingS": 20.5,
+   "savingPct": 1.4
+  },
+  {
+   "seed": 91,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2713.3,
+   "hungarianS": 2713.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 92,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2882.9,
+   "hungarianS": 2431,
+   "savingS": 451.9,
+   "savingPct": 15.7
+  },
+  {
+   "seed": 93,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1332.6,
+   "hungarianS": 1332.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 94,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1341.7,
+   "hungarianS": 1341.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 95,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1973,
+   "hungarianS": 1973,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 96,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1991.4,
+   "hungarianS": 1991.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 97,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2006.4,
+   "hungarianS": 2006.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 98,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2227.9,
+   "hungarianS": 2227.1,
+   "savingS": 0.8,
+   "savingPct": 0
+  },
+  {
+   "seed": 99,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1253.7,
+   "hungarianS": 1253.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 100,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3307.7,
+   "hungarianS": 3244.4,
+   "savingS": 63.3,
+   "savingPct": 1.9
+  },
+  {
+   "seed": 101,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2045.3,
+   "hungarianS": 2045.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 102,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2691.2,
+   "hungarianS": 2557.5,
+   "savingS": 133.8,
+   "savingPct": 5
+  },
+  {
+   "seed": 103,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1171.6,
+   "hungarianS": 1171.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 104,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3051.7,
+   "hungarianS": 3051.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 105,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1916.8,
+   "hungarianS": 1916.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 106,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1171.1,
+   "hungarianS": 1171.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 107,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1867.6,
+   "hungarianS": 1867.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 108,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1398.5,
+   "hungarianS": 1334.3,
+   "savingS": 64.3,
+   "savingPct": 4.6
+  },
+  {
+   "seed": 109,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1770.6,
+   "hungarianS": 1684.8,
+   "savingS": 85.8,
+   "savingPct": 4.8
+  },
+  {
+   "seed": 110,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1513.5,
+   "hungarianS": 1513.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 111,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2163.8,
+   "hungarianS": 2163.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 112,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2265.2,
+   "hungarianS": 2180.6,
+   "savingS": 84.7,
+   "savingPct": 3.7
+  },
+  {
+   "seed": 113,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1967.1,
+   "hungarianS": 1967.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 114,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1556.1,
+   "hungarianS": 1556.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 115,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2017,
+   "hungarianS": 1994.9,
+   "savingS": 22.1,
+   "savingPct": 1.1
+  },
+  {
+   "seed": 116,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1435.5,
+   "hungarianS": 1435.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 117,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2448.4,
+   "hungarianS": 2161.1,
+   "savingS": 287.3,
+   "savingPct": 11.7
+  },
+  {
+   "seed": 118,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2356.1,
+   "hungarianS": 2356.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 119,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1575.6,
+   "hungarianS": 1575.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 120,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3087.8,
+   "hungarianS": 3087.6,
+   "savingS": 0.3,
+   "savingPct": 0
+  },
+  {
+   "seed": 121,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1915.1,
+   "hungarianS": 1915.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 122,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1871.9,
+   "hungarianS": 1550.6,
+   "savingS": 321.3,
+   "savingPct": 17.2
+  },
+  {
+   "seed": 123,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2504.7,
+   "hungarianS": 2428,
+   "savingS": 76.6,
+   "savingPct": 3.1
+  },
+  {
+   "seed": 124,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2041.3,
+   "hungarianS": 2041.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 125,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2386.1,
+   "hungarianS": 2303.3,
+   "savingS": 82.8,
+   "savingPct": 3.5
+  },
+  {
+   "seed": 126,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2039.8,
+   "hungarianS": 1992.8,
+   "savingS": 47.1,
+   "savingPct": 2.3
+  },
+  {
+   "seed": 127,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1760.4,
+   "hungarianS": 1728.2,
+   "savingS": 32.2,
+   "savingPct": 1.8
+  },
+  {
+   "seed": 128,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1881.6,
+   "hungarianS": 1840.2,
+   "savingS": 41.4,
+   "savingPct": 2.2
+  },
+  {
+   "seed": 129,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2534.7,
+   "hungarianS": 2534.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 130,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1778.2,
+   "hungarianS": 1756.1,
+   "savingS": 22.2,
+   "savingPct": 1.2
+  },
+  {
+   "seed": 131,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2165.6,
+   "hungarianS": 2165.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 132,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1875.7,
+   "hungarianS": 1866.5,
+   "savingS": 9.1,
+   "savingPct": 0.5
+  },
+  {
+   "seed": 133,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1597.3,
+   "hungarianS": 1502,
+   "savingS": 95.2,
+   "savingPct": 6
+  },
+  {
+   "seed": 134,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1800.2,
+   "hungarianS": 1800.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 135,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1190.2,
+   "hungarianS": 1140.7,
+   "savingS": 49.5,
+   "savingPct": 4.2
+  },
+  {
+   "seed": 136,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2330.3,
+   "hungarianS": 2330.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 137,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1311.6,
+   "hungarianS": 1298,
+   "savingS": 13.6,
+   "savingPct": 1
+  },
+  {
+   "seed": 138,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1322.4,
+   "hungarianS": 1322.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 139,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1322.2,
+   "hungarianS": 1294.9,
+   "savingS": 27.2,
+   "savingPct": 2.1
+  },
+  {
+   "seed": 140,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2133.4,
+   "hungarianS": 2133.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 141,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2074.1,
+   "hungarianS": 1827.3,
+   "savingS": 246.8,
+   "savingPct": 11.9
+  },
+  {
+   "seed": 142,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1951.1,
+   "hungarianS": 1951.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 143,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2305.7,
+   "hungarianS": 2305.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 144,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2306.2,
+   "hungarianS": 2283.3,
+   "savingS": 22.9,
+   "savingPct": 1
+  },
+  {
+   "seed": 145,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2194,
+   "hungarianS": 2194,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 146,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1700.9,
+   "hungarianS": 1700.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 147,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1275.1,
+   "hungarianS": 1275.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 148,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1396.6,
+   "hungarianS": 1396.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 149,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2148.6,
+   "hungarianS": 2148.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 150,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2541.4,
+   "hungarianS": 2454.5,
+   "savingS": 86.9,
+   "savingPct": 3.4
+  },
+  {
+   "seed": 151,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 966.9,
+   "hungarianS": 966.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 152,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1939.5,
+   "hungarianS": 1939.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 153,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1187.2,
+   "hungarianS": 1187.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 154,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1136.7,
+   "hungarianS": 1136.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 155,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2134.5,
+   "hungarianS": 2134.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 156,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2375.2,
+   "hungarianS": 2375.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 157,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 760.5,
+   "hungarianS": 760.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 158,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1654.5,
+   "hungarianS": 1580.6,
+   "savingS": 73.9,
+   "savingPct": 4.5
+  },
+  {
+   "seed": 159,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1758.9,
+   "hungarianS": 1701.8,
+   "savingS": 57.1,
+   "savingPct": 3.2
+  },
+  {
+   "seed": 160,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2123.7,
+   "hungarianS": 2123.4,
+   "savingS": 0.3,
+   "savingPct": 0
+  },
+  {
+   "seed": 161,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2113.6,
+   "hungarianS": 2113.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 162,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2130.9,
+   "hungarianS": 2118.1,
+   "savingS": 12.8,
+   "savingPct": 0.6
+  },
+  {
+   "seed": 163,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2690.1,
+   "hungarianS": 2690.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 164,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1526,
+   "hungarianS": 1526,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 165,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2155.8,
+   "hungarianS": 2121.9,
+   "savingS": 33.9,
+   "savingPct": 1.6
+  },
+  {
+   "seed": 166,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3545.5,
+   "hungarianS": 3429.9,
+   "savingS": 115.6,
+   "savingPct": 3.3
+  },
+  {
+   "seed": 167,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1670.2,
+   "hungarianS": 1670,
+   "savingS": 0.2,
+   "savingPct": 0
+  },
+  {
+   "seed": 168,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1870.8,
+   "hungarianS": 1870.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 169,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2310.5,
+   "hungarianS": 2310.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 170,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1443.7,
+   "hungarianS": 1443.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 171,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1908,
+   "hungarianS": 1908,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 172,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2433.4,
+   "hungarianS": 2398,
+   "savingS": 35.4,
+   "savingPct": 1.5
+  },
+  {
+   "seed": 173,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2614.1,
+   "hungarianS": 2480.7,
+   "savingS": 133.4,
+   "savingPct": 5.1
+  },
+  {
+   "seed": 174,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2117.6,
+   "hungarianS": 2078,
+   "savingS": 39.6,
+   "savingPct": 1.9
+  },
+  {
+   "seed": 175,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 683.1,
+   "hungarianS": 683.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 176,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1269.8,
+   "hungarianS": 1269.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 177,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2156.1,
+   "hungarianS": 2156.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 178,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2085.9,
+   "hungarianS": 1954.6,
+   "savingS": 131.3,
+   "savingPct": 6.3
+  },
+  {
+   "seed": 179,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 914.8,
+   "hungarianS": 914.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 180,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2715.2,
+   "hungarianS": 2651.6,
+   "savingS": 63.6,
+   "savingPct": 2.3
+  },
+  {
+   "seed": 181,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1575.4,
+   "hungarianS": 1575.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 182,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1701,
+   "hungarianS": 1701,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 183,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1801,
+   "hungarianS": 1799.1,
+   "savingS": 1.8,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 184,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1244.2,
+   "hungarianS": 1244.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 185,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1517.3,
+   "hungarianS": 1517.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 186,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1540.4,
+   "hungarianS": 1540.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 187,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1972.9,
+   "hungarianS": 1919.3,
+   "savingS": 53.6,
+   "savingPct": 2.7
+  },
+  {
+   "seed": 188,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2028.5,
+   "hungarianS": 1985.9,
+   "savingS": 42.6,
+   "savingPct": 2.1
+  },
+  {
+   "seed": 189,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2104.6,
+   "hungarianS": 2039.9,
+   "savingS": 64.8,
+   "savingPct": 3.1
+  },
+  {
+   "seed": 190,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1290.5,
+   "hungarianS": 1244.2,
+   "savingS": 46.3,
+   "savingPct": 3.6
+  },
+  {
+   "seed": 191,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1578,
+   "hungarianS": 1578,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 192,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1378.8,
+   "hungarianS": 1248.1,
+   "savingS": 130.7,
+   "savingPct": 9.5
+  },
+  {
+   "seed": 193,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2485.6,
+   "hungarianS": 2426.9,
+   "savingS": 58.8,
+   "savingPct": 2.4
+  },
+  {
+   "seed": 194,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1696.1,
+   "hungarianS": 1696.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 195,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1163,
+   "hungarianS": 1163,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 196,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1991.6,
+   "hungarianS": 1850.2,
+   "savingS": 141.4,
+   "savingPct": 7.1
+  },
+  {
+   "seed": 197,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1436,
+   "hungarianS": 1436,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 198,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1936.5,
+   "hungarianS": 1936.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 199,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2240.2,
+   "hungarianS": 2240.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 200,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3210.6,
+   "hungarianS": 3210.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 201,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2172.7,
+   "hungarianS": 2160.5,
+   "savingS": 12.2,
+   "savingPct": 0.6
+  },
+  {
+   "seed": 202,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1342.8,
+   "hungarianS": 1342.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 203,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2119.3,
+   "hungarianS": 2116.8,
+   "savingS": 2.5,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 204,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2235.6,
+   "hungarianS": 2235.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 205,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1737.3,
+   "hungarianS": 1665.1,
+   "savingS": 72.1,
+   "savingPct": 4.2
+  },
+  {
+   "seed": 206,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2771.7,
+   "hungarianS": 2771.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 207,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1623.9,
+   "hungarianS": 1623.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 208,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2109.8,
+   "hungarianS": 2036.3,
+   "savingS": 73.5,
+   "savingPct": 3.5
+  },
+  {
+   "seed": 209,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1994.4,
+   "hungarianS": 1994.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 210,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 787.2,
+   "hungarianS": 787.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 211,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2095.1,
+   "hungarianS": 2095.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 212,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1429,
+   "hungarianS": 1429,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 213,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1774.7,
+   "hungarianS": 1774.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 214,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2131.3,
+   "hungarianS": 2055,
+   "savingS": 76.4,
+   "savingPct": 3.6
+  },
+  {
+   "seed": 215,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1775.2,
+   "hungarianS": 1729.7,
+   "savingS": 45.4,
+   "savingPct": 2.6
+  },
+  {
+   "seed": 216,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1598.1,
+   "hungarianS": 1491,
+   "savingS": 107.1,
+   "savingPct": 6.7
+  },
+  {
+   "seed": 217,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2338.9,
+   "hungarianS": 2338.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 218,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 705.7,
+   "hungarianS": 705.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 219,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1466.8,
+   "hungarianS": 1466.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 220,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1619.7,
+   "hungarianS": 1619.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 221,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2021.6,
+   "hungarianS": 1999.4,
+   "savingS": 22.2,
+   "savingPct": 1.1
+  },
+  {
+   "seed": 222,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1537.2,
+   "hungarianS": 1537.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 223,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2666.3,
+   "hungarianS": 2666.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 224,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2375.1,
+   "hungarianS": 2375.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 225,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2660.7,
+   "hungarianS": 2660.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 226,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2100.4,
+   "hungarianS": 1963.8,
+   "savingS": 136.5,
+   "savingPct": 6.5
+  },
+  {
+   "seed": 227,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1887.2,
+   "hungarianS": 1885.1,
+   "savingS": 2.1,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 228,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1735.9,
+   "hungarianS": 1735.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 229,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1636.7,
+   "hungarianS": 1636.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 230,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1657.1,
+   "hungarianS": 1508.1,
+   "savingS": 149,
+   "savingPct": 9
+  },
+  {
+   "seed": 231,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1594.2,
+   "hungarianS": 1594.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 232,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1119.9,
+   "hungarianS": 1119.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 233,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2172.6,
+   "hungarianS": 2172.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 234,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 864,
+   "hungarianS": 864,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 235,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2012.2,
+   "hungarianS": 1937.3,
+   "savingS": 74.9,
+   "savingPct": 3.7
+  },
+  {
+   "seed": 236,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1941.3,
+   "hungarianS": 1941.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 237,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2697.9,
+   "hungarianS": 2697.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 238,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1150.5,
+   "hungarianS": 1150.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 239,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1402.4,
+   "hungarianS": 1402.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 240,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2153.9,
+   "hungarianS": 2120.3,
+   "savingS": 33.5,
+   "savingPct": 1.6
+  },
+  {
+   "seed": 241,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1997.6,
+   "hungarianS": 1892.3,
+   "savingS": 105.3,
+   "savingPct": 5.3
+  },
+  {
+   "seed": 242,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1655.8,
+   "hungarianS": 1655.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 243,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1415.1,
+   "hungarianS": 1415.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 244,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1509,
+   "hungarianS": 1509,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 245,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1761.2,
+   "hungarianS": 1761.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 246,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1981.5,
+   "hungarianS": 1879.2,
+   "savingS": 102.3,
+   "savingPct": 5.2
+  },
+  {
+   "seed": 247,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1087.1,
+   "hungarianS": 1087.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 248,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1698.1,
+   "hungarianS": 1697.7,
+   "savingS": 0.4,
+   "savingPct": 0
+  },
+  {
+   "seed": 249,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1443.7,
+   "hungarianS": 1439.1,
+   "savingS": 4.5,
+   "savingPct": 0.3
+  },
+  {
+   "seed": 250,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1897.1,
+   "hungarianS": 1820,
+   "savingS": 77.1,
+   "savingPct": 4.1
+  },
+  {
+   "seed": 251,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1428.2,
+   "hungarianS": 1428.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 252,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1936.5,
+   "hungarianS": 1887.2,
+   "savingS": 49.3,
+   "savingPct": 2.5
+  },
+  {
+   "seed": 253,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1276.5,
+   "hungarianS": 1276.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 254,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1415.1,
+   "hungarianS": 1415.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 255,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1080.6,
+   "hungarianS": 1078.9,
+   "savingS": 1.7,
+   "savingPct": 0.2
+  },
+  {
+   "seed": 256,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1859.9,
+   "hungarianS": 1859.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 257,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1964.5,
+   "hungarianS": 1964.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 258,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1346.3,
+   "hungarianS": 1283.2,
+   "savingS": 63.1,
+   "savingPct": 4.7
+  },
+  {
+   "seed": 259,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1957.4,
+   "hungarianS": 1824.1,
+   "savingS": 133.3,
+   "savingPct": 6.8
+  },
+  {
+   "seed": 260,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2007.8,
+   "hungarianS": 2007.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 261,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1461.2,
+   "hungarianS": 1461.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 262,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1221.4,
+   "hungarianS": 1221.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 263,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1569.5,
+   "hungarianS": 1569.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 264,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1259.6,
+   "hungarianS": 1259.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 265,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1874,
+   "hungarianS": 1874,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 266,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2123.9,
+   "hungarianS": 2052,
+   "savingS": 71.9,
+   "savingPct": 3.4
+  },
+  {
+   "seed": 267,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1436.8,
+   "hungarianS": 1389.4,
+   "savingS": 47.4,
+   "savingPct": 3.3
+  },
+  {
+   "seed": 268,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2592.1,
+   "hungarianS": 2499.3,
+   "savingS": 92.8,
+   "savingPct": 3.6
+  },
+  {
+   "seed": 269,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1287.7,
+   "hungarianS": 1287.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 270,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1299.6,
+   "hungarianS": 1299.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 271,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1842.2,
+   "hungarianS": 1833,
+   "savingS": 9.2,
+   "savingPct": 0.5
+  },
+  {
+   "seed": 272,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1134.2,
+   "hungarianS": 1134.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 273,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1276.8,
+   "hungarianS": 1276.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 274,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1874.1,
+   "hungarianS": 1874.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 275,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3172.1,
+   "hungarianS": 2972.4,
+   "savingS": 199.6,
+   "savingPct": 6.3
+  },
+  {
+   "seed": 276,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1906.7,
+   "hungarianS": 1906.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 277,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1924.3,
+   "hungarianS": 1924.3,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 278,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2233.8,
+   "hungarianS": 2145.9,
+   "savingS": 87.8,
+   "savingPct": 3.9
+  },
+  {
+   "seed": 279,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1868.9,
+   "hungarianS": 1868.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 280,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2631.7,
+   "hungarianS": 2524.6,
+   "savingS": 107.1,
+   "savingPct": 4.1
+  },
+  {
+   "seed": 281,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1604.5,
+   "hungarianS": 1536,
+   "savingS": 68.5,
+   "savingPct": 4.3
+  },
+  {
+   "seed": 282,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1825.2,
+   "hungarianS": 1567.3,
+   "savingS": 257.8,
+   "savingPct": 14.1
+  },
+  {
+   "seed": 283,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 929.5,
+   "hungarianS": 929.5,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 284,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1452.8,
+   "hungarianS": 1321.2,
+   "savingS": 131.6,
+   "savingPct": 9.1
+  },
+  {
+   "seed": 285,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1791.8,
+   "hungarianS": 1789.4,
+   "savingS": 2.5,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 286,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1234.7,
+   "hungarianS": 1234.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 287,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1269.6,
+   "hungarianS": 1265,
+   "savingS": 4.5,
+   "savingPct": 0.4
+  },
+  {
+   "seed": 288,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2341.1,
+   "hungarianS": 2341.1,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 289,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1510.6,
+   "hungarianS": 1510.6,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 290,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1429.9,
+   "hungarianS": 1429.9,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 291,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1438,
+   "hungarianS": 1384.9,
+   "savingS": 53.1,
+   "savingPct": 3.7
+  },
+  {
+   "seed": 292,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 3550.2,
+   "hungarianS": 3550.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 293,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2309.2,
+   "hungarianS": 2296.4,
+   "savingS": 12.8,
+   "savingPct": 0.6
+  },
+  {
+   "seed": 294,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2255.4,
+   "hungarianS": 2255.4,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 295,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1621.2,
+   "hungarianS": 1621.2,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 296,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1683.4,
+   "hungarianS": 1680.9,
+   "savingS": 2.5,
+   "savingPct": 0.1
+  },
+  {
+   "seed": 297,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1409.7,
+   "hungarianS": 1363.7,
+   "savingS": 46,
+   "savingPct": 3.3
+  },
+  {
+   "seed": 298,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1391.8,
+   "hungarianS": 1391.8,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 299,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 1555.7,
+   "hungarianS": 1555.7,
+   "savingS": 0,
+   "savingPct": 0
+  },
+  {
+   "seed": 300,
+   "created": 8,
+   "greedyAssigned": 8,
+   "hungarianAssigned": 8,
+   "greedyS": 2290.8,
+   "hungarianS": 2290.8,
+   "savingS": 0,
+   "savingPct": 0
+  }
+ ]
+}

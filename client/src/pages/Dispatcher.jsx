@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '../api.js';
-import { fmtDuration, fmtKm, fmtInt, fmtClock } from '../format.js';
+import { fmtDuration, fmtKm, fmtInt, fmtClock, fmtTime } from '../format.js';
 import { getSocket, emitAck, clientId } from '../socket.js';
 import { useLiveDispatch } from '../useLiveDispatch.js';
 import SafetyBanner from '../components/SafetyBanner.jsx';
 import NavLinks from '../components/NavLinks.jsx';
 import RescueMap from '../components/RescueMap.jsx';
 import ComparisonPanel from '../components/ComparisonPanel.jsx';
+import TrafficPanel from '../components/TrafficPanel.jsx';
+import OsrmPanel from '../components/OsrmPanel.jsx';
 import { UNIT_LABEL, TYPE_ICON } from '../components/mapParts.jsx';
 
 const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals' };
@@ -51,6 +53,18 @@ export default function Dispatcher() {
   const [routeError, setRouteError] = useState(null);
   const [busy, setBusy] = useState(false);
   const [version, setVersion] = useState(0);
+  // Phase 4: traffic colours and the OSRM comparison overlay
+  const [showTraffic, setShowTraffic] = useState(false);
+  const [trafficRoads, setTrafficRoads] = useState([]);
+  const [compareResult, setCompareResult] = useState(null);
+  const trafficKey = `${live.traffic?.mode}|${live.traffic?.snapshotAt}`;
+  useEffect(() => { setCompareResult(null); }, [tab, selectedIncidentId]);
+  useEffect(() => {
+    if (!showTraffic || !live.traffic?.snapshotAt) { setTrafficRoads([]); return undefined; }
+    let cancelled = false;
+    api.traffic().then((t) => { if (!cancelled) setTrafficRoads(t.roads); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [showTraffic, trafficKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (destination) setTab('planner');
@@ -85,7 +99,7 @@ export default function Dispatcher() {
       .catch((e) => { if (!cancelled) { setResult(null); setRouteError(e.message); } })
       .finally(() => { if (!cancelled) setBusy(false); });
     return () => { cancelled = true; };
-  }, [tab, origin, destination, version, live.closedRoads]);
+  }, [tab, origin, destination, version, live.closedRoads, trafficKey]);
 
   const setStatus = useCallback(async (roadIds, status) => {
     try { for (const id of roadIds) await api.setRoadStatus(id, status); } catch (e) { setRouteError(e.message); }
@@ -150,12 +164,19 @@ export default function Dispatcher() {
         <div className="chips">
           <span className={`chip ${live.connected ? 'ok' : 'warn'}`}>{live.connected ? 'Live' : 'Reconnecting…'}</span>
           <span className="chip">Sim {fmtClock(live.simTimeS)} · {live.speed}×</span>
-          {summary && <>
-            <span className="chip">{fmtInt(summary.nodes)} junctions · {fmtInt(summary.roads)} roads</span>
-            <span className={`chip ${summary.traffic.live ? 'ok' : 'warn'}`} title={summary.traffic.message}>
-              {summary.traffic.live ? 'Live traffic' : 'Live traffic unavailable · free-flow'}
+          {summary && <span className="chip">{fmtInt(summary.nodes)} junctions · {fmtInt(summary.roads)} roads</span>}
+          {live.traffic && (
+            <span className={`chip ${live.traffic.mode === 'live' ? 'ok' : 'warn'}`} title={live.traffic.message}>
+              {live.traffic.mode === 'live' && live.traffic.snapshotAt
+                ? `Traffic as of ${fmtTime(live.traffic.snapshotAt)}`
+                : live.traffic.hasKey ? 'Free-flow traffic' : 'Free-flow · live traffic unavailable'}
             </span>
-          </>}
+          )}
+          {live.externalCalls && (
+            <span className="chip" title="External API calls today (UTC); TomTom is capped at 200/day">
+              TomTom {live.externalCalls.tomtom?.calls ?? 0}/{live.externalCalls.tomtom?.cap ?? 200} · OSRM {live.externalCalls.osrm?.calls ?? 0}{live.externalCalls.osrm?.cacheHits ? ` (+${live.externalCalls.osrm.cacheHits} cached)` : ''}
+            </span>
+          )}
         </div>
       </header>
 
@@ -169,6 +190,7 @@ export default function Dispatcher() {
             incidents={incidents.filter((i) => showResolved || i.status !== 'RESOLVED')} liveUnits={units} showIdle={showIdle}
             selectedIncidentId={selectedIncidentId} onSelectIncident={setSelectedIncidentId} beds={live.beds}
             cursor={tab === 'live' && testMode ? 'crosshair' : ''}
+            trafficRoads={trafficRoads} compare={compareResult}
           />
         ) : <div className="map-shell loading">Loading road network…</div>}
 
@@ -179,6 +201,8 @@ export default function Dispatcher() {
             </button>
             <button type="button" role="tab" aria-selected={tab === 'planner'} className={tab === 'planner' ? 'on' : ''} onClick={() => setTab('planner')}>Route planner</button>
           </div>
+
+          <TrafficPanel status={live.traffic} calls={live.externalCalls} showColours={showTraffic} onShowColours={setShowTraffic} />
 
           {tab === 'live' && (
             <>
@@ -276,6 +300,14 @@ export default function Dispatcher() {
                 </p>
               </section>
 
+              {(() => {
+                const sel = selectedIncidentId ? live.incidents.get(selectedIncidentId) : null;
+                return sel?.fromLat != null ? (
+                  <OsrmPanel from={{ lat: sel.fromLat, lng: sel.fromLng }} to={{ lat: sel.lat, lng: sel.lng }}
+                    label={`Dispatch ${sel.unitId} → ${sel.id}: same start junction and incident for both engines.`} onResult={setCompareResult} />
+                ) : <p className="note panel-note">Select an assigned incident to compare its route with OSRM.</p>;
+              })()}
+
               <section className="panel">
                 <h2>Units (simulated)</h2>
                 <table className="cmp">
@@ -319,7 +351,7 @@ export default function Dispatcher() {
                 {a?.reachable && (
                   <>
                     <div className="eta">
-                      <span className="eta-label">ETA (free-flow)</span>
+                      <span className="eta-label">ETA ({live.traffic?.mode === 'live' ? `live traffic, ${fmtTime(live.traffic.snapshotAt)}` : 'free-flow'})</span>
                       <span className="eta-value">{fmtDuration(a.totalCostS)}</span>
                       <span className="eta-sub">{fmtKm(a.totalLengthM)} · {a.roadCount} road segments</span>
                     </div>
@@ -351,6 +383,8 @@ export default function Dispatcher() {
                   </p>
                 </section>
               )}
+
+              {a?.reachable && <OsrmPanel from={origin} to={destination} label="Route planner start and destination." onResult={setCompareResult} />}
 
               {turnList.length > 0 && (
                 <section className="panel">

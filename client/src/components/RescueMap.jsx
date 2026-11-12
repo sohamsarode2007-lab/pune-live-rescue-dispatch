@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { MapContainer, Polyline, Marker, Popup } from 'react-leaflet';
 import { AreaBox, BaseTiles, ClickHandler, MapFrame, divIcon, UNIT_LABEL, UNIT_LETTER, TYPE_ICON } from './mapParts.jsx';
+import { trafficColor } from './TrafficPanel.jsx';
 
 const KIND_STYLE = {
   hospital: { cls: 'hospital', label: 'H' },
@@ -18,6 +19,7 @@ function fleetText(units) {
 export default function RescueMap({
   bbox, facilities, fleet, layers, origin, destination, route, closedRoads, onMapClick, onReopenRoad, onPickOrigin,
   incidents = [], liveUnits = [], showIdle = false, selectedIncidentId = null, onSelectIncident, beds = {}, cursor = '',
+  trafficRoads = [], compare = null,
 }) {
   const fleetByStation = useMemo(() => {
     const m = new Map();
@@ -44,6 +46,23 @@ export default function RescueMap({
               </Popup>
             </Polyline>
           ))}
+
+          {trafficRoads.map((r) => (
+            <Polyline key={`t-${r.id}`} positions={r.geometry} pathOptions={{ color: trafficColor(r.factor), weight: 5, opacity: 0.85 }}>
+              <Popup><b>{r.name || 'Unnamed road'}</b><br />Traffic factor {r.factor}× · {r.currentSpeed} km/h now, {r.freeFlowSpeed} km/h free-flow<br /><span className="muted">TomTom sample {r.sampleId}</span></Popup>
+            </Polyline>
+          ))}
+
+          {compare?.osrm?.available && compare.osrm.geometry.length > 1 && (
+            <Polyline positions={compare.osrm.geometry} pathOptions={{ color: '#c084fc', weight: 5, opacity: 0.9, dashArray: '8 8' }}>
+              <Popup>OSRM route (normal traffic, external baseline)</Popup>
+            </Polyline>
+          )}
+          {compare?.ours?.geometry?.length > 1 && (
+            <Polyline positions={compare.ours.geometry} pathOptions={{ color: '#22d3ee', weight: 4, opacity: 0.95 }}>
+              <Popup>Our route ({compare.ours.trafficMode === 'live' ? 'live traffic' : 'free-flow'})</Popup>
+            </Polyline>
+          )}
 
           {route?.geometry?.length > 1 && (
             <>

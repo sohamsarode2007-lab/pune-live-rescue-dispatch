@@ -4,17 +4,26 @@
 //   phone -> server : sos:new {lat,lng,accuracyM,type,severity,people,clientId}  (ack: {ok, incident} | {ok:false, error})
 //                     sos:watch {incidentId}   (re-join an incident's updates after a reload/reconnect)
 //                     road:report {lat,lng,clientId}  (stored; Phase 5 turns 3 reports into a closure)
-//   dispatcher      : dispatch:join, sim:speed {speed}, sim:reset
+//   dispatcher      : dispatch:join, sim:speed {speed}, sim:reset, burst:create, dispatch:mode,
+//                     traffic:refresh, traffic:mode {mode: 'live'|'free-flow'}
 //   server -> all   : incident:updated, unit:updated, unit:position, queue:updated, hospital:updated,
-//                     hazard:updated (closed roads), state:init (full snapshot on join)
+//                     hazard:updated (closed roads), state:init (full snapshot on join), comparison:updated,
+//                     traffic:updated, external:calls
 import express from 'express';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { Server } from 'socket.io';
-import { DEMO_BBOX, FACILITIES_FILE, GRAPH_FILE, PORT, ROOT, SIM_SPEED, TICK_MS, TOMTOM_API_KEY } from './config.js';
+import {
+  BURST_BENCHMARK_FILE, DEMO_BBOX, EXTERNAL_CALLS_FILE, FACILITIES_FILE, GRAPH_FILE, OSRM_BASE_URL, OSRM_LOG_FILE, PORT, ROOT,
+  SIM_SPEED, TICK_MS, TOMTOM_API_KEY, TOMTOM_FLOW_URL, TRAFFIC_SNAPSHOT_FILE,
+} from './config.js';
 import { GraphStore } from './services/graphStore.js';
 import { DispatchService, DISPATCH_MODES } from './services/dispatchService.js';
+import { ExternalCalls } from './services/externalCalls.js';
+import { TrafficService } from './services/trafficService.js';
+import { OsrmService } from './services/osrmService.js';
+import { CompareService } from './services/compareService.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -35,6 +44,18 @@ const dispatch = new DispatchService(store, {
   emit: (event, payload, rooms) => io.to(rooms).emit(event, payload),
 });
 
+// Phase 4: external services (TomTom traffic, OSRM baseline) with a persisted daily call counter.
+const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => io.to('dispatch').emit('external:calls', v) });
+const traffic = new TrafficService({
+  store, apiKey: TOMTOM_API_KEY, snapshotFile: TRAFFIC_SNAPSHOT_FILE, calls,
+  ...(TOMTOM_FLOW_URL ? { baseUrl: TOMTOM_FLOW_URL } : {}),
+  onChange: (st) => io.to('dispatch').emit('traffic:updated', st),
+});
+const osrm = new OsrmService({ calls, ...(OSRM_BASE_URL ? { baseUrl: OSRM_BASE_URL } : {}) });
+const compare = new CompareService({ store, osrm, traffic, logFile: OSRM_LOG_FILE });
+const ts = traffic.status();
+console.log(`Traffic: ${ts.message}; ${ts.samples} sample points; TomTom key ${TOMTOM_API_KEY ? 'present' : 'missing (free-flow fallback)'}`);
+
 app.use(express.json({ limit: '100kb' }));
 
 const MARGIN = 0.02; // accept points slightly outside the bbox; they snap to the nearest edge junction
@@ -49,8 +70,25 @@ app.get('/api/summary', (_req, res) => {
   res.json({
     ...store.summary(),
     facilityCounts: store.facilitiesMeta?.counts ?? null,
-    traffic: { live: false, mode: 'free-flow', message: TOMTOM_API_KEY ? 'Free-flow traffic (live traffic is added in Phase 4).' : 'Live traffic unavailable: using free-flow speeds.' },
+    traffic: { ...traffic.status(), live: traffic.mode === 'live' },
+    externalCalls: calls.view(),
   });
+});
+
+app.get('/api/traffic', (_req, res) => res.json({ status: traffic.status(), ...traffic.roadsView() }));
+
+app.get('/api/compare', async (req, res) => {
+  const from = point(req.query, 'from'), to = point(req.query, 'to');
+  if (!inArea(from.lat, from.lng) || !inArea(to.lat, to.lng)) return bad(res, 'Both points must be inside the demo area.');
+  try { res.json(await compare.compare(from, to)); } catch (e) { bad(res, e.message); }
+});
+
+app.get('/api/compare/summary', (_req, res) => res.json(compare.summary()));
+
+app.get('/api/burst-benchmark', (_req, res) => {
+  if (!fs.existsSync(BURST_BENCHMARK_FILE)) return res.status(404).json({ error: 'Run node scripts/bench-burst.mjs' });
+  const { rows, ...summary } = JSON.parse(fs.readFileSync(BURST_BENCHMARK_FILE, 'utf8'));
+  res.json(summary);
 });
 
 app.get('/api/facilities', (_req, res) => res.json({ meta: store.facilitiesMeta, facilities: store.facilities, units: store.units }));
@@ -106,6 +144,23 @@ io.on('connection', (socket) => {
     socket.join('dispatch');
     socket.emit('state:init', dispatch.snapshot());
     socket.emit('hazard:updated', store.closedRoads());
+    socket.emit('traffic:updated', traffic.status());
+    socket.emit('external:calls', calls.view());
+    // PLAN: no timer; refresh only while a dispatcher is connected, at most every 15 minutes.
+    traffic.maybeAutoRefresh()?.then(() => io.to('dispatch').emit('traffic:updated', traffic.status()));
+  });
+
+  socket.on('traffic:refresh', async (_msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false, reason: 'NOT_DISPATCHER' });
+    io.to('dispatch').emit('traffic:updated', { ...traffic.status(), refreshing: true });
+    const r = await traffic.refresh({ reason: 'manual' });
+    io.to('dispatch').emit('traffic:updated', traffic.status());
+    ack(r);
+  });
+
+  socket.on('traffic:mode', (msg, ack = () => {}) => {
+    if (!socket.rooms.has('dispatch')) return ack({ ok: false });
+    try { traffic.setMode(msg?.mode); ack({ ok: true }); } catch (e) { ack({ ok: false, message: e.message }); }
   });
 
   socket.on('sos:new', (msg, ack = () => {}) => {
