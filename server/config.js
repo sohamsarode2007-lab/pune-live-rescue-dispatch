@@ -24,5 +24,9 @@ export const BENCH_AREA = 'Pune, Maharashtra, India';
 export const PORT = Number(process.env.PORT) || 3001;
 export const TOMTOM_API_KEY = process.env.TOMTOM_API_KEY || '';
 
+// Simulation: speed multiplier at start (dispatcher can change it: 1, 5, 10, 30) and tick length.
+export const SIM_SPEED = Number(process.env.SIM_SPEED) || 1;
+export const TICK_MS = 500;
+
 export const GRAPH_FILE = path.join(DATA_DIR, 'pune-central.graph.json');
 export const FACILITIES_FILE = path.join(DATA_DIR, 'facilities.json');

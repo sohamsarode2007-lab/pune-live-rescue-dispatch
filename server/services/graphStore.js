@@ -4,6 +4,8 @@ import fs from 'node:fs';
 import { Graph, ROAD_STATUS } from '../../shared/graph/Graph.js';
 import { dijkstra } from '../../shared/graph/dijkstra.js';
 import { astar, maxHeuristicSpeedMps } from '../../shared/graph/astar.js';
+import { bfs } from '../../shared/graph/bfs.js';
+import { dfs } from '../../shared/graph/dfs.js';
 import { NodeIndex } from '../../shared/spatial/kdtree.js';
 
 export const kmhToMps = (kmh) => kmh / 3.6;
@@ -28,6 +30,7 @@ export function loadJson(file) {
 }
 
 const ALGORITHMS = { astar, dijkstra };
+const TRAVERSALS = { bfs, dfs };
 
 // Joins the geometry of every road on a route into one polyline in the direction of travel.
 export function routeGeometry(graph, route) {
@@ -110,6 +113,31 @@ export class GraphStore {
       };
     }
     return { from: a, to: b, results };
+  }
+
+  // BFS / DFS from the junction nearest to a GPS point, for the /algorithms visualisation.
+  // order[i] = [lat, lng, depth, parentIndex] (parentIndex = index into order, -1 for the start).
+  traverse(kind, lat, lng) {
+    const fn = TRAVERSALS[kind];
+    if (!fn) throw new Error(`Unknown traversal: ${kind}`);
+    const start = this.nearest(lat, lng);
+    const t0 = performance.now();
+    const r = fn(this.graph, start.nodeId);
+    const ms = performance.now() - t0;
+    const index = new Map(r.order.map((id, i) => [id, i]));
+    let maxDepth = 0;
+    const order = r.order.map((id) => {
+      const loc = this.graph.getLocation(id);
+      const p = r.parent.get(id);
+      const depth = r.depth.get(id);
+      maxDepth = Math.max(maxDepth, depth);
+      return [loc.lat, loc.lng, depth, p ? index.get(p.from) : -1];
+    });
+    return {
+      algorithm: kind, start, order, reached: r.order.length, total: this.graph.locations.size,
+      maxDepth, maxStack: r.maxStack ?? null, ms: Math.round(ms * 100) / 100,
+      blockedRoads: this.graph.countRoadsByStatus().BLOCKED,
+    };
   }
 
   setRoadStatus(roadId, status) {
