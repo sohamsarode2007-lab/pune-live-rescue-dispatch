@@ -1,0 +1,9 @@
+node_modules
+dist
+client/dist
+.venv
+scripts/.osm_cache
+__pycache__
+.env*
+!.env.example
+~$*

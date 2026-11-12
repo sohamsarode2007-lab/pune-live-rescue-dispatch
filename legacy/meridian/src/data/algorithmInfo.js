@@ -1,0 +1,51 @@
+// Text shown in the Algorithm Demonstrations section (descriptions only; the algorithms live in src/algorithms/).
+export const ALGORITHM_INFO = [
+  {
+    id: 'bfs', name: 'Breadth-First Search (BFS)', file: 'algorithms/bfs.js',
+    purpose: 'Find every location reachable from a starting location, exploring level by level.',
+    input: 'Graph (adjacency list) and a start location ID.',
+    output: 'Traversal order and the set of reachable locations.',
+    steps: ['Mark the start visited and put it in a queue.', 'Remove the front location and add it to the traversal order.', 'For each traversable road to an unvisited neighbour, mark it visited and enqueue it.', 'Repeat until the queue is empty. Blocked roads are never followed.'],
+    complexity: 'Time O(V + E), space O(V).',
+  },
+  {
+    id: 'dfs', name: 'Depth-First Search (DFS)', file: 'algorithms/dfs.js',
+    purpose: 'Explore the network going as deep as possible first; used here to show connectivity and disconnected areas.',
+    input: 'Graph and a start location ID.',
+    output: 'Traversal order and the set of reachable locations.',
+    steps: ['Visit the start location and record it.', 'Recursively visit each unvisited neighbour over a traversable road.', 'Backtrack when a location has no unvisited neighbours.', 'Blocked roads are never followed, so cut-off areas are not visited.'],
+    complexity: 'Time O(V + E), space O(V) for the visited set and recursion stack.',
+  },
+  {
+    id: 'dijkstra', name: "Dijkstra's algorithm", file: 'algorithms/dijkstra.js',
+    purpose: 'Find the minimum total effective-cost route from a rescue station to a destination.',
+    input: 'Graph, source ID, destination ID. Cost of a road = distance in km + risk penalty. Blocked roads are excluded.',
+    output: 'Route (locations and roads), distance, risk penalty, total cost and road count, or UNREACHABLE.',
+    steps: ['Set the source cost to 0 and insert it into the min-heap.', 'Extract the cheapest location; skip it if already finalised (stale entry).', 'Relax each traversable road: if cost-so-far + road cost is lower, update the neighbour, store its predecessor and insert it.', 'Stop when the heap is empty, then rebuild the route from the predecessors.'],
+    complexity: 'O((V + E) log V) with an adjacency list and a binary heap. Requires non-negative weights, which always holds here.',
+  },
+  {
+    id: 'minheap', name: 'Binary min-heap (routing)', file: 'algorithms/MinHeap.js',
+    purpose: "Priority queue that gives Dijkstra the location with the smallest tentative cost.",
+    input: 'Items compared by cost (ties broken by location ID).',
+    output: 'The smallest item on extraction.',
+    steps: ['Stored in an array: parent of index i is ⌊(i−1)/2⌋, children are 2i+1 and 2i+2.', 'push: append at the end, then swap upward while smaller than the parent.', 'pop: take the root, move the last item to the root, then swap downward with the smaller child.', 'peek: read index 0.'],
+    complexity: 'push and pop O(log n), peek O(1). This heap is separate from the emergency request queue.',
+  },
+  {
+    id: 'pq', name: 'Emergency priority queue', file: 'algorithms/EmergencyPriorityQueue.js',
+    purpose: 'Decide which pending rescue request is served next.',
+    input: 'Pending requests. Score = 5×severity + 2×min(people,10) + min(waiting,10) (illustrative weights).',
+    output: 'The highest-priority request, or the full ranked order.',
+    steps: ['Higher score first; ties go to the longer waiting time, then to the request ID.', 'Implemented as a binary max-heap (insert sifts up, extractMax sifts down).', 'Only PENDING requests are inserted, so assigned and completed ones are never selected.'],
+    complexity: 'insert and extractMax O(log n); building from n pending requests O(n log n); ranked view O(n log n). Separate from the routing min-heap.',
+  },
+  {
+    id: 'hash', name: 'Hash-map lookup', file: 'algorithms/hashLookup.js',
+    purpose: 'Retrieve a location, road or request directly by its ID.',
+    input: 'An ID string (trimmed and upper-cased).',
+    output: 'The matching record, or "not found".',
+    steps: ['Normalise the ID.', 'Call get() on the location map, the road map and the request map.', 'Return every match, or a clear not-found message.'],
+    complexity: "Average O(1) per lookup. This uses JavaScript's built-in Map; hashing and collision handling are done by the engine, not by our code.",
+  },
+];

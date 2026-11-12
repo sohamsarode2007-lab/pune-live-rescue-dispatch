@@ -1,0 +1,17 @@
+async function call(url, options) {
+  const res = await fetch(url, options);
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error || `${res.status} ${res.statusText}`);
+  return body;
+}
+
+const post = (url, data) => call(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data ?? {}) });
+
+export const api = {
+  summary: () => call('/api/summary'),
+  facilities: () => call('/api/facilities'),
+  route: (from, to) => call(`/api/route?fromLat=${from.lat}&fromLng=${from.lng}&toLat=${to.lat}&toLng=${to.lng}&algo=astar,dijkstra`),
+  closedRoads: () => call('/api/roads/closed'),
+  setRoadStatus: (id, status) => post(`/api/roads/${encodeURIComponent(id)}/status`, { status }),
+  resetRoads: () => post('/api/roads/reset'),
+};

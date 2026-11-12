@@ -1,0 +1,11 @@
+# Offline data-preparation scripts only (the app itself does not need Python).
+#   python -m venv .venv
+#   .venv\Scripts\python -m pip install -r scripts/requirements.txt     (Windows)
+#   .venv/bin/python -m pip install -r scripts/requirements.txt         (macOS/Linux)
+#
+# pandas / pyproj / geopandas are pinned to older wheels because the newest ones were blocked by
+# Windows Application Control ("DLL load failed ... blocked this file") on the development machine.
+osmnx==2.1.1
+pandas==2.2.3
+pyproj==3.6.1
+geopandas==1.0.1

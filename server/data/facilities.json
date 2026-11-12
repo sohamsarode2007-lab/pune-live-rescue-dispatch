@@ -1,0 +1,3906 @@
+{
+ "meta": {
+  "source": "OpenStreetMap contributors (ODbL): amenity=hospital|fire_station|police, healthcare=hospital",
+  "bbox": {
+   "north": 18.56,
+   "south": 18.49,
+   "east": 73.88,
+   "west": 73.8
+  },
+  "seed": 2026,
+  "simulatedNote": "Hospital bedsFree and every unit (fleet) are SIMULATED demo values, not real data.",
+  "fleetRule": "fire station: 2 fire trucks + 1 rescue boat; police: 1 ambulance; 14 hospitals (emergency=yes / named first): 1 ambulance each",
+  "counts": {
+   "hospital": 204,
+   "fire_station": 5,
+   "police": 30,
+   "units": 59
+  }
+ },
+ "facilities": [
+  {
+   "id": "F1",
+   "kind": "fire_station",
+   "name": "Dayaram Rajguru Agnishamak Kendra",
+   "osm": "way/380417657",
+   "lat": 18.529925,
+   "lng": 73.870601,
+   "nodeId": "3385751216",
+   "snapDistanceM": 235.9
+  },
+  {
+   "id": "F2",
+   "kind": "fire_station",
+   "name": "Erandvana Fire Station",
+   "osm": "way/218697330",
+   "lat": 18.506727,
+   "lng": 73.832804,
+   "nodeId": "2164185832",
+   "snapDistanceM": 45.6
+  },
+  {
+   "id": "F3",
+   "kind": "fire_station",
+   "name": "Janta Fire Brigade station",
+   "osm": "node/11942759805",
+   "lat": 18.499617,
+   "lng": 73.848468,
+   "nodeId": "4342415703",
+   "snapDistanceM": 82.7
+  },
+  {
+   "id": "F4",
+   "kind": "fire_station",
+   "name": "Kothrud Fire Station",
+   "osm": "node/2192111450",
+   "lat": 18.498889,
+   "lng": 73.81348,
+   "nodeId": "13769439234",
+   "snapDistanceM": 11.8
+  },
+  {
+   "id": "F5",
+   "kind": "fire_station",
+   "name": "Pune Main Fire Station",
+   "osm": "way/218881239",
+   "lat": 18.506553,
+   "lng": 73.865258,
+   "nodeId": "673352025",
+   "snapDistanceM": 60.4
+  },
+  {
+   "id": "H1",
+   "kind": "hospital",
+   "name": "ASG Eye Hospital",
+   "osm": "node/7651453399",
+   "lat": 18.528932,
+   "lng": 73.843635,
+   "nodeId": "9784652803",
+   "snapDistanceM": 57.2,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H2",
+   "kind": "hospital",
+   "name": "Ace Hospital",
+   "osm": "node/7063808901",
+   "lat": 18.504933,
+   "lng": 73.830359,
+   "nodeId": "2192111495",
+   "snapDistanceM": 29.7,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H3",
+   "kind": "hospital",
+   "name": "Align Diagnostic & BoneCare Polyclinic",
+   "osm": "node/12595620688",
+   "lat": 18.502711,
+   "lng": 73.817036,
+   "nodeId": "245646239",
+   "snapDistanceM": 136.4,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H4",
+   "kind": "hospital",
+   "name": "Alliance Munot Hospital;munot hospital",
+   "osm": "node/7651453392",
+   "lat": 18.502545,
+   "lng": 73.868699,
+   "nodeId": "10227016020",
+   "snapDistanceM": 20.3,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H5",
+   "kind": "hospital",
+   "name": "Allice Munot Hospital",
+   "osm": "node/10172942169",
+   "lat": 18.50255,
+   "lng": 73.868699,
+   "nodeId": "10227016020",
+   "snapDistanceM": 20.2,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H6",
+   "kind": "hospital",
+   "name": "Amai Charitable Trust Institute Of Urology",
+   "osm": "node/7076609427",
+   "lat": 18.555054,
+   "lng": 73.81624,
+   "nodeId": "2204241591",
+   "snapDistanceM": 41.8,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H7",
+   "kind": "hospital",
+   "name": "Ambekar Hospital",
+   "osm": "node/7086532369",
+   "lat": 18.505405,
+   "lng": 73.817541,
+   "nodeId": "1224084650",
+   "snapDistanceM": 56.8,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H8",
+   "kind": "hospital",
+   "name": "Annachatre Clinic",
+   "osm": "way/360254782",
+   "lat": 18.490212,
+   "lng": 73.849469,
+   "nodeId": "10239784235",
+   "snapDistanceM": 44.2,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H9",
+   "kind": "hospital",
+   "name": "Anup Hospital",
+   "osm": "node/7651453309",
+   "lat": 18.498738,
+   "lng": 73.838315,
+   "nodeId": "2207888173",
+   "snapDistanceM": 62.0,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H10",
+   "kind": "hospital",
+   "name": "Apex Superspeciality Hospital",
+   "osm": "node/7651453312",
+   "lat": 18.507598,
+   "lng": 73.843945,
+   "nodeId": "2207888353",
+   "snapDistanceM": 28.1,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H11",
+   "kind": "hospital",
+   "name": "Apollo Spectra Hospitals",
+   "osm": "node/8814103200",
+   "lat": 18.50298,
+   "lng": 73.852022,
+   "nodeId": "2165021542",
+   "snapDistanceM": 68.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H12",
+   "kind": "hospital",
+   "name": "Argade Infertility and Endoscopic Surgery and Icu Center",
+   "osm": "node/7043489278",
+   "lat": 18.501752,
+   "lng": 73.810235,
+   "nodeId": "2088317138",
+   "snapDistanceM": 27.3,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H13",
+   "kind": "hospital",
+   "name": "Ashakiran Hospital",
+   "osm": "node/7050589614",
+   "lat": 18.515825,
+   "lng": 73.847496,
+   "nodeId": "11335443568",
+   "snapDistanceM": 44.8,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H14",
+   "kind": "hospital",
+   "name": "Asian Eye Hospital",
+   "osm": "way/1412791747",
+   "lat": 18.5316,
+   "lng": 73.875815,
+   "nodeId": "6198562779",
+   "snapDistanceM": 89.4,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H15",
+   "kind": "hospital",
+   "name": "B.J.Medical College and Sassoon Hospital",
+   "osm": "node/7068194960",
+   "lat": 18.526235,
+   "lng": 73.871161,
+   "nodeId": "2864316787",
+   "snapDistanceM": 131.7,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H16",
+   "kind": "hospital",
+   "name": "Bapat Hospital",
+   "osm": "node/7651453353",
+   "lat": 18.530365,
+   "lng": 73.842063,
+   "nodeId": "2203119379",
+   "snapDistanceM": 51.0,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H17",
+   "kind": "hospital",
+   "name": "Bhagirathi Children's Hospital",
+   "osm": "node/7651453338",
+   "lat": 18.494722,
+   "lng": 73.822904,
+   "nodeId": "6477613594",
+   "snapDistanceM": 18.8,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H18",
+   "kind": "hospital",
+   "name": "Bhide Hospital",
+   "osm": "node/7048084570",
+   "lat": 18.504867,
+   "lng": 73.84434,
+   "nodeId": "10230158250",
+   "snapDistanceM": 19.3,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H19",
+   "kind": "hospital",
+   "name": "Bindu Madhav Thakarey Hospital",
+   "osm": "node/7651453330",
+   "lat": 18.496127,
+   "lng": 73.817109,
+   "nodeId": "10232424253",
+   "snapDistanceM": 19.5,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H20",
+   "kind": "hospital",
+   "name": "Bora Hospital",
+   "osm": "node/10172925426",
+   "lat": 18.510455,
+   "lng": 73.863945,
+   "nodeId": "672165939",
+   "snapDistanceM": 23.2,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H21",
+   "kind": "hospital",
+   "name": "Bora Hospital",
+   "osm": "node/3696693817",
+   "lat": 18.511463,
+   "lng": 73.862547,
+   "nodeId": "678448024",
+   "snapDistanceM": 58.8,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H22",
+   "kind": "hospital",
+   "name": "Centre For Laproscopy Surgery",
+   "osm": "node/7083324260",
+   "lat": 18.520794,
+   "lng": 73.84525,
+   "nodeId": "1223957364",
+   "snapDistanceM": 33.3,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H23",
+   "kind": "hospital",
+   "name": "Chaitanya Stem Cell Center",
+   "osm": "node/7044175339",
+   "lat": 18.500019,
+   "lng": 73.850398,
+   "nodeId": "1829951691",
+   "snapDistanceM": 90.2,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H24",
+   "kind": "hospital",
+   "name": "Chajed Hospital",
+   "osm": "node/7651453412",
+   "lat": 18.50451,
+   "lng": 73.862819,
+   "nodeId": "673346532",
+   "snapDistanceM": 32.6,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H25",
+   "kind": "hospital",
+   "name": "Chavan Hospital",
+   "osm": "node/7651453422",
+   "lat": 18.502202,
+   "lng": 73.858459,
+   "nodeId": "9913922011",
+   "snapDistanceM": 44.5,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H26",
+   "kind": "hospital",
+   "name": "Chinmay Institute Of Paediatrics",
+   "osm": "node/7062497086",
+   "lat": 18.508329,
+   "lng": 73.845701,
+   "nodeId": "10229768371",
+   "snapDistanceM": 24.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H27",
+   "kind": "hospital",
+   "name": "Clinic",
+   "osm": "way/1550971040",
+   "lat": 18.492721,
+   "lng": 73.839696,
+   "nodeId": "10239756461",
+   "snapDistanceM": 18.3,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H28",
+   "kind": "hospital",
+   "name": "Colony Nursing Home",
+   "osm": "node/7621410003",
+   "lat": 18.503077,
+   "lng": 73.844692,
+   "nodeId": "2162277671",
+   "snapDistanceM": 24.9,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H29",
+   "kind": "hospital",
+   "name": "DEENDAYAL MEMORIAL HOSPITAL",
+   "osm": "node/10172986710",
+   "lat": 18.52498,
+   "lng": 73.841172,
+   "nodeId": "2181157141",
+   "snapDistanceM": 29.7,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H30",
+   "kind": "hospital",
+   "name": "Dada Laser Eye Institute",
+   "osm": "node/7052818652",
+   "lat": 18.510938,
+   "lng": 73.879904,
+   "nodeId": "672143154",
+   "snapDistanceM": 64.4,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H31",
+   "kind": "hospital",
+   "name": "Dalvi Hospital",
+   "osm": "way/380417656",
+   "lat": 18.533115,
+   "lng": 73.848788,
+   "nodeId": "1328250904",
+   "snapDistanceM": 46.2,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H32",
+   "kind": "hospital",
+   "name": "Date Hospital",
+   "osm": "node/7651453318",
+   "lat": 18.51024,
+   "lng": 73.852229,
+   "nodeId": "2266580424",
+   "snapDistanceM": 14.2,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H33",
+   "kind": "hospital",
+   "name": "David Sassoon Hospital",
+   "osm": "node/7651453417",
+   "lat": 18.525279,
+   "lng": 73.870499,
+   "nodeId": "2258420204",
+   "snapDistanceM": 101.6,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H34",
+   "kind": "hospital",
+   "name": "Deccan Hardikar Hospital",
+   "osm": "way/282054948",
+   "lat": 18.530246,
+   "lng": 73.847541,
+   "nodeId": "2252429800",
+   "snapDistanceM": 57.8,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H35",
+   "kind": "hospital",
+   "name": "Deenanath Mangeshkar Hospital",
+   "osm": "way/207872391",
+   "lat": 18.501854,
+   "lng": 73.832798,
+   "nodeId": "10230313109",
+   "snapDistanceM": 125.7,
+   "bedsFree": 8,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H36",
+   "kind": "hospital",
+   "name": "Deendayal Memorial Hospital",
+   "osm": "way/238842686",
+   "lat": 18.524998,
+   "lng": 73.841086,
+   "nodeId": "2181157141",
+   "snapDistanceM": 38.4,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H37",
+   "kind": "hospital",
+   "name": "Deodhar Eye Hospital",
+   "osm": "node/7073537781",
+   "lat": 18.511449,
+   "lng": 73.836472,
+   "nodeId": "10230113149",
+   "snapDistanceM": 21.6,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H38",
+   "kind": "hospital",
+   "name": "Deoyani Hospital",
+   "osm": "way/218733858",
+   "lat": 18.495889,
+   "lng": 73.812282,
+   "nodeId": "12231027555",
+   "snapDistanceM": 13.6,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H39",
+   "kind": "hospital",
+   "name": "Dhanwantari Hospital",
+   "osm": "node/7068097000",
+   "lat": 18.519447,
+   "lng": 73.8659,
+   "nodeId": "2266620642",
+   "snapDistanceM": 21.9,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H40",
+   "kind": "hospital",
+   "name": "Dr Sarodes Clinic",
+   "osm": "node/14153069361",
+   "lat": 18.49862,
+   "lng": 73.850348,
+   "nodeId": "1590787092",
+   "snapDistanceM": 24.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H41",
+   "kind": "hospital",
+   "name": "Dr Sunny Dole",
+   "osm": "node/13666484240",
+   "lat": 18.501919,
+   "lng": 73.816685,
+   "nodeId": "2096194509",
+   "snapDistanceM": 91.6,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H42",
+   "kind": "hospital",
+   "name": "Dr. Agarwals Eye Hospital",
+   "osm": "node/7649461747",
+   "lat": 18.553551,
+   "lng": 73.80838,
+   "nodeId": "871513878",
+   "snapDistanceM": 82.7,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H43",
+   "kind": "hospital",
+   "name": "Dr. Arundhati kale sidhaye's Vision Eye Center",
+   "osm": "node/13644813722",
+   "lat": 18.508043,
+   "lng": 73.805956,
+   "nodeId": "13748552521",
+   "snapDistanceM": 28.2,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H44",
+   "kind": "hospital",
+   "name": "Dr. Baba Saheb Ambedkar Hospital;dr baba saheb ambedkar hospital",
+   "osm": "node/7651453377",
+   "lat": 18.496299,
+   "lng": 73.870207,
+   "nodeId": "679051868",
+   "snapDistanceM": 22.8,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H45",
+   "kind": "hospital",
+   "name": "Dr. Bonagiri",
+   "osm": "node/871515522",
+   "lat": 18.555482,
+   "lng": 73.808856,
+   "nodeId": "10536229380",
+   "snapDistanceM": 37.9,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H46",
+   "kind": "hospital",
+   "name": "Dr. Chowdhary",
+   "osm": "node/871515219",
+   "lat": 18.554729,
+   "lng": 73.808201,
+   "nodeId": "871516191",
+   "snapDistanceM": 30.1,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H47",
+   "kind": "hospital",
+   "name": "Dr. Karve Childrens Hospital",
+   "osm": "node/7051137462",
+   "lat": 18.52599,
+   "lng": 73.85012,
+   "nodeId": "824465346",
+   "snapDistanceM": 40.8,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H48",
+   "kind": "hospital",
+   "name": "Dr. Rajendra Mehata Hospital",
+   "osm": "node/11909388851",
+   "lat": 18.537694,
+   "lng": 73.85153,
+   "nodeId": "3495323680",
+   "snapDistanceM": 44.6,
+   "bedsFree": 12,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H49",
+   "kind": "hospital",
+   "name": "Dr. Shraddha Angal",
+   "osm": "node/7649461763",
+   "lat": 18.540958,
+   "lng": 73.829755,
+   "nodeId": "2183449303",
+   "snapDistanceM": 66.2,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H50",
+   "kind": "hospital",
+   "name": "Dr. Todkar Hospital",
+   "osm": "node/7079392109",
+   "lat": 18.522952,
+   "lng": 73.863947,
+   "nodeId": "11402600838",
+   "snapDistanceM": 14.9,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H51",
+   "kind": "hospital",
+   "name": "Dr.Pawar Eye Hospital",
+   "osm": "node/7073949807",
+   "lat": 18.509272,
+   "lng": 73.844926,
+   "nodeId": "1223959951",
+   "snapDistanceM": 123.2,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H52",
+   "kind": "hospital",
+   "name": "Dr.Prakash Katariya Laser Cure",
+   "osm": "node/7052987873",
+   "lat": 18.522359,
+   "lng": 73.844131,
+   "nodeId": "245646996",
+   "snapDistanceM": 26.5,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H53",
+   "kind": "hospital",
+   "name": "Dr.Purohit Nursing Home",
+   "osm": "node/7053195972",
+   "lat": 18.490344,
+   "lng": 73.844312,
+   "nodeId": "10239728248",
+   "snapDistanceM": 12.7,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H54",
+   "kind": "hospital",
+   "name": "Dugad Hospital Pvt Ltd",
+   "osm": "node/7087636861",
+   "lat": 18.490948,
+   "lng": 73.858013,
+   "nodeId": "2262754052",
+   "snapDistanceM": 52.4,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H55",
+   "kind": "hospital",
+   "name": "Facethetics - Dental, Facial Cosmetics(BOTOX), & Hair Transplant Clinique",
+   "osm": "node/8266093820",
+   "lat": 18.51363,
+   "lng": 73.828583,
+   "nodeId": "7990559676",
+   "snapDistanceM": 25.0,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H56",
+   "kind": "hospital",
+   "name": "G B Indumati Manilal Khanna Hospital",
+   "osm": "node/8813660507",
+   "lat": 18.492576,
+   "lng": 73.866595,
+   "nodeId": "10223492119",
+   "snapDistanceM": 23.6,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H57",
+   "kind": "hospital",
+   "name": "G.M Babubbhai Memo Hospital",
+   "osm": "node/10172942172",
+   "lat": 18.508112,
+   "lng": 73.875144,
+   "nodeId": "678822933",
+   "snapDistanceM": 16.2,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H58",
+   "kind": "hospital",
+   "name": "GLOBAL HOSPITAL & RESEARCH",
+   "osm": "node/10172986714",
+   "lat": 18.501287,
+   "lng": 73.841004,
+   "nodeId": "2265917513",
+   "snapDistanceM": 40.8,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H59",
+   "kind": "hospital",
+   "name": "Galaxy Care Laparoscopy Institute Pvt. Ltd.",
+   "osm": "node/7044819851",
+   "lat": 18.511003,
+   "lng": 73.837105,
+   "nodeId": "2188697600",
+   "snapDistanceM": 62.0,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H60",
+   "kind": "hospital",
+   "name": "Ghaisas ENT Hospital",
+   "osm": "node/10172977865",
+   "lat": 18.51724,
+   "lng": 73.842356,
+   "nodeId": "2192111582",
+   "snapDistanceM": 20.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H61",
+   "kind": "hospital",
+   "name": "Global Hospital & Research Institute",
+   "osm": "node/7065561512",
+   "lat": 18.501324,
+   "lng": 73.841014,
+   "nodeId": "10230550366",
+   "snapDistanceM": 43.1,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H62",
+   "kind": "hospital",
+   "name": "Godbole Hospital",
+   "osm": "node/7073895620",
+   "lat": 18.511208,
+   "lng": 73.851315,
+   "nodeId": "2266580427",
+   "snapDistanceM": 63.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H63",
+   "kind": "hospital",
+   "name": "Gokhale Hospital",
+   "osm": "node/7049292470",
+   "lat": 18.502172,
+   "lng": 73.857062,
+   "nodeId": "2162277664",
+   "snapDistanceM": 53.1,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H64",
+   "kind": "hospital",
+   "name": "Golwilkar Metropolis Heath Service (India) Pvt Ltd",
+   "osm": "node/5832438811",
+   "lat": 18.51813,
+   "lng": 73.834416,
+   "nodeId": "763541056",
+   "snapDistanceM": 26.2,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H65",
+   "kind": "hospital",
+   "name": "Gultekdi Nursing and Maternity Home",
+   "osm": "node/7050392540",
+   "lat": 18.49268,
+   "lng": 73.868547,
+   "nodeId": "679053097",
+   "snapDistanceM": 21.3,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H66",
+   "kind": "hospital",
+   "name": "Gupte Hospital Of Accurate Diagnostics Pvt Ltd",
+   "osm": "node/2921897064",
+   "lat": 18.519051,
+   "lng": 73.839872,
+   "nodeId": "2192941413",
+   "snapDistanceM": 30.1,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H67",
+   "kind": "hospital",
+   "name": "HARIJIVAN HOSPITAL",
+   "osm": "node/10173007819",
+   "lat": 18.500132,
+   "lng": 73.854311,
+   "nodeId": "2618478648",
+   "snapDistanceM": 11.6,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H68",
+   "kind": "hospital",
+   "name": "Harijivan Hospital",
+   "osm": "node/7087491750",
+   "lat": 18.500144,
+   "lng": 73.854238,
+   "nodeId": "2618478648",
+   "snapDistanceM": 19.4,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H69",
+   "kind": "hospital",
+   "name": "Healing Hands Clinic - Dhole Patil Road, Pune",
+   "osm": "node/13780010174",
+   "lat": 18.532643,
+   "lng": 73.876885,
+   "nodeId": "2171089287",
+   "snapDistanceM": 77.5,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H70",
+   "kind": "hospital",
+   "name": "Hope Hospital",
+   "osm": "node/7651453415",
+   "lat": 18.512691,
+   "lng": 73.869516,
+   "nodeId": "2696245927",
+   "snapDistanceM": 11.7,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H71",
+   "kind": "hospital",
+   "name": "Indira Maternity Home",
+   "osm": "node/7046910543",
+   "lat": 18.512219,
+   "lng": 73.876296,
+   "nodeId": "4343937953",
+   "snapDistanceM": 11.9,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H72",
+   "kind": "hospital",
+   "name": "Janata Hospital ,Pune",
+   "osm": "node/8813545344",
+   "lat": 18.499385,
+   "lng": 73.847008,
+   "nodeId": "14106845365",
+   "snapDistanceM": 25.8,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H73",
+   "kind": "hospital",
+   "name": "Jehangir Hospital",
+   "osm": "way/331500153",
+   "lat": 18.530344,
+   "lng": 73.876651,
+   "nodeId": "6198562762",
+   "snapDistanceM": 113.1,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H74",
+   "kind": "hospital",
+   "name": "Jog Hospital",
+   "osm": "way/229849146",
+   "lat": 18.509429,
+   "lng": 73.821148,
+   "nodeId": "10230188273",
+   "snapDistanceM": 32.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H75",
+   "kind": "hospital",
+   "name": "Joglekar Hospital",
+   "osm": "node/7042981399",
+   "lat": 18.532752,
+   "lng": 73.833636,
+   "nodeId": "7054251163",
+   "snapDistanceM": 30.5,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H76",
+   "kind": "hospital",
+   "name": "Joshi Hospital",
+   "osm": "node/7049658153",
+   "lat": 18.517143,
+   "lng": 73.833287,
+   "nodeId": "2251843259",
+   "snapDistanceM": 25.6,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H77",
+   "kind": "hospital",
+   "name": "Joshi Hospital",
+   "osm": "node/9295472627",
+   "lat": 18.517877,
+   "lng": 73.842284,
+   "nodeId": "2192111582",
+   "snapDistanceM": 56.3,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H78",
+   "kind": "hospital",
+   "name": "KAMLA NEHRU HOSPITAL",
+   "osm": "node/10172986712",
+   "lat": 18.522943,
+   "lng": 73.862034,
+   "nodeId": "769095267",
+   "snapDistanceM": 62.1,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H79",
+   "kind": "hospital",
+   "name": "KEM Hospital",
+   "osm": "way/215075307",
+   "lat": 18.520149,
+   "lng": 73.867025,
+   "nodeId": "8005569818",
+   "snapDistanceM": 65.6,
+   "bedsFree": 0,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H80",
+   "kind": "hospital",
+   "name": "Kalavati Mavale Hospital",
+   "osm": "node/7651453393",
+   "lat": 18.515042,
+   "lng": 73.846413,
+   "nodeId": "2266580466",
+   "snapDistanceM": 45.4,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H81",
+   "kind": "hospital",
+   "name": "Kalyani Hospital",
+   "osm": "node/7651453367",
+   "lat": 18.504665,
+   "lng": 73.859213,
+   "nodeId": "245646593",
+   "snapDistanceM": 35.4,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H82",
+   "kind": "hospital",
+   "name": "Kamal Netra Rugnalaya",
+   "osm": "node/7049807455",
+   "lat": 18.494991,
+   "lng": 73.81219,
+   "nodeId": "763446358",
+   "snapDistanceM": 38.7,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H83",
+   "kind": "hospital",
+   "name": "Kamat Hospital",
+   "osm": "node/7651453329",
+   "lat": 18.512445,
+   "lng": 73.869389,
+   "nodeId": "10226926483",
+   "snapDistanceM": 12.3,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H84",
+   "kind": "hospital",
+   "name": "Kamla Nehru Hospital",
+   "osm": "way/218059566",
+   "lat": 18.522856,
+   "lng": 73.862031,
+   "nodeId": "672162371",
+   "snapDistanceM": 66.2,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H85",
+   "kind": "hospital",
+   "name": "Karne Hospital Pvt Ltd",
+   "osm": "node/7068429388",
+   "lat": 18.49547,
+   "lng": 73.858371,
+   "nodeId": "10223341011",
+   "snapDistanceM": 16.9,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H86",
+   "kind": "hospital",
+   "name": "Karva Hospital",
+   "osm": "node/1054641704",
+   "lat": 18.500973,
+   "lng": 73.846106,
+   "nodeId": "7121060925",
+   "snapDistanceM": 35.1,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H87",
+   "kind": "hospital",
+   "name": "Kawedia Hospital",
+   "osm": "node/7085878707",
+   "lat": 18.507064,
+   "lng": 73.878261,
+   "nodeId": "10222749301",
+   "snapDistanceM": 10.3,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H88",
+   "kind": "hospital",
+   "name": "Kawediya Hospital",
+   "osm": "node/10172977883",
+   "lat": 18.524231,
+   "lng": 73.86271,
+   "nodeId": "769095273",
+   "snapDistanceM": 40.9,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H89",
+   "kind": "hospital",
+   "name": "Kering Hospital",
+   "osm": "node/10172942170",
+   "lat": 18.503003,
+   "lng": 73.86813,
+   "nodeId": "10227016018",
+   "snapDistanceM": 50.1,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H90",
+   "kind": "hospital",
+   "name": "Kering Hospital;kering clinic",
+   "osm": "node/7651453403",
+   "lat": 18.502989,
+   "lng": 73.868209,
+   "nodeId": "10227016018",
+   "snapDistanceM": 42.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H91",
+   "kind": "hospital",
+   "name": "Khares Eye Institute",
+   "osm": "node/7050060080",
+   "lat": 18.514517,
+   "lng": 73.831738,
+   "nodeId": "1223958864",
+   "snapDistanceM": 18.4,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H92",
+   "kind": "hospital",
+   "name": "Kirad Hospital",
+   "osm": "node/7651453409",
+   "lat": 18.514348,
+   "lng": 73.868913,
+   "nodeId": "10226956240",
+   "snapDistanceM": 38.6,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H93",
+   "kind": "hospital",
+   "name": "Krishna Hospital, Pune",
+   "osm": "node/1109153494",
+   "lat": 18.509206,
+   "lng": 73.81282,
+   "nodeId": "2092676746",
+   "snapDistanceM": 45.6,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H94",
+   "kind": "hospital",
+   "name": "Kulkarni Endo Surgery Institute and Reconstructive Urology Centre",
+   "osm": "node/7069814051",
+   "lat": 18.509784,
+   "lng": 73.802989,
+   "nodeId": "2199397341",
+   "snapDistanceM": 32.0,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H95",
+   "kind": "hospital",
+   "name": "Kumbhare Hospital",
+   "osm": "node/7651453368",
+   "lat": 18.521801,
+   "lng": 73.862235,
+   "nodeId": "769093976",
+   "snapDistanceM": 18.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H96",
+   "kind": "hospital",
+   "name": "Late Anandibai Narhar Gadgil Hospital",
+   "osm": "node/7226627720",
+   "lat": 18.502409,
+   "lng": 73.838681,
+   "nodeId": "2207888237",
+   "snapDistanceM": 20.2,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H97",
+   "kind": "hospital",
+   "name": "LifeLine Hospital",
+   "osm": "node/865854267",
+   "lat": 18.559745,
+   "lng": 73.806267,
+   "nodeId": "10239509783",
+   "snapDistanceM": 131.8,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H98",
+   "kind": "hospital",
+   "name": "Lokmanya Hospital, Pune",
+   "osm": "node/7065820589",
+   "lat": 18.508908,
+   "lng": 73.834105,
+   "nodeId": "1363421891",
+   "snapDistanceM": 43.7,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H99",
+   "kind": "hospital",
+   "name": "MJM Hospital",
+   "osm": "node/7651453418",
+   "lat": 18.524506,
+   "lng": 73.843822,
+   "nodeId": "245647065",
+   "snapDistanceM": 32.5,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H100",
+   "kind": "hospital",
+   "name": "Manoj Clinic / Gore Hospital",
+   "osm": "node/7079411416",
+   "lat": 18.511779,
+   "lng": 73.848787,
+   "nodeId": "2266580434",
+   "snapDistanceM": 35.1,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H101",
+   "kind": "hospital",
+   "name": "Mantri Hospital",
+   "osm": "node/7651453402",
+   "lat": 18.505204,
+   "lng": 73.834167,
+   "nodeId": "4703535397",
+   "snapDistanceM": 18.7,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H102",
+   "kind": "hospital",
+   "name": "Mathura Hospital",
+   "osm": "node/13619790669",
+   "lat": 18.548159,
+   "lng": 73.87857,
+   "nodeId": "2954430710",
+   "snapDistanceM": 253.2,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H103",
+   "kind": "hospital",
+   "name": "Matoshri Ramabai Ambedkar Prasutigriha",
+   "osm": "node/8813394447",
+   "lat": 18.502785,
+   "lng": 73.850005,
+   "nodeId": "9186308190",
+   "snapDistanceM": 28.5,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H104",
+   "kind": "hospital",
+   "name": "Matru Seva Hospital;Pacharne Hospital",
+   "osm": "node/7651453340",
+   "lat": 18.516314,
+   "lng": 73.871996,
+   "nodeId": "10214377424",
+   "snapDistanceM": 13.3,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H105",
+   "kind": "hospital",
+   "name": "Meera Hospital",
+   "osm": "node/6612986080",
+   "lat": 18.502288,
+   "lng": 73.874689,
+   "nodeId": "6240992444",
+   "snapDistanceM": 38.0,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H106",
+   "kind": "hospital",
+   "name": "Metropolis Healthcare Ltd",
+   "osm": "node/9215757550",
+   "lat": 18.507845,
+   "lng": 73.82651,
+   "nodeId": "10023337563",
+   "snapDistanceM": 34.2,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H107",
+   "kind": "hospital",
+   "name": "Modern Hospital",
+   "osm": "node/10172902304",
+   "lat": 18.515716,
+   "lng": 73.868839,
+   "nodeId": "2259729634",
+   "snapDistanceM": 36.2,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H108",
+   "kind": "hospital",
+   "name": "Moolanis Eye Care Centre",
+   "osm": "node/7049267221",
+   "lat": 18.505774,
+   "lng": 73.878349,
+   "nodeId": "9880239336",
+   "snapDistanceM": 21.2,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H109",
+   "kind": "hospital",
+   "name": "Morya General Hospital",
+   "osm": "node/7651453320",
+   "lat": 18.51479,
+   "lng": 73.848434,
+   "nodeId": "2266580468",
+   "snapDistanceM": 15.5,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H110",
+   "kind": "hospital",
+   "name": "MyGyne Clinic",
+   "osm": "node/13366468376",
+   "lat": 18.508239,
+   "lng": 73.822178,
+   "nodeId": "2192940976",
+   "snapDistanceM": 37.3,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H111",
+   "kind": "hospital",
+   "name": "N. M. Wadia Hospital",
+   "osm": "node/7649461754",
+   "lat": 18.530716,
+   "lng": 73.876952,
+   "nodeId": "6198562762",
+   "snapDistanceM": 135.2,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H112",
+   "kind": "hospital",
+   "name": "N. M. Wadia Institute of Cardiology",
+   "osm": "node/10172977881",
+   "lat": 18.530746,
+   "lng": 73.877192,
+   "nodeId": "2171089287",
+   "snapDistanceM": 139.8,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H113",
+   "kind": "hospital",
+   "name": "Nachiket Hospital Pvt Ltd",
+   "osm": "node/7052133789",
+   "lat": 18.507686,
+   "lng": 73.831062,
+   "nodeId": "2162277876",
+   "snapDistanceM": 26.8,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H114",
+   "kind": "hospital",
+   "name": "Naik Hospital, Pune",
+   "osm": "node/3238255107",
+   "lat": 18.510288,
+   "lng": 73.859469,
+   "nodeId": "672161894",
+   "snapDistanceM": 32.9,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H115",
+   "kind": "hospital",
+   "name": "National Institute Of Ophthalmology",
+   "osm": "node/7073949844",
+   "lat": 18.559686,
+   "lng": 73.814825,
+   "nodeId": "4705115048",
+   "snapDistanceM": 499.8,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H116",
+   "kind": "hospital",
+   "name": "Navalmal Firodiya Super-Speciality Hospital",
+   "osm": "way/249252730",
+   "lat": 18.517087,
+   "lng": 73.833036,
+   "nodeId": "2251843259",
+   "snapDistanceM": 10.0,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H117",
+   "kind": "hospital",
+   "name": "Naydu Rugnalay",
+   "osm": "way/380417662",
+   "lat": 18.531345,
+   "lng": 73.869027,
+   "nodeId": "10089606904",
+   "snapDistanceM": 353.3,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H118",
+   "kind": "hospital",
+   "name": "Nityashraddha super speciality hospital",
+   "osm": "node/10172977880",
+   "lat": 18.527849,
+   "lng": 73.87609,
+   "nodeId": "6198562768",
+   "snapDistanceM": 26.1,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H119",
+   "kind": "hospital",
+   "name": "Nm Wadia Institute Of Cardiology",
+   "osm": "node/7073949908",
+   "lat": 18.530744,
+   "lng": 73.877189,
+   "nodeId": "2171089287",
+   "snapDistanceM": 139.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H120",
+   "kind": "hospital",
+   "name": "ONP Leela Hospital",
+   "osm": "node/6612854042",
+   "lat": 18.532922,
+   "lng": 73.846808,
+   "nodeId": "2252429858",
+   "snapDistanceM": 47.3,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H121",
+   "kind": "hospital",
+   "name": "Om Hospital",
+   "osm": "node/7055280594",
+   "lat": 18.529245,
+   "lng": 73.830716,
+   "nodeId": "2203119324",
+   "snapDistanceM": 23.6,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H122",
+   "kind": "hospital",
+   "name": "Oyster And Pearl Meera Hospital",
+   "osm": "way/359913174",
+   "lat": 18.502297,
+   "lng": 73.874681,
+   "nodeId": "6240992444",
+   "snapDistanceM": 39.1,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H123",
+   "kind": "hospital",
+   "name": "Oyster and Pearl Hospital",
+   "osm": "node/10172977859",
+   "lat": 18.531893,
+   "lng": 73.847277,
+   "nodeId": "1328250886",
+   "snapDistanceM": 74.5,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H124",
+   "kind": "hospital",
+   "name": "Oyster and Pearl Hospital Tulip",
+   "osm": "way/238842692",
+   "lat": 18.53192,
+   "lng": 73.847225,
+   "nodeId": "1328250886",
+   "snapDistanceM": 77.7,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H125",
+   "kind": "hospital",
+   "name": "PMC - Late. Jayabai Nanasaheb Sutar Maternity Home",
+   "osm": "way/279403631",
+   "lat": 18.503659,
+   "lng": 73.807701,
+   "nodeId": "13277466386",
+   "snapDistanceM": 25.5,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H126",
+   "kind": "hospital",
+   "name": "PUNE ADVENTIST HOSPITAL",
+   "osm": "node/10173007817",
+   "lat": 18.491946,
+   "lng": 73.87096,
+   "nodeId": "1224904864",
+   "snapDistanceM": 92.4,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H127",
+   "kind": "hospital",
+   "name": "Panchsheel Hospital",
+   "osm": "node/10172942165",
+   "lat": 18.514077,
+   "lng": 73.869246,
+   "nodeId": "674918591",
+   "snapDistanceM": 29.8,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H128",
+   "kind": "hospital",
+   "name": "Pandit Clinic",
+   "osm": "way/1232100918",
+   "lat": 18.495618,
+   "lng": 73.859443,
+   "nodeId": "679054295",
+   "snapDistanceM": 17.5,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H129",
+   "kind": "hospital",
+   "name": "Paranjape Hospital",
+   "osm": "node/5832579347",
+   "lat": 18.514398,
+   "lng": 73.846052,
+   "nodeId": "2266580462",
+   "snapDistanceM": 18.0,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H130",
+   "kind": "hospital",
+   "name": "Paranjpe Eye Clinic and Eye Surgery Centre",
+   "osm": "node/7063077070",
+   "lat": 18.518355,
+   "lng": 73.8404,
+   "nodeId": "834083239",
+   "snapDistanceM": 52.0,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H131",
+   "kind": "hospital",
+   "name": "Paranjpe Hospital",
+   "osm": "node/13964029513",
+   "lat": 18.512019,
+   "lng": 73.845765,
+   "nodeId": "2266580440",
+   "snapDistanceM": 20.2,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H132",
+   "kind": "hospital",
+   "name": "Phadke Hospital",
+   "osm": "way/217431364",
+   "lat": 18.51833,
+   "lng": 73.84388,
+   "nodeId": "2852763567",
+   "snapDistanceM": 52.2,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H133",
+   "kind": "hospital",
+   "name": "Poona Hospital and Research Centre",
+   "osm": "way/217773616",
+   "lat": 18.51065,
+   "lng": 73.841902,
+   "nodeId": "248156064",
+   "snapDistanceM": 68.5,
+   "bedsFree": 12,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H134",
+   "kind": "hospital",
+   "name": "Poona Laser Center",
+   "osm": "node/7048167596",
+   "lat": 18.51237,
+   "lng": 73.838175,
+   "nodeId": "2085669840",
+   "snapDistanceM": 28.4,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H135",
+   "kind": "hospital",
+   "name": "Pramodini Urology Foundation",
+   "osm": "node/7048881959",
+   "lat": 18.519913,
+   "lng": 73.841022,
+   "nodeId": "834079873",
+   "snapDistanceM": 18.1,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H136",
+   "kind": "hospital",
+   "name": "Prayag Hospital",
+   "osm": "way/217431359",
+   "lat": 18.517478,
+   "lng": 73.842784,
+   "nodeId": "2192111582",
+   "snapDistanceM": 35.9,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H137",
+   "kind": "hospital",
+   "name": "Punarvasu Chikitsalaya",
+   "osm": "node/7045274083",
+   "lat": 18.528478,
+   "lng": 73.842318,
+   "nodeId": "1645621402",
+   "snapDistanceM": 32.0,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H138",
+   "kind": "hospital",
+   "name": "Pune Adventist Hospital;advantist hospital",
+   "osm": "node/7055494791",
+   "lat": 18.491944,
+   "lng": 73.87102,
+   "nodeId": "1224904864",
+   "snapDistanceM": 88.0,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H139",
+   "kind": "hospital",
+   "name": "Pune City Eye Hospital",
+   "osm": "node/7072638950",
+   "lat": 18.529863,
+   "lng": 73.876087,
+   "nodeId": "2171089265",
+   "snapDistanceM": 105.6,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H140",
+   "kind": "hospital",
+   "name": "Pune Fertility Center",
+   "osm": "node/7049516396",
+   "lat": 18.528776,
+   "lng": 73.847987,
+   "nodeId": "10975896015",
+   "snapDistanceM": 25.0,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H141",
+   "kind": "hospital",
+   "name": "Pungliya Hospital",
+   "osm": "node/7068155283",
+   "lat": 18.52268,
+   "lng": 73.850849,
+   "nodeId": "1223956401",
+   "snapDistanceM": 20.2,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H142",
+   "kind": "hospital",
+   "name": "Purandare Hospital, Pune",
+   "osm": "node/7048871849",
+   "lat": 18.502292,
+   "lng": 73.858665,
+   "nodeId": "9913922011",
+   "snapDistanceM": 23.2,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H143",
+   "kind": "hospital",
+   "name": "Purohit Hospital",
+   "osm": "node/7651453349",
+   "lat": 18.497559,
+   "lng": 73.851318,
+   "nodeId": "10239768515",
+   "snapDistanceM": 31.3,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H144",
+   "kind": "hospital",
+   "name": "RANKA HOSPITAL",
+   "osm": "node/10172986715",
+   "lat": 18.494958,
+   "lng": 73.8619,
+   "nodeId": "679053824",
+   "snapDistanceM": 23.1,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H145",
+   "kind": "hospital",
+   "name": "Rahel Hospital",
+   "osm": "node/7051943843",
+   "lat": 18.515291,
+   "lng": 73.875455,
+   "nodeId": "247739731",
+   "snapDistanceM": 30.5,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H146",
+   "kind": "hospital",
+   "name": "Ram Krishna Hospital, Pune",
+   "osm": "node/7080269671",
+   "lat": 18.509245,
+   "lng": 73.848335,
+   "nodeId": "2270799547",
+   "snapDistanceM": 25.0,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H147",
+   "kind": "hospital",
+   "name": "Ranka Hospital",
+   "osm": "node/7047946884",
+   "lat": 18.495012,
+   "lng": 73.861886,
+   "nodeId": "679053824",
+   "snapDistanceM": 29.2,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H148",
+   "kind": "hospital",
+   "name": "Ratna Memorial Hospital",
+   "osm": "way/261258208",
+   "lat": 18.527682,
+   "lng": 73.829524,
+   "nodeId": "2251843367",
+   "snapDistanceM": 28.2,
+   "bedsFree": 2,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H149",
+   "kind": "hospital",
+   "name": "Red blood hospital",
+   "osm": "node/10172977879",
+   "lat": 18.527389,
+   "lng": 73.871016,
+   "nodeId": "8021160081",
+   "snapDistanceM": 225.9,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H150",
+   "kind": "hospital",
+   "name": "Rode Hospital",
+   "osm": "node/7651453401",
+   "lat": 18.509181,
+   "lng": 73.814959,
+   "nodeId": "10223449644",
+   "snapDistanceM": 19.4,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H151",
+   "kind": "hospital",
+   "name": "Ruby Hall",
+   "osm": "node/9296005824",
+   "lat": 18.533466,
+   "lng": 73.876973,
+   "nodeId": "2252429857",
+   "snapDistanceM": 148.6,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H152",
+   "kind": "hospital",
+   "name": "Ruby Hall Clinic",
+   "osm": "node/10172977877",
+   "lat": 18.532784,
+   "lng": 73.877365,
+   "nodeId": "2171089287",
+   "snapDistanceM": 109.6,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H153",
+   "kind": "hospital",
+   "name": "Ruby hall hospital",
+   "osm": "node/13650019585",
+   "lat": 18.532733,
+   "lng": 73.877368,
+   "nodeId": "2171089287",
+   "snapDistanceM": 105.0,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H154",
+   "kind": "hospital",
+   "name": "Sabane Hospital",
+   "osm": "node/7651453326",
+   "lat": 18.510703,
+   "lng": 73.843434,
+   "nodeId": "245646664",
+   "snapDistanceM": 63.3,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H155",
+   "kind": "hospital",
+   "name": "Sahyadri Hospital",
+   "osm": "node/1109153493",
+   "lat": 18.507506,
+   "lng": 73.805834,
+   "nodeId": "2252147878",
+   "snapDistanceM": 36.9,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H156",
+   "kind": "hospital",
+   "name": "Sahyadri Hospital",
+   "osm": "way/218422372",
+   "lat": 18.512973,
+   "lng": 73.839248,
+   "nodeId": "2085669841",
+   "snapDistanceM": 76.6,
+   "bedsFree": 8,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H157",
+   "kind": "hospital",
+   "name": "Sai Samarth Hospital",
+   "osm": "node/7651453375",
+   "lat": 18.523104,
+   "lng": 73.868157,
+   "nodeId": "247739907",
+   "snapDistanceM": 77.7,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H158",
+   "kind": "hospital",
+   "name": "Samarth Hospital, Pune",
+   "osm": "node/7076609422",
+   "lat": 18.519523,
+   "lng": 73.862059,
+   "nodeId": "2999866974",
+   "snapDistanceM": 36.5,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H159",
+   "kind": "hospital",
+   "name": "Sancheti Hospital",
+   "osm": "way/218110050",
+   "lat": 18.529923,
+   "lng": 73.852894,
+   "nodeId": "2061304032",
+   "snapDistanceM": 51.9,
+   "bedsFree": 30,
+   "emergencyTag": true,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H160",
+   "kind": "hospital",
+   "name": "Sanjeevan Hospital, Pune",
+   "osm": "way/255661295",
+   "lat": 18.510011,
+   "lng": 73.837042,
+   "nodeId": "2807777040",
+   "snapDistanceM": 79.3,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H161",
+   "kind": "hospital",
+   "name": "Sanjeevan Maternity and Surgical Hospital",
+   "osm": "node/7081227365",
+   "lat": 18.559397,
+   "lng": 73.802553,
+   "nodeId": "10239593278",
+   "snapDistanceM": 32.9,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H162",
+   "kind": "hospital",
+   "name": "Sant Dnyaneswar Medical Education Research Centre",
+   "osm": "node/7050627585",
+   "lat": 18.51378,
+   "lng": 73.847697,
+   "nodeId": "678444580",
+   "snapDistanceM": 50.2,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H163",
+   "kind": "hospital",
+   "name": "Sardar Patel Cantonment General Hospital",
+   "osm": "node/672120487",
+   "lat": 18.502716,
+   "lng": 73.87712,
+   "nodeId": "10222793126",
+   "snapDistanceM": 92.0,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H164",
+   "kind": "hospital",
+   "name": "Sardar Patel Genral Hospital",
+   "osm": "node/10172942167",
+   "lat": 18.502736,
+   "lng": 73.877119,
+   "nodeId": "10222793125",
+   "snapDistanceM": 91.3,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H165",
+   "kind": "hospital",
+   "name": "Sasoon Hospital",
+   "osm": "node/7226727441",
+   "lat": 18.521872,
+   "lng": 73.873118,
+   "nodeId": "1232209779",
+   "snapDistanceM": 112.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H166",
+   "kind": "hospital",
+   "name": "Sassoon Hospital",
+   "osm": "node/772571829",
+   "lat": 18.525143,
+   "lng": 73.869566,
+   "nodeId": "4703358595",
+   "snapDistanceM": 92.5,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H167",
+   "kind": "hospital",
+   "name": "Sathe Multispeciality Hospital",
+   "osm": "node/8257680507",
+   "lat": 18.506787,
+   "lng": 73.803734,
+   "nodeId": "2092676600",
+   "snapDistanceM": 20.4,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H168",
+   "kind": "hospital",
+   "name": "Savitribai Phule Meternity Home",
+   "osm": "node/8813476678",
+   "lat": 18.504862,
+   "lng": 73.861199,
+   "nodeId": "4340839651",
+   "snapDistanceM": 22.2,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H169",
+   "kind": "hospital",
+   "name": "Seth Ramdas Shah Memorial Hospital and Research Centre",
+   "osm": "node/6618960830",
+   "lat": 18.529363,
+   "lng": 73.828409,
+   "nodeId": "4342574100",
+   "snapDistanceM": 37.8,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H170",
+   "kind": "hospital",
+   "name": "Seth Tarachand Hospital",
+   "osm": "relation/5664301",
+   "lat": 18.517432,
+   "lng": 73.864081,
+   "nodeId": "10225196212",
+   "snapDistanceM": 41.2,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H171",
+   "kind": "hospital",
+   "name": "Shahade Hospital",
+   "osm": "node/7052815781",
+   "lat": 18.497868,
+   "lng": 73.853756,
+   "nodeId": "2184076960",
+   "snapDistanceM": 67.7,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H172",
+   "kind": "hospital",
+   "name": "Shaikh Hospital",
+   "osm": "node/7048861322",
+   "lat": 18.51461,
+   "lng": 73.862955,
+   "nodeId": "2266620502",
+   "snapDistanceM": 14.1,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H173",
+   "kind": "hospital",
+   "name": "Shaishav Children's Hospital",
+   "osm": "node/7651453379",
+   "lat": 18.513793,
+   "lng": 73.84762,
+   "nodeId": "678444580",
+   "snapDistanceM": 42.0,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H174",
+   "kind": "hospital",
+   "name": "Shashwat Hospital",
+   "osm": "node/7046772780",
+   "lat": 18.494835,
+   "lng": 73.813527,
+   "nodeId": "2088234451",
+   "snapDistanceM": 32.7,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H175",
+   "kind": "hospital",
+   "name": "Shashwat Hospital",
+   "osm": "way/290390069",
+   "lat": 18.559724,
+   "lng": 73.802816,
+   "nodeId": "1194079749",
+   "snapDistanceM": 46.9,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H176",
+   "kind": "hospital",
+   "name": "Shintre Hospital",
+   "osm": "node/7651453390",
+   "lat": 18.51224,
+   "lng": 73.849932,
+   "nodeId": "678440493",
+   "snapDistanceM": 30.8,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H177",
+   "kind": "hospital",
+   "name": "Shraddha Hospital",
+   "osm": "node/7651453344",
+   "lat": 18.490925,
+   "lng": 73.845933,
+   "nodeId": "2204632480",
+   "snapDistanceM": 37.0,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H178",
+   "kind": "hospital",
+   "name": "Shre Samarth Hospital",
+   "osm": "node/10172977869",
+   "lat": 18.51805,
+   "lng": 73.865861,
+   "nodeId": "772554398",
+   "snapDistanceM": 21.7,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H179",
+   "kind": "hospital",
+   "name": "Shree Balaji Eye Hospital",
+   "osm": "node/7043763362",
+   "lat": 18.491028,
+   "lng": 73.858168,
+   "nodeId": "2262754052",
+   "snapDistanceM": 70.9,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H180",
+   "kind": "hospital",
+   "name": "Shreeyash Hospital, Pune",
+   "osm": "node/7079392093",
+   "lat": 18.515567,
+   "lng": 73.841867,
+   "nodeId": "834075473",
+   "snapDistanceM": 25.4,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H181",
+   "kind": "hospital",
+   "name": "Shri Samarth Hospital",
+   "osm": "node/7049775522",
+   "lat": 18.518062,
+   "lng": 73.865867,
+   "nodeId": "2266620619",
+   "snapDistanceM": 20.6,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H182",
+   "kind": "hospital",
+   "name": "Siddharth Hospital, Pune",
+   "osm": "node/7053000962",
+   "lat": 18.490058,
+   "lng": 73.868464,
+   "nodeId": "10223490691",
+   "snapDistanceM": 112.7,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H183",
+   "kind": "hospital",
+   "name": "Subodh Hospital",
+   "osm": "node/7062490981",
+   "lat": 18.503523,
+   "lng": 73.813761,
+   "nodeId": "9170953904",
+   "snapDistanceM": 89.6,
+   "bedsFree": 8,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H184",
+   "kind": "hospital",
+   "name": "Suman Hospital",
+   "osm": "node/7651453323",
+   "lat": 18.492348,
+   "lng": 73.853457,
+   "nodeId": "2265732943",
+   "snapDistanceM": 40.9,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H185",
+   "kind": "hospital",
+   "name": "Surya Sahyadri Hospital",
+   "osm": "node/2289294093",
+   "lat": 18.521259,
+   "lng": 73.855677,
+   "nodeId": "1363411982",
+   "snapDistanceM": 34.3,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H186",
+   "kind": "hospital",
+   "name": "Sutika Seva Mandir",
+   "osm": "node/7226727370",
+   "lat": 18.513913,
+   "lng": 73.846551,
+   "nodeId": "678720183",
+   "snapDistanceM": 27.9,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H187",
+   "kind": "hospital",
+   "name": "Suyash Hospital",
+   "osm": "node/7651453383",
+   "lat": 18.500186,
+   "lng": 73.812402,
+   "nodeId": "2455119488",
+   "snapDistanceM": 22.1,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H188",
+   "kind": "hospital",
+   "name": "Swanand Maternity Hospital",
+   "osm": "node/7651453385",
+   "lat": 18.529743,
+   "lng": 73.833982,
+   "nodeId": "10241642584",
+   "snapDistanceM": 17.2,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H189",
+   "kind": "hospital",
+   "name": "Todkar Hospital",
+   "osm": "node/7651453378",
+   "lat": 18.510713,
+   "lng": 73.866086,
+   "nodeId": "672166120",
+   "snapDistanceM": 31.4,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H190",
+   "kind": "hospital",
+   "name": "Umarji Hospital",
+   "osm": "node/7045823776",
+   "lat": 18.511935,
+   "lng": 73.857758,
+   "nodeId": "2280884916",
+   "snapDistanceM": 43.6,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H191",
+   "kind": "hospital",
+   "name": "Unique Hospital",
+   "osm": "node/10172977888",
+   "lat": 18.522164,
+   "lng": 73.867678,
+   "nodeId": "8005569822",
+   "snapDistanceM": 23.9,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H192",
+   "kind": "hospital",
+   "name": "Vibhute Hospital",
+   "osm": "node/7069569120",
+   "lat": 18.504049,
+   "lng": 73.851839,
+   "nodeId": "2165021556",
+   "snapDistanceM": 48.4,
+   "bedsFree": 4,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H193",
+   "kind": "hospital",
+   "name": "Vinayak Netralaya - Pune",
+   "osm": "node/7051344983",
+   "lat": 18.510585,
+   "lng": 73.817981,
+   "nodeId": "6472781538",
+   "snapDistanceM": 27.6,
+   "bedsFree": 12,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H194",
+   "kind": "hospital",
+   "name": "Vishranti Hospital",
+   "osm": "node/7651453339",
+   "lat": 18.508632,
+   "lng": 73.874451,
+   "nodeId": "678823719",
+   "snapDistanceM": 25.1,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H195",
+   "kind": "hospital",
+   "name": "Vishwaniranjan Eye Hospital",
+   "osm": "node/7080205212",
+   "lat": 18.511385,
+   "lng": 73.845828,
+   "nodeId": "2266580435",
+   "snapDistanceM": 21.3,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H196",
+   "kind": "hospital",
+   "name": "WEST VALLEY MULTISPECIALITY HOSPITAL PVT LTD",
+   "osm": "node/10172977882",
+   "lat": 18.535143,
+   "lng": 73.876532,
+   "nodeId": "518619591",
+   "snapDistanceM": 39.0,
+   "bedsFree": 20,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H197",
+   "kind": "hospital",
+   "name": "Yashda Hospital",
+   "osm": "node/7042939578",
+   "lat": 18.516808,
+   "lng": 73.859535,
+   "nodeId": "2266620569",
+   "snapDistanceM": 20.9,
+   "bedsFree": 30,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H198",
+   "kind": "hospital",
+   "name": "Yogesh Hospital",
+   "osm": "node/7651453369",
+   "lat": 18.510438,
+   "lng": 73.847875,
+   "nodeId": "678442546",
+   "snapDistanceM": 16.4,
+   "bedsFree": 15,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H199",
+   "kind": "hospital",
+   "name": "Z Y - Vision",
+   "osm": "node/7076609433",
+   "lat": 18.524737,
+   "lng": 73.840849,
+   "nodeId": "245647055",
+   "snapDistanceM": 55.2,
+   "bedsFree": 6,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H200",
+   "kind": "hospital",
+   "name": "dental health care",
+   "osm": "node/8204734780",
+   "lat": 18.506218,
+   "lng": 73.862594,
+   "nodeId": "10227701578",
+   "snapDistanceM": 37.3,
+   "bedsFree": 0,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H201",
+   "kind": "hospital",
+   "name": "eshavari clinic",
+   "osm": "way/359998821",
+   "lat": 18.526306,
+   "lng": 73.851901,
+   "nodeId": "824465351",
+   "snapDistanceM": 45.7,
+   "bedsFree": 10,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H202",
+   "kind": "hospital",
+   "name": "kedari Hospital",
+   "osm": "node/10172926367",
+   "lat": 18.515296,
+   "lng": 73.875452,
+   "nodeId": "247739731",
+   "snapDistanceM": 30.2,
+   "bedsFree": 25,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H203",
+   "kind": "hospital",
+   "name": "sharda clinic",
+   "osm": "node/10172914032",
+   "lat": 18.501244,
+   "lng": 73.866344,
+   "nodeId": "10227027372",
+   "snapDistanceM": 23.8,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H204",
+   "kind": "hospital",
+   "name": "Unnamed hospital (H204)",
+   "osm": "node/10724999583",
+   "lat": 18.54986,
+   "lng": 73.872084,
+   "nodeId": "2629943137",
+   "snapDistanceM": 19.2,
+   "bedsFree": 2,
+   "emergencyTag": false,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "P1",
+   "kind": "police",
+   "name": "Alankar Police Chowki",
+   "osm": "node/2509520919",
+   "lat": 18.498433,
+   "lng": 73.826215,
+   "nodeId": "1224083791",
+   "snapDistanceM": 33.0
+  },
+  {
+   "id": "P2",
+   "kind": "police",
+   "name": "Balagandharva Police Station",
+   "osm": "node/2289023583",
+   "lat": 18.522236,
+   "lng": 73.847842,
+   "nodeId": "2258420141",
+   "snapDistanceM": 13.9
+  },
+  {
+   "id": "P3",
+   "kind": "police",
+   "name": "Centre for Police Research - CPR,",
+   "osm": "node/10172966014",
+   "lat": 18.540655,
+   "lng": 73.82246,
+   "nodeId": "2383922357",
+   "snapDistanceM": 57.2
+  },
+  {
+   "id": "P4",
+   "kind": "police",
+   "name": "Chaturshringi Police Station",
+   "osm": "way/641670813",
+   "lat": 18.546147,
+   "lng": 73.825753,
+   "nodeId": "670336134",
+   "snapDistanceM": 44.9
+  },
+  {
+   "id": "P5",
+   "kind": "police",
+   "name": "Chavan Nagar - Pune Rural Police Headquarters",
+   "osm": "way/218691368",
+   "lat": 18.543517,
+   "lng": 73.822074,
+   "nodeId": "10994322230",
+   "snapDistanceM": 253.8
+  },
+  {
+   "id": "P6",
+   "kind": "police",
+   "name": "Council Hall Police Station",
+   "osm": "node/674930856",
+   "lat": 18.524425,
+   "lng": 73.878856,
+   "nodeId": "8021147790",
+   "snapDistanceM": 19.5
+  },
+  {
+   "id": "P7",
+   "kind": "police",
+   "name": "Crime branch",
+   "osm": "node/4547351989",
+   "lat": 18.544938,
+   "lng": 73.844857,
+   "nodeId": "11335285852",
+   "snapDistanceM": 33.8
+  },
+  {
+   "id": "P8",
+   "kind": "police",
+   "name": "Dattawadi Police Chowki",
+   "osm": "node/5253713305",
+   "lat": 18.501002,
+   "lng": 73.840267,
+   "nodeId": "2207888211",
+   "snapDistanceM": 4.0
+  },
+  {
+   "id": "P9",
+   "kind": "police",
+   "name": "Dattawadi Police Station",
+   "osm": "way/360474279",
+   "lat": 18.492916,
+   "lng": 73.848173,
+   "nodeId": "2694748973",
+   "snapDistanceM": 34.8
+  },
+  {
+   "id": "P10",
+   "kind": "police",
+   "name": "Deccan Gymkhana Police Chowki",
+   "osm": "node/1534465625",
+   "lat": 18.514141,
+   "lng": 73.840381,
+   "nodeId": "2265580236",
+   "snapDistanceM": 18.2
+  },
+  {
+   "id": "P11",
+   "kind": "police",
+   "name": "Faraskhana Police Station",
+   "osm": "way/264444880",
+   "lat": 18.516443,
+   "lng": 73.855842,
+   "nodeId": "2701228459",
+   "snapDistanceM": 30.0
+  },
+  {
+   "id": "P12",
+   "kind": "police",
+   "name": "Ganesh Peth Police station",
+   "osm": "node/1909536882",
+   "lat": 18.516175,
+   "lng": 73.862191,
+   "nodeId": "10225181898",
+   "snapDistanceM": 38.2
+  },
+  {
+   "id": "P13",
+   "kind": "police",
+   "name": "Kasba Peth Police Chowki",
+   "osm": "node/2868930213",
+   "lat": 18.520476,
+   "lng": 73.856038,
+   "nodeId": "772559401",
+   "snapDistanceM": 41.8
+  },
+  {
+   "id": "P14",
+   "kind": "police",
+   "name": "Khadki Police Station",
+   "osm": "node/2694489803",
+   "lat": 18.557192,
+   "lng": 73.845425,
+   "nodeId": "7016025854",
+   "snapDistanceM": 79.0
+  },
+  {
+   "id": "P15",
+   "kind": "police",
+   "name": "Kothrud Police Station",
+   "osm": "node/11786140865",
+   "lat": 18.506629,
+   "lng": 73.802475,
+   "nodeId": "4703535708",
+   "snapDistanceM": 32.1
+  },
+  {
+   "id": "P16",
+   "kind": "police",
+   "name": "Maharshi Nagar Police Chowki",
+   "osm": "way/1466751926",
+   "lat": 18.493332,
+   "lng": 73.87111,
+   "nodeId": "1224904859",
+   "snapDistanceM": 24.4
+  },
+  {
+   "id": "P17",
+   "kind": "police",
+   "name": "Mangaldas Police Chowki",
+   "osm": "node/6116290226",
+   "lat": 18.533987,
+   "lng": 73.878905,
+   "nodeId": "2171089304",
+   "snapDistanceM": 34.4
+  },
+  {
+   "id": "P18",
+   "kind": "police",
+   "name": "Narayan Peth Police Chowki",
+   "osm": "node/2550695929",
+   "lat": 18.5162,
+   "lng": 73.847865,
+   "nodeId": "245646825",
+   "snapDistanceM": 11.7
+  },
+  {
+   "id": "P19",
+   "kind": "police",
+   "name": "Parvati0 police station",
+   "osm": "way/1550975455",
+   "lat": 18.49565,
+   "lng": 73.842194,
+   "nodeId": "10110777750",
+   "snapDistanceM": 50.2
+  },
+  {
+   "id": "P20",
+   "kind": "police",
+   "name": "Paud Phata Police Chowki",
+   "osm": "node/2868930215",
+   "lat": 18.506451,
+   "lng": 73.824599,
+   "nodeId": "2088125783",
+   "snapDistanceM": 45.3
+  },
+  {
+   "id": "P21",
+   "kind": "police",
+   "name": "Perugate Police Chowki",
+   "osm": "node/2410718625",
+   "lat": 18.511393,
+   "lng": 73.848776,
+   "nodeId": "2266580434",
+   "snapDistanceM": 14.3
+  },
+  {
+   "id": "P22",
+   "kind": "police",
+   "name": "Prabhat Police Chowki",
+   "osm": "node/3386030401",
+   "lat": 18.514522,
+   "lng": 73.833306,
+   "nodeId": "248155938",
+   "snapDistanceM": 41.5
+  },
+  {
+   "id": "P23",
+   "kind": "police",
+   "name": "Samarth Police Station",
+   "osm": "node/3337848240",
+   "lat": 18.520318,
+   "lng": 73.869689,
+   "nodeId": "248436597",
+   "snapDistanceM": 39.9
+  },
+  {
+   "id": "P24",
+   "kind": "police",
+   "name": "Sambhaji Police Chowki",
+   "osm": "node/678444711",
+   "lat": 18.513178,
+   "lng": 73.843892,
+   "nodeId": "7976058705",
+   "snapDistanceM": 37.1
+  },
+  {
+   "id": "P25",
+   "kind": "police",
+   "name": "Sant Kabir Police Station",
+   "osm": "node/2289023585",
+   "lat": 18.514876,
+   "lng": 73.868857,
+   "nodeId": "6261109796",
+   "snapDistanceM": 32.4
+  },
+  {
+   "id": "P26",
+   "kind": "police",
+   "name": "Senadatta Police Chowki",
+   "osm": "node/2517303173",
+   "lat": 18.505206,
+   "lng": 73.844603,
+   "nodeId": "2096194555",
+   "snapDistanceM": 22.7
+  },
+  {
+   "id": "P27",
+   "kind": "police",
+   "name": "Shaniwar Peth Police Chowki",
+   "osm": "node/3337848241",
+   "lat": 18.520009,
+   "lng": 73.850024,
+   "nodeId": "3017579795",
+   "snapDistanceM": 20.6
+  },
+  {
+   "id": "P28",
+   "kind": "police",
+   "name": "ShivajiNagar Police Station",
+   "osm": "node/13616220311",
+   "lat": 18.529982,
+   "lng": 73.850013,
+   "nodeId": "10215244938",
+   "snapDistanceM": 26.2
+  },
+  {
+   "id": "P29",
+   "kind": "police",
+   "name": "Somwar Peth Police Station सोमवार पेठ पोलिस स्टेशन",
+   "osm": "way/706927370",
+   "lat": 18.519496,
+   "lng": 73.862565,
+   "nodeId": "2266620644",
+   "snapDistanceM": 16.6
+  },
+  {
+   "id": "P30",
+   "kind": "police",
+   "name": "Swargate Police Station",
+   "osm": "node/2935676185",
+   "lat": 18.500792,
+   "lng": 73.859159,
+   "nodeId": "8036470949",
+   "snapDistanceM": 34.3
+  }
+ ],
+ "units": [
+  {
+   "id": "FT-1",
+   "type": "fire_truck",
+   "stationId": "F1",
+   "homeNodeId": "3385751216",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-2",
+   "type": "fire_truck",
+   "stationId": "F1",
+   "homeNodeId": "3385751216",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "BOAT-1",
+   "type": "rescue_boat",
+   "stationId": "F1",
+   "homeNodeId": "3385751216",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-3",
+   "type": "fire_truck",
+   "stationId": "F2",
+   "homeNodeId": "2164185832",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-4",
+   "type": "fire_truck",
+   "stationId": "F2",
+   "homeNodeId": "2164185832",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "BOAT-2",
+   "type": "rescue_boat",
+   "stationId": "F2",
+   "homeNodeId": "2164185832",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-5",
+   "type": "fire_truck",
+   "stationId": "F3",
+   "homeNodeId": "4342415703",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-6",
+   "type": "fire_truck",
+   "stationId": "F3",
+   "homeNodeId": "4342415703",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "BOAT-3",
+   "type": "rescue_boat",
+   "stationId": "F3",
+   "homeNodeId": "4342415703",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-7",
+   "type": "fire_truck",
+   "stationId": "F4",
+   "homeNodeId": "13769439234",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-8",
+   "type": "fire_truck",
+   "stationId": "F4",
+   "homeNodeId": "13769439234",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "BOAT-4",
+   "type": "rescue_boat",
+   "stationId": "F4",
+   "homeNodeId": "13769439234",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-9",
+   "type": "fire_truck",
+   "stationId": "F5",
+   "homeNodeId": "673352025",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "FT-10",
+   "type": "fire_truck",
+   "stationId": "F5",
+   "homeNodeId": "673352025",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "BOAT-5",
+   "type": "rescue_boat",
+   "stationId": "F5",
+   "homeNodeId": "673352025",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-1",
+   "type": "ambulance",
+   "stationId": "P1",
+   "homeNodeId": "1224083791",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-2",
+   "type": "ambulance",
+   "stationId": "P2",
+   "homeNodeId": "2258420141",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-3",
+   "type": "ambulance",
+   "stationId": "P3",
+   "homeNodeId": "2383922357",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-4",
+   "type": "ambulance",
+   "stationId": "P4",
+   "homeNodeId": "670336134",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-5",
+   "type": "ambulance",
+   "stationId": "P5",
+   "homeNodeId": "10994322230",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-6",
+   "type": "ambulance",
+   "stationId": "P6",
+   "homeNodeId": "8021147790",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-7",
+   "type": "ambulance",
+   "stationId": "P7",
+   "homeNodeId": "11335285852",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-8",
+   "type": "ambulance",
+   "stationId": "P8",
+   "homeNodeId": "2207888211",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-9",
+   "type": "ambulance",
+   "stationId": "P9",
+   "homeNodeId": "2694748973",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-10",
+   "type": "ambulance",
+   "stationId": "P10",
+   "homeNodeId": "2265580236",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-11",
+   "type": "ambulance",
+   "stationId": "P11",
+   "homeNodeId": "2701228459",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-12",
+   "type": "ambulance",
+   "stationId": "P12",
+   "homeNodeId": "10225181898",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-13",
+   "type": "ambulance",
+   "stationId": "P13",
+   "homeNodeId": "772559401",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-14",
+   "type": "ambulance",
+   "stationId": "P14",
+   "homeNodeId": "7016025854",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-15",
+   "type": "ambulance",
+   "stationId": "P15",
+   "homeNodeId": "4703535708",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-16",
+   "type": "ambulance",
+   "stationId": "P16",
+   "homeNodeId": "1224904859",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-17",
+   "type": "ambulance",
+   "stationId": "P17",
+   "homeNodeId": "2171089304",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-18",
+   "type": "ambulance",
+   "stationId": "P18",
+   "homeNodeId": "245646825",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-19",
+   "type": "ambulance",
+   "stationId": "P19",
+   "homeNodeId": "10110777750",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-20",
+   "type": "ambulance",
+   "stationId": "P20",
+   "homeNodeId": "2088125783",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-21",
+   "type": "ambulance",
+   "stationId": "P21",
+   "homeNodeId": "2266580434",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-22",
+   "type": "ambulance",
+   "stationId": "P22",
+   "homeNodeId": "248155938",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-23",
+   "type": "ambulance",
+   "stationId": "P23",
+   "homeNodeId": "248436597",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-24",
+   "type": "ambulance",
+   "stationId": "P24",
+   "homeNodeId": "7976058705",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-25",
+   "type": "ambulance",
+   "stationId": "P25",
+   "homeNodeId": "6261109796",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-26",
+   "type": "ambulance",
+   "stationId": "P26",
+   "homeNodeId": "2096194555",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-27",
+   "type": "ambulance",
+   "stationId": "P27",
+   "homeNodeId": "3017579795",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-28",
+   "type": "ambulance",
+   "stationId": "P28",
+   "homeNodeId": "10215244938",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-29",
+   "type": "ambulance",
+   "stationId": "P29",
+   "homeNodeId": "2266620644",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-30",
+   "type": "ambulance",
+   "stationId": "P30",
+   "homeNodeId": "8036470949",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-31",
+   "type": "ambulance",
+   "stationId": "H156",
+   "homeNodeId": "2085669841",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-32",
+   "type": "ambulance",
+   "stationId": "H133",
+   "homeNodeId": "248156064",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-33",
+   "type": "ambulance",
+   "stationId": "H159",
+   "homeNodeId": "2061304032",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-34",
+   "type": "ambulance",
+   "stationId": "H35",
+   "homeNodeId": "10230313109",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-35",
+   "type": "ambulance",
+   "stationId": "H79",
+   "homeNodeId": "8005569818",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-36",
+   "type": "ambulance",
+   "stationId": "H148",
+   "homeNodeId": "2251843367",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-37",
+   "type": "ambulance",
+   "stationId": "H48",
+   "homeNodeId": "3495323680",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-38",
+   "type": "ambulance",
+   "stationId": "H188",
+   "homeNodeId": "10241642584",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-39",
+   "type": "ambulance",
+   "stationId": "H8",
+   "homeNodeId": "10239784235",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-40",
+   "type": "ambulance",
+   "stationId": "H109",
+   "homeNodeId": "2266580468",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-41",
+   "type": "ambulance",
+   "stationId": "H111",
+   "homeNodeId": "6198562762",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-42",
+   "type": "ambulance",
+   "stationId": "H171",
+   "homeNodeId": "2184076960",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-43",
+   "type": "ambulance",
+   "stationId": "H136",
+   "homeNodeId": "2192111582",
+   "status": "AVAILABLE",
+   "simulated": true
+  },
+  {
+   "id": "AMB-44",
+   "type": "ambulance",
+   "stationId": "H15",
+   "homeNodeId": "2864316787",
+   "status": "AVAILABLE",
+   "simulated": true
+  }
+ ]
+}
