@@ -14,6 +14,11 @@ export const api = {
   closedRoads: () => call('/api/roads/closed'),
   traffic: () => call('/api/traffic'),
   burstBenchmark: () => call('/api/burst-benchmark'),
+  spof: () => call('/api/network/spof'),
+  scc: () => call('/api/network/scc'),
+  crossings: () => call('/api/network/crossings'),
+  rivers: () => call('/api/rivers'),
+  setCrossingStatus: (id, status) => post(`/api/crossings/${encodeURIComponent(id)}/status`, { status }),
   setRoadStatus: (id, status) => post(`/api/roads/${encodeURIComponent(id)}/status`, { status }),
   resetRoads: () => post('/api/roads/reset'),
 };

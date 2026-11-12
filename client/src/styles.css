@@ -142,6 +142,23 @@ button.burst { border-color: #b45309; color: #fde68a; font-weight: 700; }
 .subnote { margin-top: 10px; padding: 8px 10px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--line); font-size: .76rem; line-height: 1.45; color: var(--ink); }
 .panel-note { margin: 0; padding: 0 4px; }
 
+/* ---------- network tab ---------- */
+.tabs:has(> button:nth-child(3)) { grid-template-columns: 1fr 1fr 1fr; }
+.warn-panel { border-color: #c2410c; background: #1c0f05; }
+.warn-panel h2 { color: #fdba74; }
+.zones { margin: 0; padding-left: 18px; font-size: .8rem; line-height: 1.5; }
+.cmp.crossings { table-layout: fixed; }
+.cmp.crossings th:nth-child(1), .cmp.crossings td:nth-child(1) { width: 26px; }
+.cmp.crossings thead th:nth-child(n+3), .cmp.crossings td { width: 52px; }
+.cmp.crossings tbody th { white-space: normal; word-break: break-word; }
+.cmp.crossings tbody tr { cursor: pointer; }
+.cmp.crossings tbody tr:hover td, .cmp.crossings tbody tr:hover th { background: #10223d; }
+.cmp tr.sel td, .cmp tr.sel th { background: #3a2a05; }
+.pin.crossing { background: #0369a1; border-color: #bae6fd; font-size: 11px; border-radius: 4px; }
+.pin.crossing.top { background: #be123c; border-color: #fecdd3; }
+.pin.crossing.closed { background: #475569; text-decoration: line-through; }
+.pin.crossing.sel { outline: 3px solid #fbbf24; outline-offset: 1px; }
+
 /* ---------- algorithms page ---------- */
 .scrub { width: 100%; margin: 10px 0 6px; accent-color: var(--accent); }
 .ramp { height: 10px; border-radius: 5px; margin-top: 10px; }

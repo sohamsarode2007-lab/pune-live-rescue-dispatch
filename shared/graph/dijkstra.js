@@ -9,17 +9,23 @@ import { MinHeap } from './MinHeap.js';
 //   Without a target the run is a full single-source search: dist has every reachable vertex.
 // options.reverse: search the reversed graph, so dist(v) = cost of the best route v -> sourceId and
 //   prev(v) = { from: next vertex towards sourceId, roadId }. One run gives every vertex's cost TO a target.
+// sourceId may also be an array of ids: multi-source Dijkstra (all sources start at cost 0), which gives
+// every vertex its cost from the NEAREST source in one run (e.g. response time from the closest station).
 export function dijkstraAll(graph, sourceId, options = {}) {
-  if (!graph.hasLocation(sourceId)) throw new Error(`Unknown source location: ${sourceId}`);
+  const sources = Array.isArray(sourceId) ? sourceId : [sourceId];
+  for (const s of sources) if (!graph.hasLocation(s)) throw new Error(`Unknown source location: ${s}`);
   const dist = new Map();      // id -> best known effective cost
   const prev = new Map();      // id -> { from, roadId }
   const done = new Set();
   const stats = { heapInsertions: 0, heapExtractions: 0, staleSkipped: 0, relaxations: 0 };
   const heap = new MinHeap((a, b) => a.cost - b.cost || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 
-  dist.set(sourceId, 0);
-  heap.push({ id: sourceId, cost: 0 });
-  stats.heapInsertions++;
+  for (const s of sources) {
+    if (dist.has(s)) continue;
+    dist.set(s, 0);
+    heap.push({ id: s, cost: 0 });
+    stats.heapInsertions++;
+  }
 
   while (!heap.isEmpty()) {
     const { id: u, cost } = heap.pop();
@@ -41,6 +47,10 @@ export function dijkstraAll(graph, sourceId, options = {}) {
   }
   return { source: sourceId, dist, prev, done, stats: { ...stats, settled: done.size } };
 }
+
+// Multi-source Dijkstra: cost from the nearest of `sourceIds` to every vertex (reverse: TO the nearest).
+// O((V + E) log V), the same as one single-source run.
+export const dijkstraMulti = (graph, sourceIds, options = {}) => dijkstraAll(graph, [...sourceIds], options);
 
 export function unreachableRoute(sourceId, destId) {
   return {

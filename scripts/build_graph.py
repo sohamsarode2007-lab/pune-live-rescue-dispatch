@@ -53,6 +53,19 @@ def first(v):
     return v[0] if isinstance(v, list) else v
 
 
+BRIDGE_WORDS = ("bridge", "pul", "setu", "flyover")
+
+
+def pick_name(v):
+    """Deterministic name when simplification merged ways with different names (OSMnx list order varies
+    between runs): prefer a bridge-like name, otherwise the alphabetically first."""
+    if not isinstance(v, list):
+        return v if isinstance(v, str) else None
+    names = sorted(str(x) for x in v if isinstance(x, str))
+    bridgey = [n for n in names if any(w in n.lower() for w in BRIDGE_WORDS)]
+    return (bridgey or names or [None])[0]
+
+
 def pick_highway(v):
     vals = v if isinstance(v, list) else [v]
     ranked = sorted(vals, key=lambda h: HIGHWAY_RANK.index(h) if h in HIGHWAY_RANK else len(HIGHWAY_RANK))
@@ -114,13 +127,20 @@ def main():
             geom = [[round(y, 6), round(x, 6)] for x, y in data["geometry"].coords]
         else:
             geom = [[round(coord[u][0], 6), round(coord[u][1], 6)], [round(coord[v][0], 6), round(coord[v][1], 6)]]
-        name = first(data.get("name")) or first(data.get("ref")) or ""
-        edges.append({
+        name = pick_name(data.get("name")) or pick_name(data.get("ref")) or ""
+        edge = {
             "id": f"e{len(edges)}", "from": u, "to": v, "lengthM": length,
             "highway": highway, "maxspeedKmh": round(speed, 1),
             "speedSource": "tag" if tagged is not None else "default",
             "oneway": oneway, "name": str(name), "geometry": geom,
-        })
+        }
+        # OSM bridge=* (yes / viaduct / ...). After simplification one edge can mix bridge and non-bridge
+        # ways; it is marked if any part is a bridge (river crossings are then confirmed geometrically).
+        bridge_vals = data.get("bridge")
+        bridge_vals = bridge_vals if isinstance(bridge_vals, list) else [bridge_vals]
+        if any(isinstance(b, str) and b not in ("no", "") for b in bridge_vals):
+            edge["bridge"] = True
+        edges.append(edge)
         if not oneway:
             rkey = (v, u, key[2], length)
             waiting_reverse[rkey] = waiting_reverse.get(rkey, 0) + 1

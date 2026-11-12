@@ -24,6 +24,8 @@ import { ExternalCalls } from './services/externalCalls.js';
 import { TrafficService } from './services/trafficService.js';
 import { OsrmService } from './services/osrmService.js';
 import { CompareService } from './services/compareService.js';
+import { NetworkService } from './services/networkService.js';
+import { RIVER_FILE } from './config.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
 
@@ -46,15 +48,18 @@ const dispatch = new DispatchService(store, {
 
 // Phase 4: external services (TomTom traffic, OSRM baseline) with a persisted daily call counter.
 const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => io.to('dispatch').emit('external:calls', v) });
+// Network resilience (Tarjan, trap zones, river crossings). Recomputed after closures / traffic changes.
+const network = NetworkService.fromFile(store, RIVER_FILE, { onChange: (e) => io.to('dispatch').emit('network:updated', e.summary) });
 const traffic = new TrafficService({
   store, apiKey: TOMTOM_API_KEY, snapshotFile: TRAFFIC_SNAPSHOT_FILE, calls,
   ...(TOMTOM_FLOW_URL ? { baseUrl: TOMTOM_FLOW_URL } : {}),
-  onChange: (st) => io.to('dispatch').emit('traffic:updated', st),
+  onChange: (st) => { io.to('dispatch').emit('traffic:updated', st); network.roadsChanged(); },
 });
+network.rankCrossings().then((c) => console.log(`River crossings: ${c.ranking?.length ?? 0} ranked in ${c.ms} ms`));
 const osrm = new OsrmService({ calls, ...(OSRM_BASE_URL ? { baseUrl: OSRM_BASE_URL } : {}) });
 const compare = new CompareService({ store, osrm, traffic, logFile: OSRM_LOG_FILE });
 const ts = traffic.status();
-console.log(`Traffic: ${ts.message}; ${ts.samples} sample points; TomTom key ${TOMTOM_API_KEY ? 'present' : 'missing (free-flow fallback)'}`);
+console.log(`Traffic: ${ts.message}; ${ts.samples} sample points; TomTom ${TOMTOM_API_KEY ? 'key present' : process.env.TOMTOM_DISABLED ? 'DISABLED (TOMTOM_DISABLED=1)' : 'key missing (free-flow fallback)'}`);
 
 app.use(express.json({ limit: '100kb' }));
 
@@ -121,7 +126,23 @@ app.get('/api/roads/:id', (req, res) => {
   info ? res.json(info) : res.status(404).json({ error: 'Unknown road' });
 });
 
-const hazardChanged = () => io.to('dispatch').emit('hazard:updated', store.closedRoads());
+const hazardChanged = () => { io.to('dispatch').emit('hazard:updated', store.closedRoads()); network.roadsChanged(); };
+
+app.get('/api/network/spof', (_req, res) => res.json(network.spof()));
+app.get('/api/network/scc', (_req, res) => res.json(network.scc()));
+app.get('/api/network/crossings', (_req, res) => res.json(network.crossings()));
+app.get('/api/rivers', (_req, res) => res.json(network.rivers));
+
+// Demo: close or reopen every road of one river crossing (simulates that bridge flooding).
+app.post('/api/crossings/:id/status', (req, res) => {
+  const c = network.crossingDefs.find((x) => x.id === req.params.id);
+  const { status } = req.body ?? {};
+  if (!c) return res.status(404).json({ error: 'Unknown crossing' });
+  if (!['OPEN', 'BLOCKED'].includes(status)) return bad(res, 'status must be OPEN or BLOCKED');
+  for (const id of c.roadIds) store.setRoadStatus(id, status);
+  hazardChanged();
+  res.json({ ok: true, roadIds: c.roadIds });
+});
 
 app.post('/api/roads/:id/status', (req, res) => {
   const { status } = req.body ?? {};
@@ -146,6 +167,7 @@ io.on('connection', (socket) => {
     socket.emit('hazard:updated', store.closedRoads());
     socket.emit('traffic:updated', traffic.status());
     socket.emit('external:calls', calls.view());
+    socket.emit('network:updated', network.summary());
     // PLAN: no timer; refresh only while a dispatcher is connected, at most every 15 minutes.
     traffic.maybeAutoRefresh()?.then(() => io.to('dispatch').emit('traffic:updated', traffic.status()));
   });

@@ -9,6 +9,7 @@ import RescueMap from '../components/RescueMap.jsx';
 import ComparisonPanel from '../components/ComparisonPanel.jsx';
 import TrafficPanel from '../components/TrafficPanel.jsx';
 import OsrmPanel from '../components/OsrmPanel.jsx';
+import { TrapZoneWarning, SpofPanel, CrossingsPanel } from '../components/NetworkPanels.jsx';
 import { UNIT_LABEL, TYPE_ICON } from '../components/mapParts.jsx';
 
 const KIND_NAME = { fire_station: 'Fire stations', police: 'Police stations', hospital: 'Hospitals' };
@@ -59,6 +60,27 @@ export default function Dispatcher() {
   const [compareResult, setCompareResult] = useState(null);
   const trafficKey = `${live.traffic?.mode}|${live.traffic?.snapshotAt}`;
   useEffect(() => { setCompareResult(null); }, [tab, selectedIncidentId]);
+
+  // Network tab (Tarjan, trap zones, river crossings). Data refetched when the server's analysis changes.
+  const [spof, setSpof] = useState(null);
+  const [showAllSpof, setShowAllSpof] = useState(false);
+  const [crossingState, setCrossingState] = useState(null);
+  const [selectedCrossingId, setSelectedCrossingId] = useState(null);
+  const [rivers, setRivers] = useState([]);
+  const [zones, setZones] = useState([]);
+  const netVersion = live.network?.version;
+  const crossingStatus = `${live.network?.crossings?.status}|${live.network?.crossings?.stale}`;
+  const zoneCount = live.network?.trapZones?.length ?? 0;
+  useEffect(() => { api.rivers().then(setRivers).catch(() => {}); }, []);
+  useEffect(() => { if (tab === 'network') api.spof().then(setSpof).catch(() => {}); }, [tab, netVersion]);
+  useEffect(() => { if (tab === 'network') api.crossings().then(setCrossingState).catch(() => {}); }, [tab, crossingStatus, netVersion]);
+  useEffect(() => {
+    if (!zoneCount) { setZones([]); return; }
+    api.scc().then((s) => setZones(s.zones)).catch(() => {});
+  }, [zoneCount, netVersion]);
+  const setCrossing = async (id, status) => {
+    try { await api.setCrossingStatus(id, status); setVersion((v) => v + 1); } catch (e) { setRouteError(e.message); }
+  };
   useEffect(() => {
     if (!showTraffic || !live.traffic?.snapshotAt) { setTrafficRoads([]); return undefined; }
     let cancelled = false;
@@ -135,6 +157,7 @@ export default function Dispatcher() {
 
   const onMapClick = (p) => {
     if (tab === 'live') { if (testMode) sendTestSos(p); return; }
+    if (tab === 'network') return;
     if (clickMode === 'origin') { setCustomOrigin(p); setClickMode('destination'); } else setDestination(p);
   };
   const pickStation = (id) => { setCustomOrigin(null); setOriginId(id); setTab('planner'); };
@@ -191,6 +214,9 @@ export default function Dispatcher() {
             selectedIncidentId={selectedIncidentId} onSelectIncident={setSelectedIncidentId} beds={live.beds}
             cursor={tab === 'live' && testMode ? 'crosshair' : ''}
             trafficRoads={trafficRoads} compare={compareResult}
+            network={tab === 'network'
+              ? { rivers, spof, showAll: showAllSpof, crossings: crossingState?.ranking ?? [], selectedCrossingId, onSelectCrossing: setSelectedCrossingId, onSetCrossingStatus: setCrossing, zones }
+              : { zones }}
           />
         ) : <div className="map-shell loading">Loading road network…</div>}
 
@@ -200,7 +226,19 @@ export default function Dispatcher() {
               Live dispatch {active.length > 0 && <span className="pill BLOCKED">{active.length}</span>}
             </button>
             <button type="button" role="tab" aria-selected={tab === 'planner'} className={tab === 'planner' ? 'on' : ''} onClick={() => setTab('planner')}>Route planner</button>
+            <button type="button" role="tab" aria-selected={tab === 'network'} className={tab === 'network' ? 'on' : ''} onClick={() => setTab('network')}>
+              Network {zoneCount > 0 && <span className="pill BLOCKED">{zoneCount}</span>}
+            </button>
           </div>
+
+          <TrapZoneWarning summary={live.network} />
+
+          {tab === 'network' && (
+            <>
+              <CrossingsPanel state={crossingState} selectedId={selectedCrossingId} onSelect={setSelectedCrossingId} onSetStatus={setCrossing} />
+              <SpofPanel spof={spof} showAll={showAllSpof} onShowAll={setShowAllSpof} />
+            </>
+          )}
 
           <TrafficPanel status={live.traffic} calls={live.externalCalls} showColours={showTraffic} onShowColours={setShowTraffic} />
 

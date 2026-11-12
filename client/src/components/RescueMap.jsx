@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { MapContainer, Polyline, Marker, Popup } from 'react-leaflet';
 import { AreaBox, BaseTiles, ClickHandler, MapFrame, divIcon, UNIT_LABEL, UNIT_LETTER, TYPE_ICON } from './mapParts.jsx';
 import { trafficColor } from './TrafficPanel.jsx';
+import NetworkLayer from './NetworkLayer.jsx';
 
 const KIND_STYLE = {
   hospital: { cls: 'hospital', label: 'H' },
@@ -19,7 +20,7 @@ function fleetText(units) {
 export default function RescueMap({
   bbox, facilities, fleet, layers, origin, destination, route, closedRoads, onMapClick, onReopenRoad, onPickOrigin,
   incidents = [], liveUnits = [], showIdle = false, selectedIncidentId = null, onSelectIncident, beds = {}, cursor = '',
-  trafficRoads = [], compare = null,
+  trafficRoads = [], compare = null, network = null,
 }) {
   const fleetByStation = useMemo(() => {
     const m = new Map();
@@ -46,6 +47,8 @@ export default function RescueMap({
               </Popup>
             </Polyline>
           ))}
+
+          {network && <NetworkLayer {...network} />}
 
           {trafficRoads.map((r) => (
             <Polyline key={`t-${r.id}`} positions={r.geometry} pathOptions={{ color: trafficColor(r.factor), weight: 5, opacity: 0.85 }}>

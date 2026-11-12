@@ -39,6 +39,7 @@ export class Graph {
     this.adjacency = new Map(); // id -> [{ roadId, from, to }]
     this._maxSpeedMps = null;   // cached for the A* heuristic; reset when roads are added
     this._inAdjacency = null;   // reverse adjacency, built on first use; reset when roads are added
+    this.version = 0;           // bumped on every status/traffic change, so analyses know when they are stale
   }
 
   addLocation({ id, name = '', type = 'Intersection', lat, lng, affected = false }) {
@@ -52,7 +53,7 @@ export class Graph {
   // status change is seen in both directions). `geometry` is [[lat,lng],...] from `from` to `to`.
   addRoad({
     id, from, to, lengthM, baseTimeS, status = ROAD_STATUS.OPEN, riskLevel = RISK_LEVEL.LOW,
-    oneWay = false, trafficFactor = 1, highway = 'unclassified', maxspeedKmh = null, name = '', geometry = null,
+    oneWay = false, trafficFactor = 1, highway = 'unclassified', maxspeedKmh = null, name = '', geometry = null, bridge = false,
   }) {
     if (this.roads.has(id)) throw new Error(`Duplicate road ID: ${id}`);
     if (!this.locations.has(from) || !this.locations.has(to)) throw new Error(`Road ${id} references unknown location`);
@@ -61,7 +62,7 @@ export class Graph {
     const tf = clampTrafficFactor(trafficFactor);
     const road = {
       id, from, to, lengthM, baseTimeS, trafficFactor: tf, status, riskLevel, oneWay,
-      highway, maxspeedKmh, name, geometry,
+      highway, maxspeedKmh, name, geometry, bridge,
       riskPenaltyS: computeRiskPenaltyS(status, riskLevel),
       initialStatus: status, initialRiskLevel: riskLevel, initialTrafficFactor: tf,
     };
@@ -125,6 +126,7 @@ export class Graph {
     road.status = status;
     if (riskLevel) road.riskLevel = riskLevel;
     road.riskPenaltyS = computeRiskPenaltyS(status, road.riskLevel);
+    this.version++;
   }
 
   // Traffic can only slow a road down (factor clamped to [1, 4]), which keeps the A* heuristic admissible.
@@ -132,6 +134,7 @@ export class Graph {
     const road = this.roads.get(roadId);
     if (!road) throw new Error(`Unknown road: ${roadId}`);
     road.trafficFactor = clampTrafficFactor(factor);
+    this.version++;
   }
 
   setLocationAffected(id, affected) {
@@ -149,6 +152,7 @@ export class Graph {
       road.riskPenaltyS = computeRiskPenaltyS(road.status, road.riskLevel);
     }
     for (const loc of this.locations.values()) loc.affected = false;
+    this.version++;
   }
 
   countRoadsByStatus() {

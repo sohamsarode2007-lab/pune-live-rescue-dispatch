@@ -20,6 +20,7 @@ export function graphFromJson(data) {
       id: e.id, from: e.from, to: e.to, lengthM: e.lengthM,
       baseTimeS: e.lengthM / kmhToMps(e.maxspeedKmh),
       oneWay: e.oneway, highway: e.highway, maxspeedKmh: e.maxspeedKmh, name: e.name, geometry: e.geometry,
+      bridge: Boolean(e.bridge),
     });
   }
   return g;
