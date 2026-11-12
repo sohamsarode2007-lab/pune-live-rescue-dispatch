@@ -45,6 +45,11 @@ MAJOR_NAME_HINTS = [
     "medical college", "military hospital", "cantonment general",
 ]
 
+# Manual same-place rules for campuses whose OSM records have unrelated names.
+# (kind, keyword in name, max distance in m). Sassoon General Hospital is mapped both as
+# "B.J. Medical College and Sassoon Hospital" and "David Sassoon Hospital" on one campus.
+SAME_PLACE_RULES = [("hospital", "sassoon", 500)]
+
 # Words that do not identify a hospital (removed before comparing names).
 NAME_STOPWORDS = {
     "hospital", "hospitals", "the", "pvt", "ltd", "private", "limited", "and", "multispeciality",
@@ -176,7 +181,7 @@ def main():
 
     # ---- merge duplicates (union-find over all pairs of the same kind) ----
     uf = UnionFind(len(raw))
-    reasons = {"insideOutline": 0, "similarName": 0, "unnamedNearby": 0}
+    reasons = {"insideOutline": 0, "similarName": 0, "unnamedNearby": 0, "samePlaceRule": 0}
     for i in range(len(raw)):
         for j in range(i + 1, len(raw)):
             a, b = raw[i], raw[j]
@@ -193,6 +198,11 @@ def main():
                         why = "similarName"
                 else:
                     why = "unnamedNearby"
+            if not why:
+                for kind, keyword, max_m in SAME_PLACE_RULES:
+                    if a["kind"] == kind and keyword in (a["name"] or "").lower() and keyword in (b["name"] or "").lower() \
+                            and haversine_m(a["lat"], a["lng"], b["lat"], b["lng"]) <= max_m:
+                        why = "samePlaceRule"
             if why and uf.union(i, j):
                 reasons[why] += 1
 
@@ -282,7 +292,8 @@ def main():
             "fleetRule": "fire station: 2 fire trucks + 1 rescue boat; police station: 1 ambulance; "
                          "major hospital: 1 ambulance",
             "mergeRule": f"same kind and (point inside the other's building outline, or within {MERGE_RADIUS_M} m "
-                         "with the same/similar name, or within that distance and unnamed)",
+                         "with the same/similar name, or within that distance and unnamed, or a manual same-place "
+                         f"rule: {SAME_PLACE_RULES})",
             "majorRule": f"top {MAJOR_COUNT} hospitals by score: beds, emergency=yes, healthcare:speciality, "
                          "building footprint area, well-known name",
             "rawCounts": before,

@@ -10,7 +10,7 @@
   "seed": 2026,
   "simulatedNote": "Hospital bedsFree and every unit (fleet) are SIMULATED demo values, not real data.",
   "fleetRule": "fire station: 2 fire trucks + 1 rescue boat; police station: 1 ambulance; major hospital: 1 ambulance",
-  "mergeRule": "same kind and (point inside the other's building outline, or within 150 m with the same/similar name, or within that distance and unnamed)",
+  "mergeRule": "same kind and (point inside the other's building outline, or within 150 m with the same/similar name, or within that distance and unnamed, or a manual same-place rule: [('hospital', 'sassoon', 500)])",
   "majorRule": "top 12 hospitals by score: beds, emergency=yes, healthcare:speciality, building footprint area, well-known name",
   "rawCounts": {
    "hospital": 222,
@@ -20,10 +20,11 @@
   "mergeCounts": {
    "insideOutline": 11,
    "similarName": 15,
-   "unnamedNearby": 7
+   "unnamedNearby": 7,
+   "samePlaceRule": 1
   },
   "counts": {
-   "hospital": 190,
+   "hospital": 189,
    "fire_station": 5,
    "police": 30,
    "majorHospitals": 12,
@@ -94,6 +95,11 @@
    "lng": 73.871161,
    "nodeId": "2864316787",
    "snapDistanceM": 131.7,
+   "mergedFrom": [
+    "node/7068194960",
+    "node/7651453417",
+    "node/772571829"
+   ],
    "major": true,
    "majorReasons": [
     "well-known large hospital (name)"
@@ -105,28 +111,6 @@
   },
   {
    "id": "H2",
-   "kind": "hospital",
-   "name": "David Sassoon Hospital",
-   "osm": "node/7651453417",
-   "lat": 18.525279,
-   "lng": 73.870499,
-   "nodeId": "2258420204",
-   "snapDistanceM": 101.6,
-   "mergedFrom": [
-    "node/7651453417",
-    "node/772571829"
-   ],
-   "major": true,
-   "majorReasons": [
-    "well-known large hospital (name)"
-   ],
-   "bedsFree": 12,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H3",
    "kind": "hospital",
    "name": "Deenanath Mangeshkar Hospital",
    "osm": "way/207872391",
@@ -140,13 +124,13 @@
     "footprint 22,449 m²",
     "well-known large hospital (name)"
    ],
-   "bedsFree": 30,
+   "bedsFree": 12,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H4",
+   "id": "H3",
    "kind": "hospital",
    "name": "Jehangir Hospital",
    "osm": "way/331500153",
@@ -169,7 +153,7 @@
    ]
   },
   {
-   "id": "H5",
+   "id": "H4",
    "kind": "hospital",
    "name": "KEM Hospital",
    "osm": "way/215075307",
@@ -187,13 +171,13 @@
     "footprint 16,024 m²",
     "well-known large hospital (name)"
    ],
-   "bedsFree": 40,
+   "bedsFree": 30,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H6",
+   "id": "H5",
    "kind": "hospital",
    "name": "Kamla Nehru Hospital",
    "osm": "way/218059566",
@@ -210,13 +194,13 @@
     "footprint 7,332 m²",
     "well-known large hospital (name)"
    ],
-   "bedsFree": 4,
+   "bedsFree": 40,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H7",
+   "id": "H6",
    "kind": "hospital",
    "name": "Poona Hospital and Research Centre",
    "osm": "way/217773616",
@@ -235,13 +219,13 @@
     "footprint 7,582 m²",
     "well-known large hospital (name)"
    ],
-   "bedsFree": 8,
+   "bedsFree": 4,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H8",
+   "id": "H7",
    "kind": "hospital",
    "name": "Ratna Memorial Hospital",
    "osm": "way/261258208",
@@ -254,13 +238,13 @@
     "beds=100",
     "emergency=yes"
    ],
-   "bedsFree": 30,
+   "bedsFree": 8,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H9",
+   "id": "H8",
    "kind": "hospital",
    "name": "Ruby Hall",
    "osm": "node/9296005824",
@@ -283,7 +267,7 @@
    ]
   },
   {
-   "id": "H10",
+   "id": "H9",
    "kind": "hospital",
    "name": "Sahyadri Hospital",
    "osm": "node/1109153493",
@@ -301,7 +285,7 @@
    ]
   },
   {
-   "id": "H11",
+   "id": "H10",
    "kind": "hospital",
    "name": "Sahyadri Hospital",
    "osm": "way/218422372",
@@ -314,13 +298,13 @@
     "emergency=yes",
     "well-known large hospital (name)"
    ],
-   "bedsFree": 20,
+   "bedsFree": 30,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H12",
+   "id": "H11",
    "kind": "hospital",
    "name": "Sancheti Hospital",
    "osm": "way/218110050",
@@ -333,6 +317,24 @@
     "emergency=yes",
     "4 specialities",
     "footprint 5,872 m²",
+    "well-known large hospital (name)"
+   ],
+   "bedsFree": 20,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H12",
+   "kind": "hospital",
+   "name": "Sardar Patel Cantonment General Hospital",
+   "osm": "node/672120487",
+   "lat": 18.502716,
+   "lng": 73.87712,
+   "nodeId": "10222793126",
+   "snapDistanceM": 92.0,
+   "major": true,
+   "majorReasons": [
     "well-known large hospital (name)"
    ],
    "bedsFree": 30,
@@ -2461,12 +2463,12 @@
   {
    "id": "H150",
    "kind": "hospital",
-   "name": "Sardar Patel Cantonment General Hospital",
-   "osm": "node/672120487",
-   "lat": 18.502716,
-   "lng": 73.87712,
-   "nodeId": "10222793126",
-   "snapDistanceM": 92.0,
+   "name": "Sardar Patel Genral Hospital",
+   "osm": "node/10172942167",
+   "lat": 18.502736,
+   "lng": 73.877119,
+   "nodeId": "10222793125",
+   "snapDistanceM": 91.3,
    "major": false,
    "bedsFree": 1,
    "simulated": [
@@ -2476,12 +2478,12 @@
   {
    "id": "H151",
    "kind": "hospital",
-   "name": "Sardar Patel Genral Hospital",
-   "osm": "node/10172942167",
-   "lat": 18.502736,
-   "lng": 73.877119,
-   "nodeId": "10222793125",
-   "snapDistanceM": 91.3,
+   "name": "Sasoon Hospital",
+   "osm": "node/7226727441",
+   "lat": 18.521872,
+   "lng": 73.873118,
+   "nodeId": "1232209779",
+   "snapDistanceM": 112.9,
    "major": false,
    "bedsFree": 5,
    "simulated": [
@@ -2490,21 +2492,6 @@
   },
   {
    "id": "H152",
-   "kind": "hospital",
-   "name": "Sasoon Hospital",
-   "osm": "node/7226727441",
-   "lat": 18.521872,
-   "lng": 73.873118,
-   "nodeId": "1232209779",
-   "snapDistanceM": 112.9,
-   "major": false,
-   "bedsFree": 2,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H153",
    "kind": "hospital",
    "name": "Sathe Multispeciality Hospital",
    "osm": "node/8257680507",
@@ -2519,7 +2506,7 @@
    ]
   },
   {
-   "id": "H154",
+   "id": "H153",
    "kind": "hospital",
    "name": "Savitribai Phule Meternity Home",
    "osm": "node/8813476678",
@@ -2528,13 +2515,13 @@
    "nodeId": "4340839651",
    "snapDistanceM": 22.2,
    "major": false,
-   "bedsFree": 3,
+   "bedsFree": 2,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H155",
+   "id": "H154",
    "kind": "hospital",
    "name": "Seth Ramdas Shah Memorial Hospital and Research Centre",
    "osm": "node/6618960830",
@@ -2543,13 +2530,13 @@
    "nodeId": "4342574100",
    "snapDistanceM": 37.8,
    "major": false,
-   "bedsFree": 8,
+   "bedsFree": 3,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H156",
+   "id": "H155",
    "kind": "hospital",
    "name": "Seth Tarachand Hospital",
    "osm": "relation/5664301",
@@ -2568,7 +2555,7 @@
    ]
   },
   {
-   "id": "H157",
+   "id": "H156",
    "kind": "hospital",
    "name": "Shahade Hospital",
    "osm": "node/7052815781",
@@ -2576,6 +2563,21 @@
    "lng": 73.853756,
    "nodeId": "2184076960",
    "snapDistanceM": 67.7,
+   "major": false,
+   "bedsFree": 8,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H157",
+   "kind": "hospital",
+   "name": "Shaikh Hospital",
+   "osm": "node/7048861322",
+   "lat": 18.51461,
+   "lng": 73.862955,
+   "nodeId": "2266620502",
+   "snapDistanceM": 14.1,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -2585,12 +2587,12 @@
   {
    "id": "H158",
    "kind": "hospital",
-   "name": "Shaikh Hospital",
-   "osm": "node/7048861322",
-   "lat": 18.51461,
-   "lng": 73.862955,
-   "nodeId": "2266620502",
-   "snapDistanceM": 14.1,
+   "name": "Shaishav Children's Hospital",
+   "osm": "node/7651453379",
+   "lat": 18.513793,
+   "lng": 73.84762,
+   "nodeId": "678444580",
+   "snapDistanceM": 42.0,
    "major": false,
    "bedsFree": 8,
    "simulated": [
@@ -2599,21 +2601,6 @@
   },
   {
    "id": "H159",
-   "kind": "hospital",
-   "name": "Shaishav Children's Hospital",
-   "osm": "node/7651453379",
-   "lat": 18.513793,
-   "lng": 73.84762,
-   "nodeId": "678444580",
-   "snapDistanceM": 42.0,
-   "major": false,
-   "bedsFree": 2,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H160",
    "kind": "hospital",
    "name": "Shashwat Hospital",
    "osm": "node/7046772780",
@@ -2626,13 +2613,13 @@
     "node/7046772780"
    ],
    "major": false,
-   "bedsFree": 3,
+   "bedsFree": 2,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H161",
+   "id": "H160",
    "kind": "hospital",
    "name": "Shashwat Hospital",
    "osm": "way/290390069",
@@ -2641,13 +2628,13 @@
    "nodeId": "1194079749",
    "snapDistanceM": 46.9,
    "major": false,
-   "bedsFree": 5,
+   "bedsFree": 3,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H162",
+   "id": "H161",
    "kind": "hospital",
    "name": "Shintre Hospital",
    "osm": "node/7651453390",
@@ -2660,13 +2647,13 @@
     "way/758253943"
    ],
    "major": false,
-   "bedsFree": 0,
+   "bedsFree": 5,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H163",
+   "id": "H162",
    "kind": "hospital",
    "name": "Shraddha Hospital",
    "osm": "node/7651453344",
@@ -2675,13 +2662,13 @@
    "nodeId": "2204632480",
    "snapDistanceM": 37.0,
    "major": false,
-   "bedsFree": 8,
+   "bedsFree": 0,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H164",
+   "id": "H163",
    "kind": "hospital",
    "name": "Shre Samarth Hospital",
    "osm": "node/10172977869",
@@ -2690,13 +2677,13 @@
    "nodeId": "772554398",
    "snapDistanceM": 21.7,
    "major": false,
-   "bedsFree": 1,
+   "bedsFree": 8,
    "simulated": [
     "bedsFree"
    ]
   },
   {
-   "id": "H165",
+   "id": "H164",
    "kind": "hospital",
    "name": "Shree Balaji Eye Hospital",
    "osm": "node/7043763362",
@@ -2711,7 +2698,7 @@
    ]
   },
   {
-   "id": "H166",
+   "id": "H165",
    "kind": "hospital",
    "name": "Shreeyash Hospital, Pune",
    "osm": "node/7079392093",
@@ -2719,6 +2706,21 @@
    "lng": 73.841867,
    "nodeId": "834075473",
    "snapDistanceM": 25.4,
+   "major": false,
+   "bedsFree": 1,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H166",
+   "kind": "hospital",
+   "name": "Shri Samarth Hospital",
+   "osm": "node/7049775522",
+   "lat": 18.518062,
+   "lng": 73.865867,
+   "nodeId": "2266620619",
+   "snapDistanceM": 20.6,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -2728,12 +2730,12 @@
   {
    "id": "H167",
    "kind": "hospital",
-   "name": "Shri Samarth Hospital",
-   "osm": "node/7049775522",
-   "lat": 18.518062,
-   "lng": 73.865867,
-   "nodeId": "2266620619",
-   "snapDistanceM": 20.6,
+   "name": "Siddharth Hospital, Pune",
+   "osm": "node/7053000962",
+   "lat": 18.490058,
+   "lng": 73.868464,
+   "nodeId": "10223490691",
+   "snapDistanceM": 112.7,
    "major": false,
    "bedsFree": 8,
    "simulated": [
@@ -2743,12 +2745,12 @@
   {
    "id": "H168",
    "kind": "hospital",
-   "name": "Siddharth Hospital, Pune",
-   "osm": "node/7053000962",
-   "lat": 18.490058,
-   "lng": 73.868464,
-   "nodeId": "10223490691",
-   "snapDistanceM": 112.7,
+   "name": "Subodh Hospital",
+   "osm": "node/7062490981",
+   "lat": 18.503523,
+   "lng": 73.813761,
+   "nodeId": "9170953904",
+   "snapDistanceM": 89.6,
    "major": false,
    "bedsFree": 0,
    "simulated": [
@@ -2758,12 +2760,12 @@
   {
    "id": "H169",
    "kind": "hospital",
-   "name": "Subodh Hospital",
-   "osm": "node/7062490981",
-   "lat": 18.503523,
-   "lng": 73.813761,
-   "nodeId": "9170953904",
-   "snapDistanceM": 89.6,
+   "name": "Suman Hospital",
+   "osm": "node/7651453323",
+   "lat": 18.492348,
+   "lng": 73.853457,
+   "nodeId": "2265732943",
+   "snapDistanceM": 40.9,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -2772,21 +2774,6 @@
   },
   {
    "id": "H170",
-   "kind": "hospital",
-   "name": "Suman Hospital",
-   "osm": "node/7651453323",
-   "lat": 18.492348,
-   "lng": 73.853457,
-   "nodeId": "2265732943",
-   "snapDistanceM": 40.9,
-   "major": false,
-   "bedsFree": 5,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H171",
    "kind": "hospital",
    "name": "Surya Sahyadri Hospital",
    "osm": "node/2289294093",
@@ -2801,7 +2788,7 @@
    ]
   },
   {
-   "id": "H172",
+   "id": "H171",
    "kind": "hospital",
    "name": "Sutika Seva Mandir",
    "osm": "node/7226727370",
@@ -2809,6 +2796,21 @@
    "lng": 73.846551,
    "nodeId": "678720183",
    "snapDistanceM": 27.9,
+   "major": false,
+   "bedsFree": 5,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H172",
+   "kind": "hospital",
+   "name": "Suyash Hospital",
+   "osm": "node/7651453383",
+   "lat": 18.500186,
+   "lng": 73.812402,
+   "nodeId": "2455119488",
+   "snapDistanceM": 22.1,
    "major": false,
    "bedsFree": 8,
    "simulated": [
@@ -2818,12 +2820,12 @@
   {
    "id": "H173",
    "kind": "hospital",
-   "name": "Suyash Hospital",
-   "osm": "node/7651453383",
-   "lat": 18.500186,
-   "lng": 73.812402,
-   "nodeId": "2455119488",
-   "snapDistanceM": 22.1,
+   "name": "Swanand Maternity Hospital",
+   "osm": "node/7651453385",
+   "lat": 18.529743,
+   "lng": 73.833982,
+   "nodeId": "10241642584",
+   "snapDistanceM": 17.2,
    "major": false,
    "bedsFree": 3,
    "simulated": [
@@ -2833,12 +2835,12 @@
   {
    "id": "H174",
    "kind": "hospital",
-   "name": "Swanand Maternity Hospital",
-   "osm": "node/7651453385",
-   "lat": 18.529743,
-   "lng": 73.833982,
-   "nodeId": "10241642584",
-   "snapDistanceM": 17.2,
+   "name": "Todkar Hospital",
+   "osm": "node/7651453378",
+   "lat": 18.510713,
+   "lng": 73.866086,
+   "nodeId": "672166120",
+   "snapDistanceM": 31.4,
    "major": false,
    "bedsFree": 1,
    "simulated": [
@@ -2847,21 +2849,6 @@
   },
   {
    "id": "H175",
-   "kind": "hospital",
-   "name": "Todkar Hospital",
-   "osm": "node/7651453378",
-   "lat": 18.510713,
-   "lng": 73.866086,
-   "nodeId": "672166120",
-   "snapDistanceM": 31.4,
-   "major": false,
-   "bedsFree": 2,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H176",
    "kind": "hospital",
    "name": "Umarji Hospital",
    "osm": "node/7045823776",
@@ -2874,6 +2861,21 @@
     "node/7045823776"
    ],
    "major": false,
+   "bedsFree": 2,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H176",
+   "kind": "hospital",
+   "name": "Unique Hospital",
+   "osm": "node/10172977888",
+   "lat": 18.522164,
+   "lng": 73.867678,
+   "nodeId": "8005569822",
+   "snapDistanceM": 23.9,
+   "major": false,
    "bedsFree": 0,
    "simulated": [
     "bedsFree"
@@ -2882,12 +2884,12 @@
   {
    "id": "H177",
    "kind": "hospital",
-   "name": "Unique Hospital",
-   "osm": "node/10172977888",
-   "lat": 18.522164,
-   "lng": 73.867678,
-   "nodeId": "8005569822",
-   "snapDistanceM": 23.9,
+   "name": "Vibhute Hospital",
+   "osm": "node/7069569120",
+   "lat": 18.504049,
+   "lng": 73.851839,
+   "nodeId": "2165021556",
+   "snapDistanceM": 48.4,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -2897,12 +2899,12 @@
   {
    "id": "H178",
    "kind": "hospital",
-   "name": "Vibhute Hospital",
-   "osm": "node/7069569120",
-   "lat": 18.504049,
-   "lng": 73.851839,
-   "nodeId": "2165021556",
-   "snapDistanceM": 48.4,
+   "name": "Vinayak Netralaya - Pune",
+   "osm": "node/7051344983",
+   "lat": 18.510585,
+   "lng": 73.817981,
+   "nodeId": "6472781538",
+   "snapDistanceM": 27.6,
    "major": false,
    "bedsFree": 8,
    "simulated": [
@@ -2912,12 +2914,12 @@
   {
    "id": "H179",
    "kind": "hospital",
-   "name": "Vinayak Netralaya - Pune",
-   "osm": "node/7051344983",
-   "lat": 18.510585,
-   "lng": 73.817981,
-   "nodeId": "6472781538",
-   "snapDistanceM": 27.6,
+   "name": "Vishranti Hospital",
+   "osm": "node/7651453339",
+   "lat": 18.508632,
+   "lng": 73.874451,
+   "nodeId": "678823719",
+   "snapDistanceM": 25.1,
    "major": false,
    "bedsFree": 5,
    "simulated": [
@@ -2927,12 +2929,12 @@
   {
    "id": "H180",
    "kind": "hospital",
-   "name": "Vishranti Hospital",
-   "osm": "node/7651453339",
-   "lat": 18.508632,
-   "lng": 73.874451,
-   "nodeId": "678823719",
-   "snapDistanceM": 25.1,
+   "name": "Vishwaniranjan Eye Hospital",
+   "osm": "node/7080205212",
+   "lat": 18.511385,
+   "lng": 73.845828,
+   "nodeId": "2266580435",
+   "snapDistanceM": 21.3,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -2942,12 +2944,12 @@
   {
    "id": "H181",
    "kind": "hospital",
-   "name": "Vishwaniranjan Eye Hospital",
-   "osm": "node/7080205212",
-   "lat": 18.511385,
-   "lng": 73.845828,
-   "nodeId": "2266580435",
-   "snapDistanceM": 21.3,
+   "name": "WEST VALLEY MULTISPECIALITY HOSPITAL PVT LTD",
+   "osm": "node/10172977882",
+   "lat": 18.535143,
+   "lng": 73.876532,
+   "nodeId": "518619591",
+   "snapDistanceM": 39.0,
    "major": false,
    "bedsFree": 0,
    "simulated": [
@@ -2957,12 +2959,12 @@
   {
    "id": "H182",
    "kind": "hospital",
-   "name": "WEST VALLEY MULTISPECIALITY HOSPITAL PVT LTD",
-   "osm": "node/10172977882",
-   "lat": 18.535143,
-   "lng": 73.876532,
-   "nodeId": "518619591",
-   "snapDistanceM": 39.0,
+   "name": "Yashda Hospital",
+   "osm": "node/7042939578",
+   "lat": 18.516808,
+   "lng": 73.859535,
+   "nodeId": "2266620569",
+   "snapDistanceM": 20.9,
    "major": false,
    "bedsFree": 5,
    "simulated": [
@@ -2972,12 +2974,12 @@
   {
    "id": "H183",
    "kind": "hospital",
-   "name": "Yashda Hospital",
-   "osm": "node/7042939578",
-   "lat": 18.516808,
-   "lng": 73.859535,
-   "nodeId": "2266620569",
-   "snapDistanceM": 20.9,
+   "name": "Yogesh Hospital",
+   "osm": "node/7651453369",
+   "lat": 18.510438,
+   "lng": 73.847875,
+   "nodeId": "678442546",
+   "snapDistanceM": 16.4,
    "major": false,
    "bedsFree": 1,
    "simulated": [
@@ -2987,12 +2989,12 @@
   {
    "id": "H184",
    "kind": "hospital",
-   "name": "Yogesh Hospital",
-   "osm": "node/7651453369",
-   "lat": 18.510438,
-   "lng": 73.847875,
-   "nodeId": "678442546",
-   "snapDistanceM": 16.4,
+   "name": "Z Y - Vision",
+   "osm": "node/7076609433",
+   "lat": 18.524737,
+   "lng": 73.840849,
+   "nodeId": "245647055",
+   "snapDistanceM": 55.2,
    "major": false,
    "bedsFree": 2,
    "simulated": [
@@ -3002,12 +3004,12 @@
   {
    "id": "H185",
    "kind": "hospital",
-   "name": "Z Y - Vision",
-   "osm": "node/7076609433",
-   "lat": 18.524737,
-   "lng": 73.840849,
-   "nodeId": "245647055",
-   "snapDistanceM": 55.2,
+   "name": "dental health care",
+   "osm": "node/8204734780",
+   "lat": 18.506218,
+   "lng": 73.862594,
+   "nodeId": "10227701578",
+   "snapDistanceM": 37.3,
    "major": false,
    "bedsFree": 1,
    "simulated": [
@@ -3016,21 +3018,6 @@
   },
   {
    "id": "H186",
-   "kind": "hospital",
-   "name": "dental health care",
-   "osm": "node/8204734780",
-   "lat": 18.506218,
-   "lng": 73.862594,
-   "nodeId": "10227701578",
-   "snapDistanceM": 37.3,
-   "major": false,
-   "bedsFree": 0,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H187",
    "kind": "hospital",
    "name": "eshavari clinic",
    "osm": "way/359998821",
@@ -3045,7 +3032,7 @@
    ]
   },
   {
-   "id": "H188",
+   "id": "H187",
    "kind": "hospital",
    "name": "kedari Hospital",
    "osm": "node/10172926367",
@@ -3053,6 +3040,21 @@
    "lng": 73.875452,
    "nodeId": "247739731",
    "snapDistanceM": 30.2,
+   "major": false,
+   "bedsFree": 0,
+   "simulated": [
+    "bedsFree"
+   ]
+  },
+  {
+   "id": "H188",
+   "kind": "hospital",
+   "name": "sharda clinic",
+   "osm": "node/10172914032",
+   "lat": 18.501244,
+   "lng": 73.866344,
+   "nodeId": "10227027372",
+   "snapDistanceM": 23.8,
    "major": false,
    "bedsFree": 5,
    "simulated": [
@@ -3062,29 +3064,14 @@
   {
    "id": "H189",
    "kind": "hospital",
-   "name": "sharda clinic",
-   "osm": "node/10172914032",
-   "lat": 18.501244,
-   "lng": 73.866344,
-   "nodeId": "10227027372",
-   "snapDistanceM": 23.8,
-   "major": false,
-   "bedsFree": 8,
-   "simulated": [
-    "bedsFree"
-   ]
-  },
-  {
-   "id": "H190",
-   "kind": "hospital",
-   "name": "Unnamed hospital (H190)",
+   "name": "Unnamed hospital (H189)",
    "osm": "node/10724999583",
    "lat": 18.54986,
    "lng": 73.872084,
    "nodeId": "2629943137",
    "snapDistanceM": 19.2,
    "major": false,
-   "bedsFree": 2,
+   "bedsFree": 8,
    "simulated": [
     "bedsFree"
    ]
@@ -3507,77 +3494,77 @@
    "id": "AMB-2",
    "type": "ambulance",
    "stationId": "H2",
-   "homeNodeId": "2258420204",
+   "homeNodeId": "10230313109",
    "simulated": true
   },
   {
    "id": "AMB-3",
    "type": "ambulance",
    "stationId": "H3",
-   "homeNodeId": "10230313109",
+   "homeNodeId": "6198562762",
    "simulated": true
   },
   {
    "id": "AMB-4",
    "type": "ambulance",
    "stationId": "H4",
-   "homeNodeId": "6198562762",
+   "homeNodeId": "8005569818",
    "simulated": true
   },
   {
    "id": "AMB-5",
    "type": "ambulance",
    "stationId": "H5",
-   "homeNodeId": "8005569818",
+   "homeNodeId": "672162371",
    "simulated": true
   },
   {
    "id": "AMB-6",
    "type": "ambulance",
    "stationId": "H6",
-   "homeNodeId": "672162371",
+   "homeNodeId": "248156064",
    "simulated": true
   },
   {
    "id": "AMB-7",
    "type": "ambulance",
    "stationId": "H7",
-   "homeNodeId": "248156064",
+   "homeNodeId": "2251843367",
    "simulated": true
   },
   {
    "id": "AMB-8",
    "type": "ambulance",
    "stationId": "H8",
-   "homeNodeId": "2251843367",
+   "homeNodeId": "2252429857",
    "simulated": true
   },
   {
    "id": "AMB-9",
    "type": "ambulance",
    "stationId": "H9",
-   "homeNodeId": "2252429857",
+   "homeNodeId": "2252147878",
    "simulated": true
   },
   {
    "id": "AMB-10",
    "type": "ambulance",
    "stationId": "H10",
-   "homeNodeId": "2252147878",
+   "homeNodeId": "2085669841",
    "simulated": true
   },
   {
    "id": "AMB-11",
    "type": "ambulance",
    "stationId": "H11",
-   "homeNodeId": "2085669841",
+   "homeNodeId": "2061304032",
    "simulated": true
   },
   {
    "id": "AMB-12",
    "type": "ambulance",
    "stationId": "H12",
-   "homeNodeId": "2061304032",
+   "homeNodeId": "10222793126",
    "simulated": true
   },
   {
