@@ -23,11 +23,40 @@ The plan of record is [PLAN.md](PLAN.md). **Status: all 7 phases done.**
 See [section 3f](#3f-planning-tools-and-the-one-click-demo-phase-6), the timed demo script in
 [DEMO.md](DEMO.md) and the oral-exam notes in [VIVA.md](VIVA.md). If anything fails during a demo, `/replay`
 plays a saved recording of the whole scenario with no network.
-The earlier fictional-city version ("Meridian") is kept, unused, in `legacy/meridian/`.
+`legacy/meridian/` is the **original version** of this project (a fictional city, "Meridian", with BFS/DFS/
+Dijkstra only). It is kept for reference and is not built, run or tested.
+
+| Dispatcher dashboard | Monsoon flood demo | `/algorithms` |
+|---|---|---|
+| [![Dispatcher dashboard: 8 simultaneous incidents assigned, units driving on the Pune road graph](docs/screenshots/dashboard.png)](docs/screenshots/dashboard.png) | [![Monsoon flood demo: 8 m flood, coverage isochrones, closed roads, trap-zone warning](docs/screenshots/flood-demo.png)](docs/screenshots/flood-demo.png) | [![Algorithms page: BFS/DFS on the real graph and an explanation card per algorithm](docs/screenshots/algorithms.png)](docs/screenshots/algorithms.png) |
 
 ## 1. Run it
 
-Requires Node.js 18+ (developed on Node 24).
+Requires Node.js 18+ (developed on Node 24). Python is only needed to regenerate the map data
+([section 8](#regenerating-the-map-data-optional)); the generated data is committed.
+
+**From a clean clone:**
+
+```bash
+git clone <this repository's URL> pune-live-rescue-dispatch
+cd pune-live-rescue-dispatch
+npm install
+cp .env.example .env     # optional (Windows: copy .env.example .env); see "TomTom key" below
+npm run build            # builds the web UI into client/dist
+npm start                # server + UI on http://localhost:3001
+```
+
+Open http://localhost:3001 (dispatcher) and http://localhost:3001/sos (phone page). The timed demo script is
+[DEMO.md](DEMO.md); the viva notes are [VIVA.md](VIVA.md).
+
+**TomTom key (optional):** without `.env` everything works with the committed traffic snapshot
+(`server/data/traffic-snapshot.baseline.json`) or free-flow speeds. For live traffic, get a free key at
+https://developer.tomtom.com/ and set it in `.env` (never commit it: `.env*` is git-ignored):
+
+```bash
+TOMTOM_API_KEY=your-key-here
+PORT=3001
+```
 
 The only key is optional: put `TOMTOM_API_KEY=...` in **`.env`** (git-ignored; copy `.env.example`, which must
 stay without a real key because it is committed). Without a key the app runs fully: it uses the saved
@@ -137,7 +166,8 @@ client/   React + Vite + Leaflet (react-leaflet)
 scripts/  data: build_graph build_facilities build_shelters build_river build_elevation (Python, OSMnx)
           checks: e2e-* browser-check bench sos-bots record-demo find-burst-seed bench-burst
 tests/    *.test.js (node:test)
-legacy/   previous fictional-city version, not built or tested
+legacy/   meridian/: the original version (fictional city), kept for reference, not built or tested
+docs/     screenshots/ used in this README
 DEMO.md   7-8 minute demo script with fallbacks · VIVA.md  algorithms, assumptions, likely questions
 ```
 
@@ -777,14 +807,17 @@ Earlier reference comparisons:
   OSM raster tiles are used lightly. The dark look is a CSS filter (CARTO's dark basemap now requires an API
   key). Tiles are never bulk-downloaded.
 - Road network and facilities downloaded with OSMnx via the Overpass API, cached in `scripts/.osm_cache`.
-- Live traffic: **TomTom** Traffic Flow Segment Data (free tier, no card). The server-side key is in `.env`,
-  calls are capped at 200/day, and `traffic-snapshot.json` contains TomTom-derived speeds.
+- Live traffic: **TomTom** Traffic Flow Segment Data (free tier, no card), © TomTom. The server-side key is
+  in `.env` (git-ignored), calls are capped at 200/day, and `traffic-snapshot*.json` contain TomTom-derived
+  speeds.
 - Comparison baseline: **OSRM** public demo server (`router.project-osrm.org`), max 1 request/s, cached,
   never presented as our route.
 - River lines: OpenStreetMap `waterway=river` (`scripts/build_river.py`).
-- Elevation: **SRTM** (NASA) via the `srtm.py` package, downloaded once.
-- River discharge: **Open-Meteo Flood API** (GloFAS, Copernicus Emergency Management Service), free and with
-  no key. The history and the latest result are cached in `server/data/flood-*.json`.
+- Elevation: **SRTM** (NASA Shuttle Radar Topography Mission, distributed by USGS) via the `srtm.py` package,
+  downloaded once.
+- River discharge: **Open-Meteo Flood API** ([open-meteo.com](https://open-meteo.com/), data under CC BY 4.0),
+  which serves **GloFAS** (Global Flood Awareness System, Copernicus Emergency Management Service) forecasts and
+  reanalysis. Free, no key. The history and the latest result are cached in `server/data/flood-*.json`.
 
 ### Regenerating the map data (optional)
 

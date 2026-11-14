@@ -5,6 +5,8 @@ client/dist
 scripts/.osm_cache
 __pycache__
 server/logs
+logs/
+*.log
 server/data/pune-full.graph.json
 server/data/external-calls.json
 server/data/osrm-comparisons.jsonl
