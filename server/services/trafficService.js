@@ -38,11 +38,11 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export class TrafficService {
   constructor({
-    store, apiKey = '', snapshotFile = null, calls, fetchImpl = globalThis.fetch, now = () => Date.now(),
+    store, apiKey = '', snapshotFile = null, baselineFile = null, calls, fetchImpl = globalThis.fetch, now = () => Date.now(),
     sampleCount = SAMPLE_COUNT, spacingMs = REQUEST_SPACING_MS, minRefreshMs = MIN_REFRESH_MS, baseUrl = TOMTOM_URL,
     onChange = () => {},
   }) {
-    Object.assign(this, { store, graph: store.graph, apiKey, snapshotFile, calls, fetchImpl, now, sampleCount, spacingMs, minRefreshMs, baseUrl, onChange });
+    Object.assign(this, { store, graph: store.graph, apiKey, snapshotFile, baselineFile, calls, fetchImpl, now, sampleCount, spacingMs, minRefreshMs, baseUrl, onChange });
     this.edges = new EdgeIndex(this.graph, { filter: (r) => MATCH_HIGHWAYS.has(r.highway) });
     this.samples = this.#pickSamples();
     this.snapshot = null;
@@ -70,16 +70,21 @@ export class TrafficService {
   }
 
   // ---------- snapshot ----------
+  // The runtime copy (snapshotFile, git-ignored, rewritten by every refresh) wins; without a usable one the
+  // committed baseline (baselineFile, never written) is the offline fallback.
   #loadSnapshot() {
-    if (!this.snapshotFile || !fs.existsSync(this.snapshotFile)) return;
-    try {
-      const snap = JSON.parse(fs.readFileSync(this.snapshotFile, 'utf8'));
-      if (!Array.isArray(snap.samples) || !snap.fetchedAt) return;
-      this.snapshot = snap;
-      this.snapshotSource = 'disk';
-      this.mode = 'live';
-      this.apply();
-    } catch { /* unreadable snapshot: stay on free-flow */ }
+    for (const file of [this.snapshotFile, this.baselineFile]) {
+      if (!file || !fs.existsSync(file)) continue;
+      try {
+        const snap = JSON.parse(fs.readFileSync(file, 'utf8'));
+        if (!Array.isArray(snap.samples) || !snap.fetchedAt) continue;
+        this.snapshot = snap;
+        this.snapshotSource = 'disk';
+        this.mode = 'live';
+        this.apply();
+        return;
+      } catch { /* unreadable: try the next file, else stay on free-flow */ }
+    }
   }
 
   #saveSnapshot() {
@@ -193,15 +198,26 @@ export class TrafficService {
     // Samples not fetched this time (cap reached part-way, or failed) keep their previous values.
     const got = new Set(samples.map((s) => s.id));
     for (const s of this.samples) if (!got.has(s.id) && previous.get(s.id)?.ok) samples.push({ ...previous.get(s.id), stale: true });
-    this.snapshot = {
-      fetchedAt: new Date(this.now()).toISOString(), source: 'TomTom Traffic Flow (flowSegmentData)', reason,
-      partial: fetched < this.samples.length, samples,
-    };
-    this.snapshotSource = 'fetched';
+    // All or nothing: if applying the new snapshot throws, the previous one is put back (and re-applied)
+    // before the error propagates, so a failed refresh really keeps the last data.
+    const before = { snapshot: this.snapshot, snapshotSource: this.snapshotSource, mode: this.mode };
+    let matched;
+    try {
+      this.snapshot = {
+        fetchedAt: new Date(this.now()).toISOString(), source: 'TomTom Traffic Flow (flowSegmentData)', reason,
+        partial: fetched < this.samples.length, samples,
+      };
+      this.snapshotSource = 'fetched';
+      this.mode = 'live';
+      matched = this.apply();
+    } catch (e) {
+      Object.assign(this, before);
+      this.apply();
+      throw e;
+    }
     this.#saveSnapshot();
-    this.mode = 'live';
-    const matched = this.apply();
-    this.onChange(this.status());
+    // the new data is in place: a failing listener is logged, it does not turn this into a failed refresh
+    try { this.onChange(this.status()); } catch (e) { console.error('traffic onChange failed:', e); }
     return (this.lastResult = { ok: true, fetched, failed, capReached, matchedRoads: matched });
   }
 

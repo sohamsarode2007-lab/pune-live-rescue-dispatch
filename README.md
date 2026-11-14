@@ -127,7 +127,7 @@ server/   Express + Socket.IO
   services/  graphStore dispatchService burst burstBenchmark trafficService osrmService compareService
              externalCalls networkService floodService crowdReports planningService scenario eventLog
   data/      pune-central.graph.json facilities.json river.json elevation.json flood-*.json
-             traffic-snapshot.json burst-benchmark.json benchmarks.json sos-bots-result.json
+             traffic-snapshot.baseline.json burst-benchmark.json benchmarks.json sos-bots-result.json
              replays/monsoon-demo.jsonl   (all generated, committed so the app runs offline)
   logs/      session event logs (git-ignored)
 client/   React + Vite + Leaflet (react-leaflet)
@@ -242,10 +242,13 @@ Socket events added: `burst:create` (ack with created and merged ids and the com
 3. **Daily cap:** `ExternalCalls` checks the **200 TomTom calls/day** cap before every request. The count is
    saved to `server/data/external-calls.json` (UTC day, git-ignored), so a restart cannot reset it. The
    dashboard chip and the Traffic panel show the count live.
-4. **Offline:** every successful fetch is saved to `server/data/traffic-snapshot.json` (committed) and loaded
-   on startup. The dashboard shows **"Traffic as of <time>"** (IST), adds "(saved snapshot)" when the data was
-   loaded from disk, and shows "free-flow" otherwise. Failed or capped fetches keep the previous snapshot,
-   and error messages never include the key.
+4. **Offline:** every successful fetch is saved to `server/data/traffic-snapshot.json` (machine-local,
+   git-ignored) and loaded on startup; without it (fresh clone) the committed
+   `server/data/traffic-snapshot.baseline.json` is loaded instead. The GloFAS result works the same way
+   (`flood-current.json` / `flood-current.baseline.json`). The dashboard shows **"Traffic as of <time>"** (IST),
+   adds "(saved snapshot)" when the data was loaded from disk, and shows "free-flow" otherwise. Failed or capped
+   fetches (and any error during a refresh) keep the previous snapshot: the dashboard says "Refresh failed —
+   keeping last data" and the server keeps running. Error messages never include the key.
 5. **Live traffic / Free-flow toggle:** switches every factor between the snapshot and 1.0. Routes, dispatch
    ETAs and the Hungarian matrix all follow the toggle.
 6. **Traffic colours:** an optional map layer colours the sampled roads green (< 1.25×), orange (1.25–2×) or

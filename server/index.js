@@ -18,7 +18,7 @@ import path from 'node:path';
 import { Server } from 'socket.io';
 import {
   BURST_BENCHMARK_FILE, DEMO_BBOX, EXTERNAL_CALLS_FILE, FACILITIES_FILE, GRAPH_FILE, OSRM_BASE_URL, OSRM_LOG_FILE, PORT, ROOT,
-  SIM_SPEED, TICK_MS, TOMTOM_API_KEY, TOMTOM_FLOW_URL, TRAFFIC_SNAPSHOT_FILE,
+  SIM_SPEED, TICK_MS, TOMTOM_API_KEY, TOMTOM_FLOW_URL, TRAFFIC_SNAPSHOT_FILE, TRAFFIC_SNAPSHOT_BASELINE_FILE, FLOOD_CURRENT_BASELINE_FILE,
 } from './config.js';
 import { GraphStore } from './services/graphStore.js';
 import { DispatchService, DISPATCH_MODES } from './services/dispatchService.js';
@@ -29,13 +29,18 @@ import { CompareService } from './services/compareService.js';
 import { NetworkService } from './services/networkService.js';
 import { FloodService } from './services/floodService.js';
 import { CrowdReports } from './services/crowdReports.js';
-import { ELEVATION_FILE, FLOOD_CURRENT_FILE, FLOOD_HISTORY_FILE, RIVER_FILE } from './config.js';
+import { ELEVATION_FILE, FLOOD_CURRENT_FILE, FLOOD_HISTORY_FILE, OPEN_METEO_FLOOD_URL, RIVER_FILE } from './config.js';
 import { PlanningService } from './services/planningService.js';
 import { ScenarioRunner, monsoonScenario, simStep } from './services/scenario.js';
 import { EventLog, listReplays } from './services/eventLog.js';
 import { LOG_DIR, REPLAY_DIR, BENCHMARKS_FILE } from './config.js';
+import { trafficRefresh, glofasRefresh, compareRoutes } from './externalHandlers.js';
 import { ROAD_STATUS } from '../shared/graph/Graph.js';
 import { SIM_SPEEDS } from '../shared/sim/simClock.js';
+
+// Last-resort net: every known async path catches its own errors (startupTask, externalHandlers.js), but a
+// missed rejection must be logged, not take the dispatch server down.
+process.on('unhandledRejection', (e) => console.error('Unhandled promise rejection (server keeps running):', e));
 
 if (!fs.existsSync(GRAPH_FILE)) {
   console.error(`Missing ${GRAPH_FILE}. Run: npm run data:graph`);
@@ -69,7 +74,7 @@ const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => to
 // Network resilience (Tarjan, trap zones, river crossings). Recomputed after closures / traffic changes.
 const network = NetworkService.fromFile(store, RIVER_FILE, { onChange: (e) => toDispatch('network:updated', e.summary) });
 const traffic = new TrafficService({
-  store, apiKey: TOMTOM_API_KEY, snapshotFile: TRAFFIC_SNAPSHOT_FILE, calls,
+  store, apiKey: TOMTOM_API_KEY, snapshotFile: TRAFFIC_SNAPSHOT_FILE, baselineFile: TRAFFIC_SNAPSHOT_BASELINE_FILE, calls,
   ...(TOMTOM_FLOW_URL ? { baseUrl: TOMTOM_FLOW_URL } : {}),
   onChange: (st) => { toDispatch('traffic:updated', st); network.roadsChanged(); },
 });
@@ -87,7 +92,8 @@ startupTask('river crossings', async () => {
 const readJson = (f) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
 const flood = new FloodService({
   store, elevation: readJson(ELEVATION_FILE), rivers: network.rivers, calls,
-  historyFile: FLOOD_HISTORY_FILE, currentFile: FLOOD_CURRENT_FILE,
+  historyFile: FLOOD_HISTORY_FILE, currentFile: FLOOD_CURRENT_FILE, currentBaselineFile: FLOOD_CURRENT_BASELINE_FILE,
+  ...(OPEN_METEO_FLOOD_URL ? { apiUrl: OPEN_METEO_FLOOD_URL } : {}),
 });
 const crowd = new CrowdReports({ store });
 const floodChanged = () => toDispatch('flood:updated', flood.status());
@@ -147,7 +153,8 @@ app.get('/api/traffic', (_req, res) => res.json({ status: traffic.status(), ...t
 app.get('/api/compare', async (req, res) => {
   const from = point(req.query, 'from'), to = point(req.query, 'to');
   if (!inArea(from.lat, from.lng) || !inArea(to.lat, to.lng)) return bad(res, 'Both points must be inside the demo area.');
-  try { res.json(await compare.compare(from, to)); } catch (e) { bad(res, e.message); }
+  const [status, body] = await compareRoutes({ compare }, from, to);
+  res.status(status).json(body);
 });
 
 app.get('/api/compare/summary', (_req, res) => res.json(compare.summary()));
@@ -274,12 +281,11 @@ io.on('connection', (socket) => {
     // button below spends quota.
   });
 
+  // External services (TomTom, Open-Meteo): the handlers never reject; failures are logged and acked as
+  // "Refresh failed — keeping last data".
   socket.on('traffic:refresh', async (msg, ack = () => {}) => {
     if (!socket.rooms.has('dispatch')) return ack({ ok: false, reason: 'NOT_DISPATCHER' });
-    toDispatch('traffic:updated', { ...traffic.status(), refreshing: true });
-    const r = await traffic.refresh({ reason: 'manual', force: msg?.force === true });
-    toDispatch('traffic:updated', traffic.status());
-    ack(r);
+    ack(await trafficRefresh({ traffic, toDispatch }, msg));
   });
 
   socket.on('traffic:mode', (msg, ack = () => {}) => {
@@ -334,10 +340,7 @@ io.on('connection', (socket) => {
 
   socket.on('flood:glofas', async (msg, ack = () => {}) => {
     if (!socket.rooms.has('dispatch')) return ack({ ok: false });
-    const g = await flood.refreshGlofas({ force: true });
-    if (msg?.apply && g.ok) flood.applyGlofasSuggestion(dispatch.now);
-    floodChanged();
-    ack(g);
+    ack(await glofasRefresh({ flood, now: () => dispatch.now, floodChanged }, msg));
   });
 
   socket.on('sim:speed', (msg) => {

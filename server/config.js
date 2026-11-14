@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const DATA_DIR = path.join(ROOT, 'server', 'data');
+// Machine-local files the server rewrites at runtime (snapshots, call counter, OSRM log). Same folder by
+// default; RUNTIME_DATA_DIR moves them (tests run a real server without touching this machine's copies).
+export const RUNTIME_DATA_DIR = process.env.RUNTIME_DATA_DIR ? path.resolve(process.env.RUNTIME_DATA_DIR) : DATA_DIR;
 
 // Minimal .env loader (no extra dependency). Only TOMTOM_API_KEY is used, and only from Phase 4.
 const envFile = path.join(ROOT, '.env');
@@ -35,22 +38,26 @@ export const TICK_MS = 500;
 export const GRAPH_FILE = path.join(DATA_DIR, 'pune-central.graph.json');
 export const FACILITIES_FILE = path.join(DATA_DIR, 'facilities.json');
 
-// Phase 4: traffic snapshot (committed, so the demo works offline), daily call counter and OSRM log
-// (machine-local, git-ignored), burst benchmark.
-export const TRAFFIC_SNAPSHOT_FILE = path.join(DATA_DIR, 'traffic-snapshot.json');
-export const EXTERNAL_CALLS_FILE = path.join(DATA_DIR, 'external-calls.json');
-export const OSRM_LOG_FILE = path.join(DATA_DIR, 'osrm-comparisons.jsonl');
+// Phase 4: traffic snapshot, daily call counter and OSRM log (machine-local, git-ignored), burst benchmark.
+// Runtime data rewritten by the server (*.json) is git-ignored; the committed *.baseline.json copies are the
+// offline fallback, used when there is no runtime copy yet (fresh clone). The server never writes them.
+export const TRAFFIC_SNAPSHOT_FILE = path.join(RUNTIME_DATA_DIR, 'traffic-snapshot.json');
+export const TRAFFIC_SNAPSHOT_BASELINE_FILE = path.join(DATA_DIR, 'traffic-snapshot.baseline.json');
+export const EXTERNAL_CALLS_FILE = path.join(RUNTIME_DATA_DIR, 'external-calls.json');
+export const OSRM_LOG_FILE = path.join(RUNTIME_DATA_DIR, 'osrm-comparisons.jsonl');
 export const BURST_BENCHMARK_FILE = path.join(DATA_DIR, 'burst-benchmark.json');
 export const RIVER_FILE = path.join(DATA_DIR, 'river.json');
 // Phase 7: session event logs (git-ignored), saved replays (committed), benchmark results (committed).
-export const LOG_DIR = path.join(ROOT, 'server', 'logs');
+export const LOG_DIR = process.env.LOG_DIR ? path.resolve(process.env.LOG_DIR) : path.join(ROOT, 'server', 'logs');
 export const REPLAY_DIR = path.join(DATA_DIR, 'replays');
 export const BENCHMARKS_FILE = path.join(DATA_DIR, 'benchmarks.json');
 // Phase 5: SRTM elevations (generated), Open-Meteo Flood API history (committed, for offline use) and the
-// latest current-discharge result (committed too, refreshed at most every 6 h).
+// latest current-discharge result (runtime copy git-ignored, refreshed at most every 6 h; committed baseline).
 export const ELEVATION_FILE = path.join(DATA_DIR, 'elevation.json');
 export const FLOOD_HISTORY_FILE = path.join(DATA_DIR, 'flood-history.json');
-export const FLOOD_CURRENT_FILE = path.join(DATA_DIR, 'flood-current.json');
+export const FLOOD_CURRENT_FILE = path.join(RUNTIME_DATA_DIR, 'flood-current.json');
+export const FLOOD_CURRENT_BASELINE_FILE = path.join(DATA_DIR, 'flood-current.baseline.json');
 // Endpoint overrides, only for testing against a local mock (defaults are the real services).
 export const TOMTOM_FLOW_URL = process.env.TOMTOM_FLOW_URL || undefined;
+export const OPEN_METEO_FLOOD_URL = process.env.OPEN_METEO_FLOOD_URL || undefined;
 export const OSRM_BASE_URL = process.env.OSRM_BASE_URL || undefined;

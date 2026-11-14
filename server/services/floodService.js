@@ -32,9 +32,9 @@ export function classifyDischarge(currentMax, history) {
 export class FloodService {
   constructor({
     store, elevation, rivers, calls = null, fetchImpl = globalThis.fetch, historyFile = null, currentFile = null,
-    point = GLOFAS_POINT, now = () => Date.now(), modelOptions = {},
+    currentBaselineFile = null, point = GLOFAS_POINT, now = () => Date.now(), modelOptions = {}, apiUrl = API,
   }) {
-    Object.assign(this, { store, graph: store.graph, calls, fetchImpl, historyFile, currentFile, point, now });
+    Object.assign(this, { store, graph: store.graph, calls, fetchImpl, historyFile, currentFile, currentBaselineFile, point, now, apiUrl });
     this.available = Boolean(elevation && rivers?.length);
     this.riverPoints = this.available ? riverProfile(rivers, elevation.rivers) : [];
     this.model = this.available
@@ -147,8 +147,13 @@ export class FloodService {
   }
 
   // ---------- GloFAS (Open-Meteo Flood API) ----------
+  // The runtime copy (currentFile, git-ignored, rewritten by every successful refresh) wins; otherwise the
+  // committed baseline (currentBaselineFile, never written) is the offline fallback.
   #loadCurrent() {
-    try { return this.currentFile && fs.existsSync(this.currentFile) ? JSON.parse(fs.readFileSync(this.currentFile, 'utf8')) : null; } catch { return null; }
+    for (const file of [this.currentFile, this.currentBaselineFile]) {
+      try { if (file && fs.existsSync(file)) return JSON.parse(fs.readFileSync(file, 'utf8')); } catch { /* try the next */ }
+    }
+    return null;
   }
 
   async #get(url) {
@@ -170,7 +175,7 @@ export class FloodService {
       try { return JSON.parse(fs.readFileSync(this.historyFile, 'utf8')); } catch { /* refetch */ }
     }
     const end = new Date(this.now() - 400 * 86400000).toISOString().slice(0, 10);     // the archive lags; stop a year back
-    const body = await this.#get(`${API}?latitude=${this.point.lat}&longitude=${this.point.lng}&daily=river_discharge&start_date=1984-01-01&end_date=${end}`);
+    const body = await this.#get(`${this.apiUrl}?latitude=${this.point.lat}&longitude=${this.point.lng}&daily=river_discharge&start_date=1984-01-01&end_date=${end}`);
     const values = body?.daily?.river_discharge ?? [];
     if (values.length < 365) throw new Error('history too short');
     const h = { fetchedAt: new Date(this.now()).toISOString(), from: body.daily.time[0], to: body.daily.time.at(-1), cell: { lat: body.latitude, lng: body.longitude }, values };
@@ -184,7 +189,7 @@ export class FloodService {
     if (!force && this.glofas?.fetchedAt && this.now() - Date.parse(this.glofas.fetchedAt) < CURRENT_TTL_MS) return this.glofas;
     try {
       const history = await this.#history();
-      const body = await this.#get(`${API}?latitude=${this.point.lat}&longitude=${this.point.lng}&daily=river_discharge&past_days=3&forecast_days=7`);
+      const body = await this.#get(`${this.apiUrl}?latitude=${this.point.lat}&longitude=${this.point.lng}&daily=river_discharge&past_days=3&forecast_days=7`);
       const days = (body?.daily?.time ?? []).map((t, i) => ({ date: t, m3s: body.daily.river_discharge[i] })).filter((d) => Number.isFinite(d.m3s));
       if (!days.length) throw new Error('no discharge values');
       const peak = days.reduce((a, b) => (b.m3s > a.m3s ? b : a));

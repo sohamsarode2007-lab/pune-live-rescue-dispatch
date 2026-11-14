@@ -22,8 +22,8 @@ export function FloodPanel({ flood }) {
     setBusy(true); setMsg(null);
     try {
       const r = await emitAck('flood:glofas', { apply: true }, 40000);
-      setMsg(r.ok ? { text: `GloFAS refreshed: ${r.status}; level set to ${r.suggestedLevel} m.` } : { bad: true, text: r.error });
-    } catch { setMsg({ bad: true, text: 'Server did not answer.' }); }
+      setMsg(r.ok ? { text: `GloFAS refreshed: ${r.status}; level set to ${r.suggestedLevel} m.` } : { bad: true, text: r.message ?? r.error ?? 'Refresh failed — keeping last data.' });
+    } catch { setMsg({ bad: true, text: 'Refresh failed — keeping last data. The server did not answer.' }); }
     setBusy(false);
   };
   const rising = flood.level > 0 && flood.floodedNow < flood.predictedFlooded;

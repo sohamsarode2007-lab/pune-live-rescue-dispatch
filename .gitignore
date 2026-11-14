@@ -11,3 +11,6 @@ server/data/osrm-comparisons.jsonl
 .env*
 !.env.example
 ~$*
+# runtime data rewritten by the server (committed fallbacks: *.baseline.json)
+server/data/traffic-snapshot.json
+server/data/flood-current.json

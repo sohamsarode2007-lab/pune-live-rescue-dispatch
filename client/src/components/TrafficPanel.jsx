@@ -5,10 +5,11 @@ import { fmtTime } from '../format.js';
 export const TRAFFIC_COLORS = [[1.25, '#22c55e', 'free / light'], [2, '#f59e0b', 'slow'], [Infinity, '#ef4444', 'heavy']];
 export const trafficColor = (f) => TRAFFIC_COLORS.find(([max]) => f < max)[1];
 
+// Fallbacks only: the server's message ("Refresh failed — keeping last data. …") is shown when present.
 const REASONS = {
-  NO_KEY: 'No TomTom key on the server (.env TOMTOM_API_KEY): live traffic unavailable, free-flow is used.',
-  DAILY_CAP: 'Daily TomTom cap reached (200 calls). The last snapshot is kept.',
-  FETCH_FAILED: 'TomTom could not be reached. The last snapshot is kept.',
+  NO_KEY: 'Refresh failed — keeping last data. No TomTom key on the server (.env TOMTOM_API_KEY).',
+  DAILY_CAP: 'Refresh failed — keeping last data. Daily TomTom cap reached (200 calls).',
+  FETCH_FAILED: 'Refresh failed — keeping last data. TomTom could not be reached.',
 };
 
 // Live traffic controls: snapshot time, live / free-flow toggle, manual refresh, colour toggle, call budget.
@@ -25,8 +26,8 @@ export default function TrafficPanel({ status, calls, showColours, onShowColours
       if (r.reason === 'TOO_SOON' && window.confirm(`${r.message} Refresh anyway?`)) r = await emitAck('traffic:refresh', { force: true }, 120000);
       setMsg(r.ok
         ? { text: `Fetched ${r.fetched} of ${status.samples} sample points${r.failed ? `, ${r.failed} failed` : ''}${r.capReached ? ' (daily cap reached part-way)' : ''}; ${r.matchedRoads} roads updated.` }
-        : { bad: true, text: REASONS[r.reason] ?? r.message ?? r.reason });
-    } catch { setMsg({ bad: true, text: 'Server did not answer.' }); }
+        : { bad: true, text: r.message ?? REASONS[r.reason] ?? r.reason });
+    } catch { setMsg({ bad: true, text: 'Refresh failed — keeping last data. The server did not answer.' }); }
   };
   const setMode = async (mode) => {
     const r = await emitAck('traffic:mode', { mode });
