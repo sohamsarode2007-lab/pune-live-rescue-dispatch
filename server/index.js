@@ -73,7 +73,15 @@ const traffic = new TrafficService({
   ...(TOMTOM_FLOW_URL ? { baseUrl: TOMTOM_FLOW_URL } : {}),
   onChange: (st) => { toDispatch('traffic:updated', st); network.roadsChanged(); },
 });
-network.rankCrossings().then((c) => console.log(`River crossings: ${c.ranking?.length ?? 0} ranked in ${c.ms} ms`));
+// Startup background tasks must never take the server down: any error (in the task or in its logging) is
+// logged and the server keeps serving.
+const startupTask = (name, fn) => Promise.resolve().then(fn).catch((e) => console.error(`Startup task "${name}" failed:`, e));
+startupTask('river crossings', async () => {
+  const c = await network.rankCrossings();
+  console.log(c?.status === 'ready'
+    ? `River crossings: ${c.ranking.length} ranked in ${c.ms} ms`
+    : 'River crossings: network changed during ranking; recomputing shortly');
+});
 
 // Phase 5: flood model + crowd reports.
 const readJson = (f) => (fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null);
@@ -92,19 +100,20 @@ const coverageChanged = () => {
   clearTimeout(coverageTimer);
   coverageTimer = setTimeout(() => toDispatch('coverage:updated', planning.coverageSummary(dispatch.now)), 250);
 };
-setTimeout(async () => {
+setTimeout(() => startupTask('planning', async () => {
   const p = await planning.computePlacement();
   console.log(`Station placement (k-center) ready in ${p.ms} ms; normal and 10 m flood suggestions ${p.sameSuggestion ? 'are the same' : 'differ'}`);
   const e = await planning.computeEvacuation();
   if (e) console.log(`Evacuation (Edmonds-Karp): normal ${e.normal.pct}% vs 10 m flood ${e.flood.pct}% of ${e.normal.totalPeople} people`);
   toDispatch('planning:updated', { placement: Boolean(p), evacuation: Boolean(e) });
-}, 300);
+}), 300);
 
 // One-click demo scenario (deterministic: fixed sim steps, seeded calls).
 const runner = new ScenarioRunner();
 const MONSOON = monsoonScenario(flood.riverPoints, DEMO_BBOX, network.crossingDefs);
 
-flood.refreshGlofas().then((g) => {
+startupTask('GloFAS', async () => {
+  const g = await flood.refreshGlofas();
   console.log(g.ok ? `GloFAS: ${g.status} (peak ${g.peak.m3s} m3/s; p90 ${g.p90?.toFixed(1)}, p99 ${g.p99?.toFixed(1)}) -> initial level ${g.suggestedLevel} m` : `GloFAS: ${g.error}`);
   flood.applyGlofasSuggestion(dispatch.now);           // PLAN: GloFAS sets the initial slider level
   floodChanged();

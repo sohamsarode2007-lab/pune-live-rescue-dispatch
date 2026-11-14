@@ -178,6 +178,8 @@ export class NetworkService {
   }
 
   // Baseline + every crossing removed alone. Yields to the event loop between crossings (~60 ms each).
+  // Always resolves to the crossing state: if the network really changes mid-run, the run is abandoned, a
+  // fresh one is scheduled, and the current (status 'computing', stale) state is returned, never null.
   async rankCrossings() {
     const version = this.graph.version;
     this.crossingState = { ...this.crossingState, status: 'computing' };
@@ -193,7 +195,7 @@ export class NetworkService {
     const ranking = [];
     for (const c of this.crossingDefs) {
       await new Promise((r) => setImmediate(r));
-      if (this.graph.version !== version) return this.#schedule();     // network changed meanwhile: start again
+      if (this.graph.version !== version) { this.#schedule(); return this.crossingState; }   // network changed meanwhile: start again
       const ex = new Set(c.roadIds);
       // junctions whose every road belongs to this crossing are ON the bridge: not counted
       const onDeck = new Set(c.roadIds.flatMap((id) => { const r = this.graph.getRoad(id); return [r.from, r.to]; })
@@ -222,7 +224,6 @@ export class NetworkService {
   #schedule() {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => { this.rankCrossings().catch((e) => console.error('crossing ranking failed:', e)); }, RECOMPUTE_DEBOUNCE_MS);
-    return null;
   }
 
   // Call after any closure / reopening / traffic change: trap zones are recomputed now, the crossing

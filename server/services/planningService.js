@@ -119,13 +119,20 @@ export class PlanningService {
 
   // Runs fn with the road statuses of a scenario applied to the graph (every other road OPEN), then puts
   // every status back exactly. Synchronous on purpose: nothing else can run while the graph is changed.
+  // graph.version is restored too: the net change is nothing, and a bumped version would make every other
+  // analysis think the network changed (e.g. the crossing ranking, running concurrently at startup, would
+  // abandon its run). fn must not cache anything by graph.version (#placementNow doesn't).
   #withStatuses({ blocked = new Set(), highRisk = new Set() }, fn) {
+    const version = this.graph.version;
     const saved = [];
     for (const r of this.graph.roads.values()) {
       const want = blocked.has(r.id) ? 'BLOCKED' : highRisk.has(r.id) ? 'HIGH_RISK' : 'OPEN';
       if (r.status !== want) { saved.push([r.id, r.status, r.riskLevel]); this.graph.setRoadStatus(r.id, want); }
     }
-    try { return fn(); } finally { for (const [id, s, lvl] of saved) this.graph.setRoadStatus(id, s, lvl); }
+    try { return fn(); } finally {
+      for (const [id, s, lvl] of saved) this.graph.setRoadStatus(id, s, lvl);
+      this.graph.version = version;
+    }
   }
 
   // ---------- 2. station placement ----------
