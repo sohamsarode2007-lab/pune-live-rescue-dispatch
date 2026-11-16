@@ -19,6 +19,8 @@ if (!exe) { console.error('No Edge/Chrome found'); process.exit(1); }
 const port = 9333;
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'cdp-'));
 const browser = spawn(exe, [`--remote-debugging-port=${port}`, '--headless=new', '--disable-gpu', `--user-data-dir=${profile}`, '--window-size=430,900', 'about:blank'], { stdio: 'ignore' });
+// Always kill the browser and delete its temp profile, even if a step below throws.
+process.on('exit', () => { browser.kill(); fs.rmSync(profile, { recursive: true, force: true }); });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let target;
@@ -26,6 +28,7 @@ for (let i = 0; i < 40 && !target; i++) {
   await sleep(250);
   try { target = (await (await fetch(`http://127.0.0.1:${port}/json`)).json()).find((t) => t.type === 'page'); } catch { /* not up yet */ }
 }
+if (!target) throw new Error('Browser did not expose a debuggable page');
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise((r) => ws.addEventListener('open', r));
 let id = 0;

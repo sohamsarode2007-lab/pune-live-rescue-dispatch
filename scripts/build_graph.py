@@ -154,7 +154,7 @@ def main():
             waiting_reverse[rkey] = waiting_reverse.get(rkey, 0) + 1
 
     unmatched = sum(waiting_reverse.values())
-    out = {
+    payload = {
         "meta": {
             "area": place or "Central Pune (Kothrud, Deccan, Shivajinagar, Swargate, Camp)",
             "bbox": BBOX,
@@ -176,8 +176,8 @@ def main():
     }
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
-        json.dump(out, f, separators=(",", ":"))
-    print(json.dumps(out["meta"]["counts"]), file=sys.stderr)
+        json.dump(payload, f, separators=(",", ":"))
+    print(json.dumps(payload["meta"]["counts"]), file=sys.stderr)
     print(f"Wrote {out} ({os.path.getsize(out) / 1e6:.1f} MB)", file=sys.stderr)
 
 

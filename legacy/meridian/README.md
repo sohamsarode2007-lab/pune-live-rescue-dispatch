@@ -1,3 +1,5 @@
+> **Archived.** This original prototype is kept for reference only. It is not built or tested, and it does not run as-is: its imports of `algorithms/*`, `format.js`, `data/requestConstants.js` and `tests/helpers.js` no longer exist. The working code is in `shared/` and `server/`.
+
 # Smart Urban Disaster Rescue Network and Evacuation Routing System
 
 An interactive classroom simulation of a **fictional city ("Meridian")** during a flood or fire.

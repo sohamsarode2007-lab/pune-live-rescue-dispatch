@@ -365,7 +365,7 @@ export default function Dispatcher() {
                           <div>
                             <b>{i.id}</b> {TYPE_ICON[i.type]} {i.type} · {i.severity} · {i.people} ppl
                             {i.calls > 1 && <span className="pill merged" title="SOS calls merged by geohash clustering">{i.calls} calls</span>}
-                            {i.source !== 'phone' && <span className="muted"> ({i.source === 'burst' ? 'burst' : 'test'})</span>}
+                            {i.source !== 'phone' && <span className="muted"> ({{ burst: 'burst', scenario: 'scenario' }[i.source] ?? 'test'})</span>}
                           </div>
                           <div className="muted">
                             <span className={`st ${i.status}`}>{i.status}</span>
