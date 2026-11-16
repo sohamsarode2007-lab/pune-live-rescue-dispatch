@@ -17,7 +17,8 @@ export class FlowNetwork {
 
   // Directed edge u -> v with capacity cap (and its residual reverse with 0). Returns the edge index.
   addEdge(u, v, cap, label = null) {
-    if (!(cap >= 0)) throw new Error('capacity must be >= 0');
+    if (!(cap >= 0) || !Number.isFinite(cap)) throw new Error('capacity must be a finite number >= 0');
+    if (!this.#valid(u) || !this.#valid(v)) throw new Error(`vertex out of range [0, ${this.n - 1}]`);
     for (const [a, b, c] of [[u, v, cap], [v, u, 0]]) {
       this.to.push(b); this.from.push(a); this.cap.push(c); this.orig.push(c);
       this.next.push(this.head[a]); this.head[a] = this.to.length - 1;
@@ -26,8 +27,14 @@ export class FlowNetwork {
     return this.to.length - 2;
   }
 
+  #valid(x) { return Number.isInteger(x) && x >= 0 && x < this.n; }
+
+  // Restore every edge to its original capacity (undo a maxFlow run).
+  reset() { this.cap = [...this.orig]; }
+
   // Returns { flow, augmentations }. Capacities are left as residuals (call minCut afterwards).
   maxFlow(s, t) {
+    if (!this.#valid(s) || !this.#valid(t)) throw new Error(`vertex out of range [0, ${this.n - 1}]`);
     if (s === t) throw new Error('source and sink must differ');
     let flow = 0, augmentations = 0;
     const parentEdge = new Int32Array(this.n);

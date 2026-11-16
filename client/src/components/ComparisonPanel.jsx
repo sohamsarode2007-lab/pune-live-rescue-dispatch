@@ -56,23 +56,31 @@ export default function ComparisonPanel({ comparisons, totals, mode }) {
       {sameCount && saving <= 0.5 && <p className="muted">Same total: greedy happened to be optimal for this batch.</p>}
       {!sameCount && <p className="alert">Hungarian serves {c.hungarian.assigned - c.greedy.assigned} more incident(s) than greedy.</p>}
 
-      {c.pairs.length > 1 && (
-        <details open={c.incidents > 1}>
-          <summary>Who goes where ({c.pairs.filter((p) => p.unitId !== p.greedyUnitId).length} differ)</summary>
-          <table className="cmp pairs">
-            <thead><tr><th>Incident</th><th>{c.mode === 'hungarian' ? 'Hungarian' : 'Executed'}</th><th>Greedy</th></tr></thead>
-            <tbody>
-              {c.pairs.map((p) => (
-                <tr key={p.incidentId} className={p.unitId !== p.greedyUnitId ? 'diff' : ''}>
-                  <th>{p.incidentId}</th>
-                  <td>{p.unitId} · {fmtDuration(p.etaS)}</td>
-                  <td>{p.greedyUnitId ? `${p.greedyUnitId} · ${fmtDuration(p.greedyEtaS)}` : '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </details>
-      )}
+      {c.pairs.length > 1 && (() => {
+        // Both plans are shown in either mode (older logs only carry the executed plan's unit).
+        const hung = (p) => (p.hungarianUnitId !== undefined ? [p.hungarianUnitId, p.hungarianEtaS] : c.mode === 'hungarian' ? [p.unitId, p.etaS] : [null, null]);
+        const differs = (p) => hung(p)[0] !== p.greedyUnitId;
+        return (
+          <details open={c.incidents > 1}>
+            <summary>Who goes where ({c.pairs.filter(differs).length} differ)</summary>
+            <table className="cmp pairs">
+              <thead><tr><th>Incident</th><th>Hungarian{c.mode === 'hungarian' ? ' (executed)' : ''}</th><th>Greedy{c.mode === 'greedy' ? ' (executed)' : ''}</th></tr></thead>
+              <tbody>
+                {c.pairs.map((p) => {
+                  const [hu, he] = hung(p);
+                  return (
+                    <tr key={p.incidentId} className={differs(p) ? 'diff' : ''}>
+                      <th>{p.incidentId}</th>
+                      <td>{hu ? `${hu} · ${fmtDuration(he)}` : '—'}</td>
+                      <td>{p.greedyUnitId ? `${p.greedyUnitId} · ${fmtDuration(p.greedyEtaS)}` : '—'}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </details>
+        );
+      })()}
 
       {totals && totals.batches > 0 && (
         <p className="note">

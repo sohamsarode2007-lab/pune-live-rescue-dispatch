@@ -28,13 +28,15 @@ export function farthestFirst(graph, existing, k, { excludeRoadIds = null } = {}
   for (let i = 0; i < k; i++) {
     const d = centers.length ? dijkstraAll(graph, centers, { excludeRoadIds }).dist : new Map();
     let far = null, farD = -1;
+    const isCenter = new Set(centers);
     for (const id of ids) {
       if (!centers.length) { far = id; break; }           // no station yet: start anywhere (first junction)
-      const v = d.get(id);
-      if (v !== undefined && (v > farD || (v === farD && id < far))) { far = id; farD = v; }
+      if (isCenter.has(id)) continue;                     // never pick the same junction twice
+      const v = d.get(id) ?? Infinity;                    // cut off from every station = infinitely far: served first
+      if (v > farD || (v === farD && id < far)) { far = id; farD = v; }
     }
     if (far === null) break;
-    picks.push({ nodeId: far, radiusBeforeS: farD < 0 ? null : farD });
+    picks.push({ nodeId: far, radiusBeforeS: farD < 0 || !Number.isFinite(farD) ? null : farD });
     centers.push(far);
   }
   const final = dijkstraAll(graph, centers, { excludeRoadIds }).dist;

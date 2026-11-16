@@ -60,16 +60,20 @@ export function unreachableRoute(sourceId, destId) {
 }
 
 // Walks the predecessor map back from destId and sums each cost component from the current road state.
+// sourceId may be an array (multi-source search); returns { reachable: false } if destId was never reached.
 export function buildRoute(graph, sourceId, destId, prev) {
+  const sources = Array.isArray(sourceId) ? new Set(sourceId) : new Set([sourceId]);
   const path = [destId];
   const roadIds = [];
   let cur = destId;
-  while (cur !== sourceId) {
+  while (!sources.has(cur)) {
     const p = prev.get(cur);
-    roadIds.unshift(p.roadId);
-    path.unshift(p.from);
+    if (!p) return unreachableRoute(sourceId, destId);
+    roadIds.push(p.roadId);
+    path.push(p.from);
     cur = p.from;
   }
+  path.reverse(); roadIds.reverse();                       // O(L) instead of O(L^2) unshift
   let totalLengthM = 0, totalTimeS = 0, totalRiskPenaltyS = 0;
   for (const rid of roadIds) {
     const r = graph.getRoad(rid);
@@ -78,7 +82,7 @@ export function buildRoute(graph, sourceId, destId, prev) {
     totalRiskPenaltyS += r.riskPenaltyS;
   }
   return {
-    reachable: true, source: sourceId, destination: destId, path, roadIds,
+    reachable: true, source: path[0], destination: destId, path, roadIds,
     totalLengthM, totalTimeS, totalRiskPenaltyS,
     totalCost: totalTimeS + totalRiskPenaltyS,
     roadCount: roadIds.length,
@@ -92,6 +96,7 @@ export function buildRouteToTarget(graph, sourceId, targetId, prevReverse) {
   let cur = sourceId;
   while (cur !== targetId) {
     const p = prevReverse.get(cur);
+    if (!p) return unreachableRoute(sourceId, targetId);
     roadIds.push(p.roadId);
     path.push(p.from);
     cur = p.from;

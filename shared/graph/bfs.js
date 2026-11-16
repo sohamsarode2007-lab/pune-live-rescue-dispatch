@@ -1,8 +1,8 @@
 // Breadth-First Search. Ignores BLOCKED roads (graph.neighbors only yields traversable edges).
 // Time O(V + E), space O(V).
 // Returns the visit order, the reachable set, and parent/depth per vertex (depth = number of roads
-// from the start = BFS level; BFS finds the fewest-roads route, not the fastest).
-export function bfs(graph, startId) {
+// from the start = BFS level; options.excludeRoadIds: Set of road IDs ignored for this run only; BFS finds the fewest-roads route, not the fastest).
+export function bfs(graph, startId, options = {}) {
   if (!graph.hasLocation(startId)) throw new Error(`Unknown start location: ${startId}`);
   const visited = new Set([startId]);
   const order = [];
@@ -14,7 +14,7 @@ export function bfs(graph, startId) {
     const u = queue[head++];
     order.push(u);
     for (const e of graph.neighbors(u)) {
-      if (!visited.has(e.to)) {
+      if (!visited.has(e.to) && !options.excludeRoadIds?.has(e.roadId)) {
         visited.add(e.to);
         parent.set(e.to, { from: u, roadId: e.roadId });
         depth.set(e.to, depth.get(u) + 1);

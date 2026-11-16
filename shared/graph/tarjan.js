@@ -50,7 +50,7 @@ function describe(cutJunctions, cutFac, compFac) {
 
 // facilityNodes: Map(nodeId -> { hospital: n, fire_station: n, ... }) (optional).
 export function bridgesAndArticulationPoints(graph, { facilityNodes = new Map(), criticalJunctions = 50, ...opts } = {}) {
-  const { ids, adj } = undirected(graph, opts);
+  const { ids, index, adj } = undirected(graph, opts);
   const n = ids.length;
   const disc = new Int32Array(n).fill(-1), low = new Int32Array(n);
   const parent = new Int32Array(n).fill(-1), parentEdge = new Array(n).fill(null);
@@ -139,7 +139,7 @@ export function bridgesAndArticulationPoints(graph, { facilityNodes = new Map(),
 
   return {
     bridges, articulationPoints, components: compSize.length, maxStack,
-    componentOf: (id) => comp[ids.indexOf(id)],
+    componentOf: (id) => comp[index.get(id)],
   };
 }
 
@@ -192,10 +192,18 @@ export function trapZones(graph, { facilityNodes = new Map() } = {}) {
   if (components.length <= 1) return { components: components.length, zones: [] };
   let main = 0;
   components.forEach((c, i) => { if (c.length > components[main].length) main = i; });
-  const hasIn = new Uint8Array(components.length), hasOut = new Uint8Array(components.length);
+  // Reachability on the condensation DAG relative to the MAIN component (not just "has any edge"):
+  // a chain main -> A -> B(sink) makes A a trap too, since nothing entered through A can get back to main.
+  const fwd = components.map(() => []), rev = components.map(() => []);
   for (let v = 0; v < ids.length; v++) {
-    for (const w of out[v]) if (comp[v] !== comp[w]) { hasOut[comp[v]] = 1; hasIn[comp[w]] = 1; }
+    for (const w of out[v]) if (comp[v] !== comp[w]) { fwd[comp[v]].push(comp[w]); rev[comp[w]].push(comp[v]); }
   }
+  const reach = (adjList) => {
+    const seen = new Uint8Array(components.length); const stack = [main]; seen[main] = 1;
+    while (stack.length) for (const w of adjList[stack.pop()]) if (!seen[w]) { seen[w] = 1; stack.push(w); }
+    return seen;
+  };
+  const hasIn = reach(fwd), hasOut = reach(rev);     // reachable FROM main / able to reach main
   const zones = [];
   components.forEach((members, i) => {
     if (i === main) return;

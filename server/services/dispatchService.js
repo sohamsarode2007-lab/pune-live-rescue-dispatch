@@ -44,6 +44,7 @@ export const INCIDENT_STATUS = Object.freeze({
 });
 const MOVING = new Set([UNIT_STATUS.EN_ROUTE, UNIT_STATUS.TO_HOSPITAL, UNIT_STATUS.RETURNING]);
 const FREE = new Set([UNIT_STATUS.AVAILABLE, UNIT_STATUS.RETURNING]);
+const HOSPITAL_STAY_S = 1800;  // a patient occupies a bed this long (sim seconds), then it is freed again
 const RETRY_PENDING_S = 30;     // re-try pending incidents this often (roads may have reopened)
 
 const round1 = (x) => (x == null ? null : Math.round(x * 10) / 10);
@@ -67,7 +68,7 @@ export class DispatchService {
     this.incidents = new Map();
     this.incidentSeq = 0;
     this.clusterer = new SosClusterer();
-    this.hospitals = new Map(this.store.facilities.filter((f) => f.kind === 'hospital').map((h) => [h.id, { ...h }]));
+    this.hospitals = new Map(this.store.facilities.filter((f) => f.kind === 'hospital').map((h) => [h.id, { ...h, bedsCap: h.bedsFree }]));
     this.units = new Map(this.store.units.map((u) => {
       const home = this.graph.getLocation(u.homeNodeId);
       return [u.id, {
@@ -185,15 +186,18 @@ export class DispatchService {
     origins.forEach((o) => { freeByType[o.unit.type] = (freeByType[o.unit.type] ?? 0) + 1; });
     // Who is served: per unit type, the top-k pending incidents by priority (k = free units of that type).
     const takenByType = {};
-    const rows = [];
+    const rows = [], revs = [];
     for (const q of queue) {
       const inc = this.incidents.get(q.id);
       const t = UNIT_FOR[inc.type];
-      if ((takenByType[t] ?? 0) < (freeByType[t] ?? 0)) { takenByType[t] = (takenByType[t] ?? 0) + 1; rows.push(inc); }
+      if ((takenByType[t] ?? 0) >= (freeByType[t] ?? 0)) continue;
+      const rev = dijkstraAll(this.graph, inc.nodeId, { reverse: true });
+      // An incident no free unit can reach (flood pocket) must not use up a slot meant for a reachable one.
+      if (!origins.some((o) => o.unit.type === t && rev.dist.has(o.originNode))) continue;
+      takenByType[t] = (takenByType[t] ?? 0) + 1; rows.push(inc); revs.push(rev);
     }
     if (rows.length === 0) return null;
     const cols = origins.filter((o) => rows.some((inc) => UNIT_FOR[inc.type] === o.unit.type));
-    const revs = rows.map((inc) => dijkstraAll(this.graph, inc.nodeId, { reverse: true }));
     const cost = rows.map((inc, i) => cols.map((o) => {
       if (UNIT_FOR[inc.type] !== o.unit.type || !revs[i].dist.has(o.originNode)) return Infinity;
       return o.delayS + revs[i].dist.get(o.originNode);
@@ -217,12 +221,16 @@ export class DispatchService {
     chosen.assignment.forEach((j, i) => {
       if (j < 0) return;
       const inc = p.rows[i], o = p.cols[j];
-      const g = p.greedy.assignment[i];
-      record.pairs.push({ incidentId: inc.id, unitId: o.unit.id, etaS: round1(p.cost[i][j]), greedyUnitId: g >= 0 ? p.cols[g].unit.id : null, greedyEtaS: g >= 0 ? round1(p.cost[i][g]) : null });
+      const g = p.greedy.assignment[i], h = p.optimal.assignment[i];
+      record.pairs.push({
+        incidentId: inc.id, unitId: o.unit.id, etaS: round1(p.cost[i][j]),
+        greedyUnitId: g >= 0 ? p.cols[g].unit.id : null, greedyEtaS: g >= 0 ? round1(p.cost[i][g]) : null,
+        hungarianUnitId: h >= 0 ? p.cols[h].unit.id : null, hungarianEtaS: h >= 0 ? round1(p.cost[i][h]) : null,
+      });
       inc.batchId = record.id;
       this.#assignWith(inc, o, p.revs[i].prev);
     });
-    if (record.incidents > 0) {
+    if (record.incidents > 0 && record.pairs.length > 0) {
       this.comparisons.push(record);
       if (this.comparisons.length > 200) this.comparisons.shift();
       this.emit('comparison:updated', { latest: record, totals: this.comparisonTotals() }, ['dispatch']);
@@ -248,7 +256,7 @@ export class DispatchService {
     const { unit, originNode, prefix } = origin;
     const route = buildRouteToTarget(this.graph, originNode, inc.nodeId, revPrev);
     unit.incidentId = inc.id;          // set first, so the unit broadcast also reaches the incident's room
-    unit.hospitalId = null;
+    unit.hospitalId = null; unit.bedHeld = false;
     this.#startTrip(unit, route, prefix, UNIT_STATUS.EN_ROUTE, { type: 'ARRIVE_SCENE', incidentId: inc.id });
     const from = this.graph.getLocation(originNode);
     Object.assign(inc, {
@@ -263,15 +271,45 @@ export class DispatchService {
     this.#incidentChanged(inc);
   }
 
-  // Best hospital from the scene: lowest cost among hospitals with free beds. For a HIGH
-  // (life-threatening) incident, major hospitals are preferred while one is reachable.
+  // Best hospital from the scene: lowest cost among reachable hospitals with free beds. For a HIGH
+  // (life-threatening) incident, major hospitals are preferred while one is reachable. If every reachable
+  // hospital is full the patient still goes to the nearest one as an over-capacity ("surge") admission;
+  // null only when no hospital can be reached at all.
   #chooseHospital(inc) {
     const { dist, prev } = dijkstraAll(this.graph, inc.nodeId);
-    const withBeds = [...this.hospitals.values()].filter((h) => h.bedsFree > 0 && dist.has(h.nodeId));
-    const pool = inc.severity === 'HIGH' && withBeds.some((h) => h.major) ? withBeds.filter((h) => h.major) : withBeds;
+    const reachable = [...this.hospitals.values()].filter((h) => dist.has(h.nodeId));
+    const withBeds = reachable.filter((h) => h.bedsFree > 0);
+    const surge = withBeds.length === 0;
+    const base = surge ? reachable : withBeds;
+    const pool = inc.severity === 'HIGH' && base.some((h) => h.major) ? base.filter((h) => h.major) : base;
     pool.sort((a, b) => dist.get(a.nodeId) - dist.get(b.nodeId) || byId(a.id, b.id));
     const h = pool[0];
-    return h ? { hospital: h, route: buildRoute(this.graph, inc.nodeId, h.nodeId, prev) } : null;
+    return h ? { hospital: h, route: buildRoute(this.graph, inc.nodeId, h.nodeId, prev), surge } : null;
+  }
+
+  // A bed is reserved when the ambulance is sent to the hospital (not on arrival), so two ambulances can
+  // never be promised the same last bed. Surge admissions take no bed.
+  #reserveBed(unit, choice) {
+    unit.bedHeld = false;
+    unit.hospitalId = choice.hospital.id;
+    if (choice.surge) return;
+    const h = choice.hospital;
+    h.bedsFree = Math.max(0, h.bedsFree - 1);
+    unit.bedHeld = true;
+    this.emit('hospital:updated', { id: h.id, bedsFree: h.bedsFree }, ['dispatch']);
+  }
+
+  #releaseBed(h) {
+    if (!h) return;
+    h.bedsFree = Math.min(h.bedsCap ?? Infinity, h.bedsFree + 1);
+    this.emit('hospital:updated', { id: h.id, bedsFree: h.bedsFree }, ['dispatch']);
+  }
+
+  // The patient is handed over: the bed stays taken for HOSPITAL_STAY_S, then a BED_FREE event frees it.
+  #admit(unit) {
+    if (!unit.bedHeld) return;
+    unit.bedHeld = false;
+    this.events.push(this.now + HOSPITAL_STAY_S, { type: 'BED_FREE', hospitalId: unit.hospitalId });
   }
 
   #routeHome(unit) {
@@ -311,6 +349,7 @@ export class DispatchService {
 
   // ---------- simulation ----------
   #handle(ev) {
+    if (ev.type === 'BED_FREE') { this.#releaseBed(this.hospitals.get(ev.hospitalId)); return; }
     const unit = this.units.get(ev.unitId);
     if (!unit || (ev.tripSeq !== undefined && ev.tripSeq !== unit.tripSeq)) return;   // stale (unit re-assigned)
     const endNode = unit.trip?.path.at(-1);
@@ -327,23 +366,30 @@ export class DispatchService {
         this.#unitChanged(unit); this.#incidentChanged(inc);
         break;
       }
-      case 'SCENE_DONE': {
-        const choice = unit.type === 'ambulance' ? this.#chooseHospital(inc) : null;
+      case 'SCENE_DONE':
+      case 'HOSPITAL_RETRY': {
+        const isAmb = unit.type === 'ambulance';
+        const choice = isAmb ? this.#chooseHospital({ ...inc, nodeId: unit.nodeId }) : null;
+        if (isAmb && !choice) {                  // no hospital reachable right now: keep the patient, look again later
+          unit.trip = null;
+          this.events.push(this.now + RETRY_PENDING_S, { type: 'HOSPITAL_RETRY', unitId: unit.id, tripSeq: unit.tripSeq });
+          this.#unitChanged(unit);
+          break;
+        }
+        if (choice) { this.#reserveBed(unit, choice); if (choice.surge) inc.surge = true; }
         if (choice && choice.route.roadIds.length > 0) {
-          unit.hospitalId = choice.hospital.id;
           Object.assign(inc, { status: INCIDENT_STATUS.TRANSPORTING, hospitalId: choice.hospital.id });
           this.#incidentChanged(inc);
           this.#startTrip(unit, choice.route, null, UNIT_STATUS.TO_HOSPITAL, { type: 'ARRIVE_HOSPITAL' });
-        } else {
-          if (choice) { choice.hospital.bedsFree--; inc.hospitalId = choice.hospital.id; }
+        } else {                                 // incident is at the hospital's own junction (or no ambulance needed)
+          if (choice) { inc.hospitalId = choice.hospital.id; this.#admit(unit); }
           this.#resolve(inc);
           this.#goHome(unit);
         }
         break;
       }
       case 'ARRIVE_HOSPITAL': {
-        const h = this.hospitals.get(unit.hospitalId);
-        if (h) { h.bedsFree = Math.max(0, h.bedsFree - 1); this.emit('hospital:updated', { id: h.id, bedsFree: h.bedsFree }, ['dispatch']); }
+        this.#admit(unit);
         this.#resolve(inc);
         this.#goHome(unit);
         break;
@@ -426,37 +472,35 @@ export class DispatchService {
     return events;
   }
 
-  // The unit's destination became unreachable. It stops at the next junction (after finishing its road).
+  // The unit's destination became unreachable. It finishes the road it is on (the prefix of its trip) and
+  // stops at the next junction; it never jumps there.
   #cannotReach(u, junctionId, part) {
-    const loc = this.graph.getLocation(junctionId);
-    const stopAt = () => Object.assign(u, { nodeId: junctionId, lat: loc.lat, lng: loc.lng, trip: null, tripSeq: u.tripSeq + 1 });
+    const stopTrip = (status, type) => this.#startTrip(u, { path: [junctionId], roadIds: [] }, part.prefix, status, { type });
     if (u.status === UNIT_STATUS.TO_HOSPITAL) {
       const inc = this.incidents.get(u.incidentId);
-      stopAt();
+      if (u.bedHeld) { this.#releaseBed(this.hospitals.get(u.hospitalId)); u.bedHeld = false; }
       const other = this.#chooseHospital({ ...inc, nodeId: junctionId });
       if (other && other.route.roadIds.length) {
-        u.hospitalId = other.hospital.id;
+        this.#reserveBed(u, other);
+        if (other.surge) inc.surge = true;
         inc.hospitalId = other.hospital.id;
         this.#incidentChanged(inc);
         this.#startTrip(u, other.route, part.prefix, UNIT_STATUS.TO_HOSPITAL, { type: 'ARRIVE_HOSPITAL' });
         return 'other-hospital';
       }
-      this.#resolve(inc);
-      this.#becomeAvailable(u);
+      stopTrip(UNIT_STATUS.TO_HOSPITAL, 'HOSPITAL_RETRY');   // keep the patient; admit/retry at the junction
       return 'no-hospital-reachable';
     }
     if (u.status === UNIT_STATUS.EN_ROUTE) {
       const inc = this.incidents.get(u.incidentId);
       Object.assign(inc, { status: INCIDENT_STATUS.PENDING, unitId: null, assignedS: null, etaS: null });
       this.#incidentChanged(inc);
-      stopAt();
-      Object.assign(u, { status: UNIT_STATUS.AVAILABLE, incidentId: null, phaseEndS: null });
-      this.#unitChanged(u);
+      Object.assign(u, { incidentId: null, hospitalId: null });
+      stopTrip(UNIT_STATUS.RETURNING, 'ARRIVE_HOME');         // free (re-assignable) while it finishes the road
       return 'incident-unreachable';
     }
-    stopAt();                                    // RETURNING: home cut off, wait where it is
-    Object.assign(u, { status: UNIT_STATUS.AVAILABLE, incidentId: null, hospitalId: null, phaseEndS: null });
-    this.#unitChanged(u);
+    Object.assign(u, { incidentId: null, hospitalId: null });  // RETURNING: home cut off, wait at the junction
+    stopTrip(UNIT_STATUS.RETURNING, 'ARRIVE_HOME');
     return 'home-unreachable';
   }
 

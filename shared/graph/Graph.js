@@ -45,7 +45,7 @@ export class Graph {
   addLocation({ id, name = '', type = 'Intersection', lat, lng, affected = false }) {
     if (this.locations.has(id)) throw new Error(`Duplicate location ID: ${id}`);
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) throw new Error(`Location ${id} needs numeric lat/lng`);
-    this.locations.set(id, { id, name, type, lat, lng, affected });
+    this.locations.set(id, { id, name, type, lat, lng, affected, initialAffected: affected });
     this.adjacency.set(id, []);
   }
 
@@ -141,6 +141,7 @@ export class Graph {
     const loc = this.locations.get(id);
     if (!loc) throw new Error(`Unknown location: ${id}`);
     loc.affected = affected;
+    this.version++;
   }
 
   // Restore every road and location to its original state.
@@ -151,7 +152,7 @@ export class Graph {
       road.trafficFactor = road.initialTrafficFactor;
       road.riskPenaltyS = computeRiskPenaltyS(road.status, road.riskLevel);
     }
-    for (const loc of this.locations.values()) loc.affected = false;
+    for (const loc of this.locations.values()) loc.affected = loc.initialAffected;
     this.version++;
   }
 
@@ -166,6 +167,6 @@ export class Graph {
     const r = this.roads.get(roadId);
     const a = this.locations.get(r.from), b = this.locations.get(r.to);
     const g = r.geometry ?? [[a.lat, a.lng], [b.lat, b.lng]];
-    return fromId === r.from ? g : [...g].reverse();
+    return fromId === r.from ? g.slice() : [...g].reverse();   // never hand out the internal array
   }
 }

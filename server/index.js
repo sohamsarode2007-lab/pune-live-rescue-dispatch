@@ -121,7 +121,8 @@ const MONSOON = monsoonScenario(flood.riverPoints, DEMO_BBOX, network.crossingDe
 startupTask('GloFAS', async () => {
   const g = await flood.refreshGlofas();
   console.log(g.ok ? `GloFAS: ${g.status} (peak ${g.peak.m3s} m3/s; p90 ${g.p90?.toFixed(1)}, p99 ${g.p99?.toFixed(1)}) -> initial level ${g.suggestedLevel} m` : `GloFAS: ${g.error}`);
-  flood.applyGlofasSuggestion(dispatch.now);           // PLAN: GloFAS sets the initial slider level
+  // Only if nobody has set a level (or started a scenario) while the request was in flight.
+  if (flood.levelSource === 'none' && !runner.status().running) flood.applyGlofasSuggestion(dispatch.now);   // PLAN: GloFAS sets the initial slider level
   floodChanged();
 });
 const osrm = new OsrmService({ calls, ...(OSRM_BASE_URL ? { baseUrl: OSRM_BASE_URL } : {}) });
@@ -196,12 +197,25 @@ app.get('/api/roads/:id', (req, res) => {
 });
 
 const hazardChanged = () => { toDispatch('hazard:updated', store.closedRoads()); network.roadsChanged(); coverageChanged(); };
+
+// One definition of "clear every road hazard", shared by /api/roads/reset, sim:reset and scenario:start:
+// manual / crowd / crossing / flood closures, and the live traffic factors (Graph.reset() sets those back to 1,
+// so the traffic snapshot is put back on the graph). An active flood re-applies itself on the next tick.
+let lastFloodKey = '';
+const resetHazards = ({ announce = true } = {}) => {
+  store.resetRoads();
+  flood.applied.clear();
+  crowd.clear();
+  traffic.apply();
+  lastFloodKey = '';
+  if (announce) { toDispatch('crowd:updated', crowd.pending()); hazardChanged(); }
+};
 // Every closure path (manual, crossing, flood, crowd) ends here: reroute affected units, then broadcast.
 const roadsClosed = (ids) => { if (ids.length) dispatch.roadsBlocked(ids); hazardChanged(); };
 
 app.get('/api/coverage', (req, res) => {
   const kind = req.query.kind === 'ambulance' ? 'ambulance' : 'fire';
-  res.json({ kind, ...planning.coverage(kind), summary: planning.coverageSummary() });
+  res.json({ kind, ...planning.coverage(kind), summary: planning.coverageSummary(dispatch.now) });
 });
 // (not under /api/roads/: that prefix is taken by /api/roads/:id)
 app.get('/api/geometry/roads', (_req, res) => {
@@ -258,7 +272,7 @@ app.post('/api/roads/:id/status', (req, res) => {
 });
 
 // Reopens everything; an active flood re-applies itself on the next tick.
-app.post('/api/roads/reset', (_req, res) => { store.resetRoads(); flood.applied.clear(); crowd.clear(); hazardChanged(); res.json({ ok: true }); });
+app.post('/api/roads/reset', (_req, res) => { resetHazards(); res.json({ ok: true }); });
 
 // ---------------- Socket.IO ----------------
 const SOS_MIN_INTERVAL_MS = 3000;  // per connection, to stop accidental double-taps / floods
@@ -275,7 +289,7 @@ io.on('connection', (socket) => {
     socket.emit('network:updated', network.summary());
     socket.emit('flood:updated', flood.status());
     socket.emit('crowd:updated', crowd.pending());
-    socket.emit('coverage:updated', planning.coverageSummary());
+    socket.emit('coverage:updated', planning.coverageSummary(dispatch.now));
     socket.emit('scenario:updated', runner.status());
     // TomTom is never called automatically (not on startup, not on connect): only the "Refresh traffic"
     // button below spends quota.
@@ -367,7 +381,8 @@ io.on('connection', (socket) => {
     runner.stop();
     dispatch.reset();
     eventLog.open('reset');
-    flood.restartAt(0);                                // sim clock restarted at 0
+    resetHazards();                                    // roads, crowd reports and traffic back to normal
+    flood.restartAt(0);                                // sim clock restarted at 0; the slider level is kept and re-spreads
     planning.clearHistory();
     toDispatch('state:init', dispatch.snapshot());
     toDispatch('scenario:updated', runner.status());
@@ -380,9 +395,8 @@ io.on('connection', (socket) => {
     if (msg?.id !== 'monsoon') return ack({ ok: false, error: 'Unknown scenario' });
     if (!flood.model) return ack({ ok: false, error: 'Flood model unavailable (run scripts/build_elevation.py)' });
     dispatch.reset();
-    store.resetRoads();
     flood.reset();
-    crowd.clear();
+    resetHazards({ announce: false });                 // announced below, after the new log is open
     planning.clearHistory();
     if (traffic.mode !== MONSOON.trafficMode) traffic.setMode(MONSOON.trafficMode);
     dispatch.setSpeed(MONSOON.speed);
@@ -393,6 +407,7 @@ io.on('connection', (socket) => {
     toDispatch('sim:speed', { speed: dispatch.clock.speed });
     toDispatch('dispatch:mode', { mode: dispatch.mode });
     toDispatch('scenario:updated', runner.status());
+    toDispatch('crowd:updated', crowd.pending());
     hazardChanged();
     floodChanged();
     ack({ ok: true, status: runner.status() });
@@ -401,7 +416,6 @@ io.on('connection', (socket) => {
 
 // Simulation loop. The sim clock advances by a FIXED step per tick (TICK_MS x speed), not by measured wall
 // time, so a scenario always plays out identically (deterministic); wall-clock jitter only changes pace.
-let lastFloodKey = '';
 setInterval(() => {
   const { roadsChanged, scenarioChanged } = simStep({ dispatch, flood, runner }, TICK_MS);
   // (reroutes caused by changes.blocked were already broadcast by the dispatch service)

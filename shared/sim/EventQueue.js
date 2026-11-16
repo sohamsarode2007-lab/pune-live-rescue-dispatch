@@ -16,7 +16,7 @@ export class EventQueue {
   // Schedule `event` (any object with a `type`) at simulated time `time` (seconds).
   push(time, event) {
     if (!Number.isFinite(time)) throw new Error('Event time must be a finite number');
-    const item = { time, seq: this.seq++, ...event };
+    const item = { ...event, time, seq: this.seq++ };
     this.heap.push(item);
     return item;
   }
