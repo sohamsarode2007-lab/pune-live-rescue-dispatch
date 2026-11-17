@@ -22,6 +22,7 @@ export class EventLog {
     this.file = null;
     this.buffer = [];
     this.lines = 0;
+    this.opened = 0;
     fs.mkdirSync(dir, { recursive: true });
     this.timer = setInterval(() => this.flush(), flushMs);
     this.timer.unref?.();
@@ -29,8 +30,11 @@ export class EventLog {
 
   open(label, meta = {}) {
     this.flush();
-    const stamp = new Date(this.now()).toISOString().replace(/[-:]/g, '').replace('T', '-').slice(0, 15);
-    this.file = path.join(this.dir, `events-${stamp}-${label}.jsonl`);
+    const d = new Date(this.now());
+    const stamp = d.toISOString().replace(/[-:]/g, '').replace('T', '-').slice(0, 15);
+    // milliseconds + a counter: two resets inside one second must not append to the same file
+    const uniq = `${String(d.getMilliseconds()).padStart(3, '0')}${this.opened++ ? `-${this.opened}` : ''}`;
+    this.file = path.join(this.dir, `events-${stamp}${uniq}-${label}.jsonl`);
     this.lines = 0;
     this.write('meta', { version: LOG_VERSION, label, startedAt: new Date(this.now()).toISOString(), ...meta }, 0);
     return this.file;
@@ -47,7 +51,7 @@ export class EventLog {
     if (!this.file || !this.buffer.length) return;
     const chunk = `${this.buffer.join('\n')}\n`;
     this.buffer = [];
-    fs.appendFile(this.file, chunk, () => {});
+    fs.appendFileSync(this.file, chunk);               // sync: an async append could land after a later flushSync()
   }
 
   flushSync() {

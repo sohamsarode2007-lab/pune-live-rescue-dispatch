@@ -77,8 +77,12 @@ export default function SOS() {
         } else store.set(STORE_KEY, null);    // server restarted: the old incident is gone
       } catch { /* retried on next connect */ }
     };
-    const onIncident = (i) => setIncident((cur) => (cur && cur.id === i.id ? i : cur));
-    const onUnit = (u) => setUnit((cur) => (u.incidentId && u.incidentId === store.get(STORE_KEY) ? u : cur && cur.id === u.id ? { ...cur, ...u } : cur));
+    const onIncident = (i) => {
+      setIncident((cur) => (cur && cur.id === i.id ? i : cur));
+      if (i.id === store.get(STORE_KEY) && !i.unitId) setUnit(null);   // back to PENDING: that unit is no longer coming
+    };
+    // Track a unit only while it works on THIS caller's incident; once it is reassigned or finished, drop it.
+    const onUnit = (u) => setUnit((cur) => (u.incidentId && u.incidentId === store.get(STORE_KEY) ? u : cur && cur.id === u.id ? null : cur));
     const onPos = (p) => setUnit((cur) => {
       if (!cur) return cur;
       const m = p.units.find((x) => x.id === cur.id);

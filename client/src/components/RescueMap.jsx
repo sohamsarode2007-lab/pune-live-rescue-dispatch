@@ -19,6 +19,8 @@ function fleetText(units) {
   return Object.entries(counts).map(([t, n]) => `${n} ${UNIT_LABEL[t]}${n > 1 ? 's' : ''}`).join(', ');
 }
 
+const SNAP_WARN_M = 150;   // a facility snapped further than this from the road network gets a warning
+
 // Dispatcher map: facilities, closures, planner route, live incidents and units.
 export default function RescueMap({
   bbox, facilities, fleet, layers, origin, destination, route, closedRoads, onMapClick, onReopenRoad, onPickOrigin,
@@ -116,6 +118,7 @@ export default function RescueMap({
                 <Popup>
                   <b>{f.name}</b>{f.major && <span className="tag-major">major</span>}<br />
                   <span className="muted">{f.id} · {f.kind.replace('_', ' ')} · OSM {f.osm}</span>
+                  {f.snapDistanceM > SNAP_WARN_M && <><br /><span style={{ color: '#b45309' }}>⚠ Mapped {Math.round(f.snapDistanceM)} m from the nearest road: routes start at the road, not the building.</span></>}
                   {f.kind === 'hospital' && <><br />Beds free: <b>{beds[f.id] ?? f.bedsFree}</b> <i>(simulated)</i></>}
                   {f.kind === 'shelter' && <><br />Evacuation shelter ({SHELTER_TYPE[f.shelterType]}) · capacity <b>{f.capacity}</b> people <i>(simulated)</i></>}
                   {f.majorReasons && <><br /><span className="muted">Major because: {f.majorReasons.join(', ')}</span></>}

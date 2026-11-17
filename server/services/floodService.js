@@ -58,10 +58,14 @@ export class FloodService {
     // water stays under water (earliest time wins) and the new BFS continues from now; when it falls,
     // junctions not in the new plan recede.
     const rel = this.model.plan(l);
+    // When the level FALLS, only junctions that are already under water keep their time; water that had not
+    // arrived yet now follows the lower level's slower timetable instead of the old, higher one.
+    const lowering = this.plan && l < this.level;
     const merged = new Map();
     for (const [id, t] of rel.floodTimeS) {
       const prev = this.plan?.floodTimeS.get(id);
-      merged.set(id, prev !== undefined ? Math.min(prev, simNowS + t) : simNowS + t);
+      const keep = prev !== undefined && (!lowering || prev <= simNowS);
+      merged.set(id, keep ? Math.min(prev, simNowS + t) : simNowS + t);
     }
     this.level = l;
     this.levelSource = source;

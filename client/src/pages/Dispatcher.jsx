@@ -157,7 +157,7 @@ export default function Dispatcher() {
   }, [tab, origin, destination, version, live.closedRoads, trafficKey]);
 
   const setStatus = useCallback(async (roadIds, status) => {
-    try { for (const id of roadIds) await api.setRoadStatus(id, status); } catch (e) { setRouteError(e.message); }
+    try { await api.setRoadsStatus(roadIds, status); } catch (e) { setRouteError(e.message); }
     setSummary(await api.summary());
     setVersion((v) => v + 1);
   }, []);

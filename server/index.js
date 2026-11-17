@@ -69,6 +69,9 @@ const dispatch = new DispatchService(store, {
 });
 simNow = () => dispatch.now;
 eventLog.open('session');
+// A replay needs the starting state too (later logs get it from reset / scenario:start).
+eventLog.write('state:init', dispatch.snapshot(), 0);
+eventLog.write('hazard:updated', store.closedRoads(), 0);
 
 // Phase 4: external services (TomTom traffic, OSRM baseline) with a persisted daily call counter.
 const calls = new ExternalCalls({ file: EXTERNAL_CALLS_FILE, onChange: (v) => toDispatch('external:calls', v) });
@@ -289,6 +292,18 @@ app.post('/api/roads/:id/status', (req, res) => {
   flood.forget(req.params.id);                     // a dispatcher's decision overrides the flood model
   roadsClosed(status === 'BLOCKED' ? [req.params.id] : []);
   res.json(info);
+});
+
+// Several roads at once (a multi-segment stretch): one hazard update instead of one per road.
+app.post('/api/roads/status', (req, res) => {
+  const { roadIds, status } = req.body ?? {};
+  if (!Array.isArray(roadIds) || roadIds.length === 0 || roadIds.length > 500) return bad(res, 'roadIds must be a list of 1-500 road ids');
+  if (!Object.values(ROAD_STATUS).includes(status)) return bad(res, 'status must be OPEN, HIGH_RISK or BLOCKED');
+  const unknown = roadIds.find((id) => !store.graph.getRoad(id));
+  if (unknown !== undefined) return res.status(404).json({ error: `Unknown road: ${unknown}` });
+  for (const id of roadIds) { store.setRoadStatus(id, status, 'manual'); flood.forget(id); }
+  roadsClosed(status === 'BLOCKED' ? roadIds : []);
+  res.json({ ok: true, count: roadIds.length });
 });
 
 // Reopens everything; an active flood re-applies itself on the next tick.

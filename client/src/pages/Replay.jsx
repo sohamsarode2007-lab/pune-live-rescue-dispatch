@@ -4,6 +4,7 @@ import SafetyBanner from '../components/SafetyBanner.jsx';
 import NavLinks from '../components/NavLinks.jsx';
 import { AreaBox, BaseTiles, MapFrame, divIcon, TYPE_ICON, UNIT_LETTER } from '../components/mapParts.jsx';
 import { fmtClock } from '../format.js';
+import { trimRoute } from '../useLiveDispatch.js';
 
 const SPEEDS = [1, 5, 10, 30];
 const getJson = async (url) => { const r = await fetch(url); if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.statusText); return r.json(); };
@@ -33,7 +34,7 @@ function apply(s, ev) {
       break;
     }
     case 'unit:updated': s.units.set(d.id, { ...s.units.get(d.id), ...d }); break;
-    case 'unit:position': for (const p of d.units) { const u = s.units.get(p.id); if (u) s.units.set(p.id, { ...u, lat: p.lat, lng: p.lng, status: p.status }); } break;
+    case 'unit:position': for (const p of d.units) { const u = s.units.get(p.id); if (u) s.units.set(p.id, { ...u, lat: p.lat, lng: p.lng, status: p.status, route: trimRoute(u.route, p) }); } break;
     case 'unit:rerouted': feed(`↻ ${d.unitId} ${d.outcome === 'rerouted' ? `rerouted (+${Math.round(d.extraS)} s)` : d.outcome}`, 'warn'); break;
     case 'closures': s.closures = new Map(d.map(([id, status]) => [id, status])); break;
     case 'flood:updated':
@@ -77,7 +78,10 @@ export default function Replay() {
   useEffect(() => {
     if (!name) return;
     setPlaying(false); setError(null);
-    fetch(`/api/replays/${encodeURIComponent(name)}`).then((r) => r.text()).then((text) => {
+    fetch(`/api/replays/${encodeURIComponent(name)}`).then((r) => {
+      if (!r.ok) throw new Error(`Replay not found (${r.status})`);
+      return r.text();
+    }).then((text) => {
       const evs = text.split('\n').filter(Boolean).map((l) => JSON.parse(l));
       setMeta(evs.find((e) => e.type === 'meta')?.data ?? null);
       setEvents(evs);
@@ -146,6 +150,9 @@ export default function Replay() {
                   <Marker key={i.id} position={[i.lat, i.lng]} icon={divIcon(`inc ${i.status}`, TYPE_ICON[i.type], i.status === 'RESOLVED' ? 16 : 24)}>
                     <Popup><b>{i.id}</b> {i.type} · {i.status}{i.unitId ? ` · ${i.unitId}` : ''}</Popup>
                   </Marker>
+                ))}
+                {[...s.units.values()].filter((u) => u.status !== 'AVAILABLE' && u.route?.length > 1).map((u) => (
+                  <Polyline key={`r-${u.id}`} positions={u.route} interactive={false} pathOptions={{ color: '#2563eb', weight: 3, opacity: 0.7 }} />
                 ))}
                 {[...s.units.values()].filter((u) => u.status !== 'AVAILABLE').map((u) => (
                   <Marker key={u.id} position={[u.lat, u.lng]} zIndexOffset={1000} icon={divIcon(`unit ${u.status}`, UNIT_LETTER[u.type], 20)} />

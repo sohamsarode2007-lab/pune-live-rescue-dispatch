@@ -253,3 +253,16 @@ test('rerouting: a closure ahead of a moving unit re-plans from its next junctio
       store.resetRoads();
     }
   });
+
+test('lowering the water level: water that had not arrived yet follows the lower level\'s timetable', { skip }, async () => {
+  const store = await loadPune();
+  const { elevation, rivers } = loadData();
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'flood-'));
+  const f = new FloodService({ store, elevation, rivers, historyFile: path.join(dir, 'h.json'), currentFile: path.join(dir, 'c.json') });
+  f.setLevel(10, 0, 'manual');
+  f.setLevel(4, 100, 'manual');
+  const rel = f.model.plan(4).floodTimeS;
+  let future = 0;
+  for (const [id, t] of f.plan.floodTimeS) if (t > 100) { future++; assert.equal(t, 100 + rel.get(id)); }
+  assert.ok(future > 0);
+});

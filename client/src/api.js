@@ -28,6 +28,7 @@ export const api = {
   placement: () => call('/api/placement'),
   evacuation: () => call('/api/evacuation'),
   setCrossingStatus: (id, status) => post(`/api/crossings/${encodeURIComponent(id)}/status`, { status }),
+  setRoadsStatus: (roadIds, status) => post('/api/roads/status', { roadIds, status }),
   setRoadStatus: (id, status) => post(`/api/roads/${encodeURIComponent(id)}/status`, { status }),
   resetRoads: () => post('/api/roads/reset'),
 };
