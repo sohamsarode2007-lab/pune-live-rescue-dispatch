@@ -222,7 +222,7 @@ export class PlanningService {
       return { roadId, name: r.name || 'Unnamed road', highway: r.highway, capacity, geometry: this.graph.roadGeometry(roadId, r.from) };
     }).sort((a, b) => b.capacity - a.capacity);
     return {
-      totalPeople, evacuable: flow, pct: r1((100 * flow) / totalPeople), stranded,
+      totalPeople, evacuable: flow, pct: totalPeople > 0 ? r1((100 * flow) / totalPeople) : 0, stranded,
       cutCapacity: cut.capacity, cut: { roads: bottlenecks.reduce((s, b) => s + b.capacity, 0), shelters: shelterCut, supply: supplyCut },
       bottlenecks, shelters: shelters.length, shelterCapacity: [...capAt.values()].reduce((a, b) => a + b, 0),
       augmentations, ms: Math.round(performance.now() - t0),

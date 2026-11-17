@@ -186,7 +186,7 @@ export class NetworkService {
     const t0 = performance.now();
     const base = this.#measure();
     const all = [...this.graph.locations.keys()];
-    const stats = (m) => { const v = [...m.values()]; return { avgS: r1(avg(v)), worstS: r1(Math.max(...v)), reachable: m.size }; };
+    const stats = (m) => { const v = [...m.values()]; return { avgS: r1(avg(v)), worstS: v.length ? r1(Math.max(...v)) : 0, reachable: m.size }; };
     const baseline = {
       fire: stats(base.fire), all: stats(base.all), junctions: all.length,
       majorHospitalWithin8: all.filter((v) => (base.hosp.get(v) ?? Infinity) <= HOSPITAL_ACCESS_S).length,
