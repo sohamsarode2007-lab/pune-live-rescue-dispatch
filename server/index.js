@@ -14,11 +14,12 @@
 import express from 'express';
 import http from 'node:http';
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { Server } from 'socket.io';
 import {
   BURST_BENCHMARK_FILE, DEMO_BBOX, EXTERNAL_CALLS_FILE, FACILITIES_FILE, GRAPH_FILE, OSRM_BASE_URL, OSRM_LOG_FILE, PORT, ROOT,
-  SIM_SPEED, TICK_MS, TOMTOM_API_KEY, TOMTOM_FLOW_URL, TRAFFIC_SNAPSHOT_FILE, TRAFFIC_SNAPSHOT_BASELINE_FILE, FLOOD_CURRENT_BASELINE_FILE,
+  DISPATCH_TOKEN, HOST, RATE_LIMIT_PER_MIN, SIM_SPEED, TICK_MS, TOMTOM_API_KEY, TOMTOM_FLOW_URL, TRAFFIC_SNAPSHOT_FILE, TRAFFIC_SNAPSHOT_BASELINE_FILE, FLOOD_CURRENT_BASELINE_FILE,
 } from './config.js';
 import { GraphStore } from './services/graphStore.js';
 import { DispatchService, DISPATCH_MODES } from './services/dispatchService.js';
@@ -131,6 +132,25 @@ const ts = traffic.status();
 console.log(`Traffic: ${ts.message}; ${ts.samples} sample points; TomTom ${TOMTOM_API_KEY ? 'key present' : process.env.TOMTOM_DISABLED ? 'DISABLED (TOMTOM_DISABLED=1)' : 'key missing (free-flow fallback)'}`);
 
 app.use(express.json({ limit: '100kb' }));
+
+// ---- optional dispatcher token + per-IP rate limit (see config.js) ----
+const tokenOk = (t) => {
+  if (!DISPATCH_TOKEN) return true;
+  const a = Buffer.from(String(t ?? '')), b = Buffer.from(DISPATCH_TOKEN);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+};
+app.use(['/api/roads', '/api/crossings'], (req, res, next) => {          // reads stay public; changes need the token
+  if (req.method === 'GET' || req.method === 'OPTIONS' || tokenOk((req.get('authorization') ?? '').replace(/^Bearer /i, ''))) return next();
+  res.status(401).json({ error: 'Dispatcher token required' });
+});
+const ipHits = new Map();
+const rateLimited = (socket, kind) => {
+  const key = `${kind}:${socket.handshake.address}`, now = Date.now();
+  const hits = (ipHits.get(key) ?? []).filter((t) => now - t < 60_000);
+  hits.push(now); ipHits.set(key, hits);
+  return hits.length > RATE_LIMIT_PER_MIN;
+};
+setInterval(() => { const now = Date.now(); for (const [k, v] of ipHits) if (!v.some((t) => now - t < 60_000)) ipHits.delete(k); }, 300_000).unref();
 
 const MARGIN = 0.02; // accept points slightly outside the bbox; they snap to the nearest edge junction
 const inArea = (lat, lng) => Number.isFinite(lat) && Number.isFinite(lng)
@@ -280,8 +300,10 @@ const SOS_MIN_INTERVAL_MS = 3000;  // per connection, to stop accidental double-
 io.on('connection', (socket) => {
   let lastSos = 0;
 
-  socket.on('dispatch:join', () => {
+  socket.on('dispatch:join', (msg, ack = () => {}) => {
+    if (!tokenOk(msg?.token)) { socket.emit('auth:error', { error: 'DISPATCH_TOKEN_REQUIRED' }); return ack({ ok: false, error: 'DISPATCH_TOKEN_REQUIRED' }); }
     socket.join('dispatch');
+    ack({ ok: true });
     socket.emit('state:init', dispatch.snapshot());
     socket.emit('hazard:updated', store.closedRoads());
     socket.emit('traffic:updated', traffic.status());
@@ -310,13 +332,14 @@ io.on('connection', (socket) => {
   socket.on('sos:new', (msg, ack = () => {}) => {
     try {
       if (Date.now() - lastSos < SOS_MIN_INTERVAL_MS) return ack({ ok: false, error: 'TOO_FAST' });
+      if (rateLimited(socket, 'sos')) return ack({ ok: false, error: 'RATE_LIMITED' });
       const lat = Number(msg?.lat), lng = Number(msg?.lng);
       if (!inArea(lat, lng)) return ack({ ok: false, error: 'OUTSIDE_AREA' });
       lastSos = Date.now();
       const { incident: inc, merged } = dispatch.submitCall({
         lat, lng, type: msg.type, severity: msg.severity, people: Number(msg.people),
         accuracyM: Number.isFinite(Number(msg.accuracyM)) ? Math.round(Number(msg.accuracyM)) : null,
-        source: msg.source === 'dispatcher' ? 'dispatcher' : 'phone',
+        source: msg.source === 'dispatcher' && socket.rooms.has('dispatch') ? 'dispatcher' : 'phone',   // only a joined dispatcher may claim it
         clientId: typeof msg.clientId === 'string' ? msg.clientId.slice(0, 64) : null,
       });
       socket.join(`inc:${inc.id}`);
@@ -339,8 +362,11 @@ io.on('connection', (socket) => {
     const lat = Number(msg?.lat), lng = Number(msg?.lng);
     if (!inArea(lat, lng)) return ack({ ok: false, error: 'OUTSIDE_AREA' });
     if (Date.now() - lastReport < 2000) return ack({ ok: false, error: 'TOO_FAST' });
+    if (rateLimited(socket, 'report')) return ack({ ok: false, error: 'RATE_LIMITED' });
     lastReport = Date.now();
-    const r = crowd.report({ lat, lng, clientId: typeof msg?.clientId === 'string' ? msg.clientId.slice(0, 64) : socket.id });
+    // One connection is one voter: its first id sticks, so a single socket cannot pose as 3 different phones.
+    socket.data.clientId ??= typeof msg?.clientId === 'string' ? msg.clientId.slice(0, 64) : socket.id;
+    const r = crowd.report({ lat, lng, clientId: socket.data.clientId });
     if (r.newlyBlocked) { flood.forget(r.roadId); roadsClosed([r.roadId]); }
     toDispatch('crowd:updated', crowd.pending());
     ack(r);
@@ -436,4 +462,8 @@ if (fs.existsSync(dist)) {
   app.get(/^\/(?!api\/|socket\.io\/).*/, (_req, res) => res.sendFile(path.join(dist, 'index.html')));
 }
 
-server.listen(PORT, () => console.log(`Server on http://localhost:${PORT}  (sim speed ${dispatch.clock.speed}x)`));
+const onListen = () => {
+  console.log(`Server on http://localhost:${PORT}  (sim speed ${dispatch.clock.speed}x)`);
+  if (!DISPATCH_TOKEN) console.log('Note: dispatcher controls are open to anything that can reach this port. Outside a trusted network set DISPATCH_TOKEN (and HOST=127.0.0.1).');
+};
+if (HOST) server.listen(PORT, HOST, onListen); else server.listen(PORT, onListen);

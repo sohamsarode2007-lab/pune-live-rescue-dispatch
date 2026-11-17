@@ -25,6 +25,11 @@ export const DEMO_BBOX = Object.freeze({ north: 18.56, south: 18.49, east: 73.88
 export const BENCH_AREA = 'Pune, Maharashtra, India';
 
 export const PORT = Number(process.env.PORT) || 3001;
+// Optional hardening for anything beyond a trusted local demo. DISPATCH_TOKEN: required to join the dispatcher
+// room and to change roads/crossings (unset = open, as before). HOST: bind address (unset = all interfaces).
+export const DISPATCH_TOKEN = process.env.DISPATCH_TOKEN || '';
+export const HOST = process.env.HOST || '';
+export const RATE_LIMIT_PER_MIN = Number(process.env.RATE_LIMIT_PER_MIN) || 300;   // per client IP, SOS and road reports
 // TOMTOM_DISABLED=1 ignores the key (no TomTom calls at all; the saved snapshot is still used). Use it for
 // tests and rehearsals: an empty TOMTOM_API_KEY does not work in PowerShell, where setting a variable to ''
 // deletes it, so the key from .env would be loaded again.

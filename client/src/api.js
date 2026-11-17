@@ -1,4 +1,8 @@
-async function call(url, options) {
+import { dispatcherToken } from './auth.js';
+
+async function call(url, options = {}) {
+  const token = dispatcherToken();
+  if (token && options.method && options.method !== 'GET') options = { ...options, headers: { ...options.headers, Authorization: `Bearer ${token}` } };
   const res = await fetch(url, options);
   const body = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(body.error || `${res.status} ${res.statusText}`);

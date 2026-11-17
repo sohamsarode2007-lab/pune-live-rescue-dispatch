@@ -1,3 +1,4 @@
+import { dispatcherToken } from './auth.js';
 import { useEffect, useReducer } from 'react';
 import { getSocket } from './socket.js';
 
@@ -70,7 +71,7 @@ export function useLiveDispatch() {
   const [state, dispatch] = useReducer(reducer, initial);
   useEffect(() => {
     const s = getSocket();
-    const join = () => { dispatch({ type: 'connected', value: true }); s.emit('dispatch:join'); };
+    const join = () => { dispatch({ type: 'connected', value: true }); s.emit('dispatch:join', { token: dispatcherToken() }); };
     const handlers = {
       connect: join,
       disconnect: () => dispatch({ type: 'connected', value: false }),
